@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Workshop</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%235b8cff'/%3E%3Ccircle cx='9' cy='9' r='2.4' fill='white'/%3E%3Cpath d='M21 16.5l-5.5-5.5L8 18.5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-D-NHlUqi.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CMw3LI1j.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand" title="Photo Workshop — edit, crop, filter, export">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+          <circle cx="9" cy="9" r="2"></circle>
+          <path d="M21 15.5l-5-5L7 19.5"></path>
+        </svg>
+        <span>Photo Workshop</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="btn-group">
+          <button id="btn-undo" class="icon-btn" title="Undo (Ctrl+Z)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"></path><path d="M4 9h10a6 6 0 0 1 0 12h-3"></path></svg>
+          </button>
+          <button id="btn-redo" class="icon-btn" title="Redo (Ctrl+Shift+Z)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"></path><path d="M20 9H10a6 6 0 0 0 0 12h3"></path></svg>
+          </button>
+        </div>
+        <button id="btn-compare" class="btn" title="Before / after split view (B)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"></path><path d="M8 8L4 12l4 4"></path><path d="M16 8l4 4-4 4"></path></svg>
+          <span>Compare</span>
+        </button>
+        <button id="btn-reset" class="btn" title="Discard all edits and restore the original photo">Reset</button>
+        <button id="btn-export" class="btn primary" title="Download the current image as PNG (Ctrl+E)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 19h16"></path></svg>
+          <span>Export PNG</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="main">
+      <aside class="panel">
+        <section class="panel-section">
+          <h2>Adjust</h2>
+          <div class="slider-row">
+            <label for="s-bright">Brightness</label>
+            <div class="slider-line">
+              <input type="range" id="s-bright" min="-100" max="100" step="1" value="0">
+              <span class="val" id="v-bright">0</span>
+            </div>
+          </div>
+          <div class="slider-row">
+            <label for="s-contrast">Contrast</label>
+            <div class="slider-line">
+              <input type="range" id="s-contrast" min="-100" max="100" step="1" value="0">
+              <span class="val" id="v-contrast">0</span>
+            </div>
+          </div>
+          <div class="slider-row">
+            <label for="s-saturation">Saturation</label>
+            <div class="slider-line">
+              <input type="range" id="s-saturation" min="-100" max="100" step="1" value="0">
+              <span class="val" id="v-saturation">0</span>
+            </div>
+          </div>
+          <button id="btn-adj-reset" class="link-btn" title="Set brightness, contrast and saturation back to 0">Reset adjustments</button>
+        </section>
+
+        <section class="panel-section">
+          <h2>Filters</h2>
+          <div class="filters" id="filters"></div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Transform</h2>
+          <div class="transform-row">
+            <button id="btn-rotl" class="icon-btn" title="Rotate 90° left (Shift+R)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"></path><path d="M4 9h10a6 6 0 0 1 6 6v0a6 6 0 0 1-6 6H8"></path></svg>
+            </button>
+            <button id="btn-rotr" class="icon-btn" title="Rotate 90° right (R)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"></path><path d="M20 9H10a6 6 0 0 0-6 6v0a6 6 0 0 0 6 6h6"></path></svg>
+            </button>
+            <button id="btn-fliph" class="icon-btn" title="Flip horizontal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"></path><path d="M8 7L4 12l4 5"></path><path d="M16 7l4 5-4 5"></path></svg>
+            </button>
+            <button id="btn-flipv" class="icon-btn" title="Flip vertical">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"></path><path d="M7 8l5-4 5 4"></path><path d="M7 16l5 4 5-4"></path></svg>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Crop</h2>
+          <div class="crop-grid">
+            <label>X<input type="number" id="c-x" min="0" step="1" value="0"></label>
+            <label>Y<input type="number" id="c-y" min="0" step="1" value="0"></label>
+            <label>W<input type="number" id="c-w" min="1" step="1" value="800"></label>
+            <label>H<input type="number" id="c-h" min="1" step="1" value="600"></label>
+          </div>
+          <div class="aspect-row" id="aspects">
+            <button class="chip active" data-a="">Free</button>
+            <button class="chip" data-a="1">1:1</button>
+            <button class="chip" data-a="1.5">3:2</button>
+            <button class="chip" data-a="1.3333">4:3</button>
+            <button class="chip" data-a="1.7778">16:9</button>
+          </div>
+          <div class="crop-actions">
+            <button id="btn-crop-apply" class="btn primary small">Apply crop</button>
+            <button id="btn-crop-clear" class="btn small">Clear</button>
+          </div>
+          <p class="hint">Press <kbd>C</kbd> and drag on the photo to draw a crop area; drag the handles to fine-tune.</p>
+        </section>
+
+        <details class="panel-section sc-details">
+          <summary>Shortcuts</summary>
+          <div class="sc-row"><span>Crop tool</span><span><kbd>C</kbd></span></div>
+          <div class="sc-row"><span>Adjust tool</span><span><kbd>V</kbd></span></div>
+          <div class="sc-row"><span>Compare</span><span><kbd>B</kbd></span></div>
+          <div class="sc-row"><span>Fit view (reset zoom)</span><span><kbd>F</kbd></span></div>
+          <div class="sc-row"><span>Zoom / pan</span><span><kbd>Scroll</kbd> <kbd>Drag</kbd></span></div>
+          <div class="sc-row"><span>Rotate right / left</span><span><kbd>R</kbd> <kbd>Shift+R</kbd></span></div>
+          <div class="sc-row"><span>Undo / Redo</span><span><kbd>Ctrl+Z</kbd> <kbd>Ctrl+⇧+Z</kbd></span></div>
+          <div class="sc-row"><span>Export PNG</span><span><kbd>Ctrl+E</kbd></span></div>
+          <div class="sc-row"><span>Cancel selection</span><span><kbd>Esc</kbd></span></div>
+        </details>
+      </aside>
+
+      <div class="stage" id="stage">
+        <canvas id="view"></canvas>
+        <div id="hist" class="hidden"></div>
+        <div id="loading" class="overlay">
+          <div class="spinner"></div>
+          <p>Loading photo…</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="statusbar">
+      <span id="st-size">—</span>
+      <span class="dot">·</span>
+      <span id="st-zoom" title="Click to reset zoom">—</span>
+      <span class="dot">·</span>
+      <span id="st-tool">Adjust</span>
+      <span class="grow"></span>
+      <span id="st-step">Step 0 of 0</span>
+    </footer>
+  </div>
+  <div id="toast"></div>
+</body>
+</html>

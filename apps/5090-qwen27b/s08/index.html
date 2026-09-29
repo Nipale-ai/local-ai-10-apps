@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flock at dusk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 18 Q10 6 16 15 Q22 6 30 18 Q22 13 16 21 Q10 13 2 18 Z' fill='%23f2a65e'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-CTczEzMB.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-ULlll7vb.css">
+</head>
+<body>
+  <canvas id="sky"></canvas>
+
+  <div id="panel">
+    <div class="panel-head">
+      <h1>Murmuration</h1>
+      <button id="hideBtn" title="Hide panel (H)">Hide</button>
+    </div>
+
+    <div class="ctl">
+      <div class="ctl-label"><span>Cohesion</span><b id="cohesionVal"></b></div>
+      <input id="cohesion" type="range" min="0" max="1" step="0.01" value="0.55">
+    </div>
+    <div class="ctl">
+      <div class="ctl-label"><span>Separation</span><b id="separationVal"></b></div>
+      <input id="separation" type="range" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div class="ctl">
+      <div class="ctl-label"><span>Speed</span><b id="speedVal"></b></div>
+      <input id="speed" type="range" min="0" max="1" step="0.01" value="0.6">
+    </div>
+    <div class="ctl">
+      <div class="ctl-label"><span>Birds</span><b id="countVal"></b></div>
+      <input id="count" type="range" min="100" max="900" step="50" value="500">
+    </div>
+
+    <div class="btns">
+      <button id="pauseBtn">Pause</button>
+      <button id="restartBtn">Restart</button>
+    </div>
+
+    <div class="presets">
+      <button data-preset="murmuration">Murmuration</button>
+      <button data-preset="tight">Tight ball</button>
+      <button data-preset="scatter">Scattered</button>
+      <button data-preset="racing">Racing</button>
+      <button data-preset="drift">Drift</button>
+    </div>
+
+    <p class="stats" id="stats"></p>
+    <p class="hint">Move the mouse — you are the hawk. Hold the button to strike.<br>Space pauses · R restarts · H hides this panel</p>
+  </div>
+
+  <button id="showBtn" hidden>Controls</button>
+
+</body>
+</html>
