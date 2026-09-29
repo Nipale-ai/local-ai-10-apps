@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local AI ranking · Round 1: apps</title><meta name="description" content="Same 10 prompts, 45 minutes each, five local AI models on my own hardware. Every app is clickable.">
+<meta property="og:title" content="10 apps, 5 local AI models, one night"><meta property="og:description" content="Same prompts, 45 minutes each, nobody touched the code. Click any app.">
+<meta property="og:image" content="shots/16gb-qwen27b-s02.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>:root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--tx:#ececef;--mu:#8e8e96;--acc:#ffb020;--ok:#35d07f;--part:#f5a524}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--acc)}.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.hero{padding:88px 0 56px;background:radial-gradient(900px 420px at 15% 0%,rgba(255,176,32,.14),transparent 70%),radial-gradient(700px 380px at 90% 10%,rgba(80,120,255,.10),transparent 70%);border-bottom:1px solid var(--line)}
+.kick{font:500 13px 'JetBrains Mono',monospace;color:var(--acc);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(38px,6.4vw,76px);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px;font-weight:800}h1 span{color:var(--mu)}
+.lead{max-width:680px;color:#c3c3ca;font-size:18px;margin:0 0 34px}
+.hs{display:flex;gap:34px;flex-wrap:wrap}.hs b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em}.hs span{color:var(--mu);font-size:14px}
+.nav{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--tx);font-size:14px;font-weight:600;padding:8px 13px;border:1px solid var(--line);border-radius:99px;background:var(--card)}
+.nav a span{font:500 11px 'JetBrains Mono',monospace;color:var(--acc);margin-right:7px}.nav a:hover{border-color:#444}
+.cell{padding:70px 0 10px}.ch{margin-bottom:26px}
+.cls{font:500 12px 'JetBrains Mono',monospace;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+h2{font-size:clamp(28px,3.6vw,42px);letter-spacing:-.025em;line-height:1.1;margin:0 0 10px}h2 em{font-style:normal;color:var(--mu);font-weight:600}
+.rec{font:14px 'JetBrains Mono',monospace;color:#a9a9b2;margin:0 0 6px}.note{color:var(--mu);font-size:14px;margin:4px 0 0}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;min-width:170px}
+.stat b{display:block;font-size:22px;letter-spacing:-.01em}.stat span{color:var(--mu);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.card:hover{border-color:#3a3a40;transform:translateY(-2px)}
+.shot{position:relative;display:block;aspect-ratio:16/10;background:#000;overflow:hidden}.shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s}
+.card:hover .shot img{transform:scale(1.03)}
+.open{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.72);color:#fff;font-size:13px;font-weight:600;padding:6px 10px;border-radius:99px;opacity:0;transition:opacity .2s}.card:hover .open{opacity:1}
+@media (hover:none){.open{opacity:1}}
+.cb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}.tn{font-weight:700;font-size:16px}.ts{color:var(--mu);font-size:13.5px;line-height:1.4}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.b{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
+.b.ok{color:var(--ok);background:rgba(53,208,127,.1)}.b.part{color:var(--part);background:rgba(245,165,36,.12)}.mt{font-size:12px;color:var(--mu);padding:3px 0}
+.pb{margin-top:auto;align-self:flex-start;background:none;border:1px solid var(--line);color:var(--tx);font:600 13px Inter,sans-serif;padding:7px 12px;border-radius:10px;cursor:pointer}.pb:hover{border-color:#555}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}.to{background:var(--card);border:1px solid var(--line);color:var(--tx);font:600 13px Inter,sans-serif;padding:8px 12px;border-radius:99px;cursor:pointer}.to.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}.cc{text-decoration:none;color:var(--tx);background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cc img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;display:block}.cc div{padding:10px 12px}.cc b{display:block;font-size:14px}.cc span{color:var(--mu);font-size:12.5px}
+.how ol{max-width:760px;padding-left:20px;color:#c9c9d0}.how li{margin-bottom:12px}.disc{max-width:760px;color:var(--mu);font-size:14px;border-left:2px solid var(--acc);padding-left:14px;margin-top:24px}
+footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;color:var(--mu);font-size:14px}
+dialog{max-width:760px;width:calc(100% - 32px);background:#101012;color:var(--tx);border:1px solid var(--line);border-radius:16px;padding:0}dialog::backdrop{background:rgba(0,0,0,.7)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}.dh button{background:none;border:0;color:var(--tx);font-size:18px;cursor:pointer}
+dialog pre{margin:0;padding:18px;max-height:70vh;overflow:auto;white-space:pre-wrap;font:13px/1.55 'JetBrains Mono',monospace;color:#cfcfd6}
+h1,h2,.rec,.note,.lead{overflow-wrap:anywhere}body{overflow-x:hidden}
+@media (max-width:560px){.wrap{padding:0 16px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{min-width:0;padding:10px 12px}.stat b{font-size:19px}.hs{gap:22px}.grid{grid-template-columns:1fr}.hero{padding:56px 0 40px}.cell{padding:48px 0 6px}}
+.rk{max-width:680px;color:var(--mu);font-size:15px;margin:-18px 0 30px;border-left:2px solid var(--acc);padding-left:12px}
+.lock .ch{opacity:.75}.lk{border:1px dashed #3a3a40;border-radius:16px;padding:40px 20px;text-align:center;color:var(--mu);font-weight:600;background:repeating-linear-gradient(135deg,#111 0 14px,#131316 14px 28px)}
+.pl{margin-top:auto;font-size:12.5px;color:var(--mu)}
+</style></head><body>
+<header class="hero"><div class="wrap"><div class="kick">Part of one ranking: which AI runs best on the machine you already own</div><h1>10 apps.<br>Every machine class.<br><span>Nobody touched the code.</span></h1>
+<p class="lead">Every model got the exact same 10 prompts and 45 minutes per app. It worked alone in a coding agent: wrote the code, ran it in a real browser, fixed its own bugs. Then an automatic checker clicked through every app. Pick your class and try what each contender built.</p><p class="rk">Round 1 of the ranking: building apps. Same prompts on every class, every result clickable, every number with receipts. More rounds and more contenders follow.</p>
+<div class="hs"><div><b>50</b><span>apps built</span></div><div><b>0 / 5</b><span>contenders released</span></div><div><b>4</b><span>machine classes</span></div><div><b>0</b><span>cloud</span></div></div></div></header>
+<nav class="nav"><div class="wrap"><a href="#16gb"><span>16 GB</span>🔒 soon</a><a href="#rtx5090"><span>32 GB</span>🔒 soon</a><a href="#spark-flash-next"><span>1 Spark</span>🔒 soon</a><a href="#spark-qwen36"><span>1 Spark</span>🔒 soon</a><a href="#2-sparks-glm"><span>2 Sparks</span>🔒 soon</a></div></nav>
+<main class="wrap"><section id="16gb" class="cell lock"><div class="ch"><div class="cls">16 GB class · contender 1</div><h2>RTX 5060 Ti, 16 GB <em>· next contender</em></h2><p class="rec">10 apps, same prompts, 45 minutes each. Drops Tue 29 Sep, 19:00 CEST on <a href="https://x.com/niklaslenz_ai">X</a>.</p></div><div class="lk">🔒 Follow <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai</a> so you don't miss it</div></section><section id="rtx5090" class="cell lock"><div class="ch"><div class="cls">32 GB class · contender 1</div><h2>RTX 5090, 32 GB <em>· next contender</em></h2><p class="rec">10 apps, same prompts, 45 minutes each. Drops Tue 29 Sep, 21:00 CEST on <a href="https://x.com/niklaslenz_ai">X</a>.</p></div><div class="lk">🔒 Follow <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai</a> so you don't miss it</div></section><section id="spark-flash-next" class="cell lock"><div class="ch"><div class="cls">One DGX Spark class · contender 1</div><h2>1× DGX Spark, 128 GB <em>· next contender</em></h2><p class="rec">10 apps, same prompts, 45 minutes each. Drops Tue 29 Sep, 23:00 CEST on <a href="https://x.com/niklaslenz_ai">X</a>.</p></div><div class="lk">🔒 Follow <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai</a> so you don't miss it</div></section><section id="spark-qwen36" class="cell lock"><div class="ch"><div class="cls">One DGX Spark class · contender 2</div><h2>1× DGX Spark, 128 GB <em>· next contender</em></h2><p class="rec">10 apps, same prompts, 45 minutes each. Drops Wed 30 Sep, 13:00 CEST on <a href="https://x.com/niklaslenz_ai">X</a>.</p></div><div class="lk">🔒 Follow <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai</a> so you don't miss it</div></section><section id="2-sparks-glm" class="cell lock"><div class="ch"><div class="cls">Two DGX Spark class · contender 1</div><h2>2× DGX Spark, 256 GB <em>· next contender</em></h2><p class="rec">10 apps, same prompts, 45 minutes each. Drops Wed 30 Sep, 15:00 CEST on <a href="https://x.com/niklaslenz_ai">X</a>.</p></div><div class="lk">🔒 Follow <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai</a> so you don't miss it</div></section>
+<section id="compare" class="cell" hidden><div class="ch"><div class="cls">Side by side</div><h2>One prompt, <em>every model</em></h2><p class="rec">Pick a task and see what each machine made of the same brief.</p></div><div class="tabs"><button class="to" data-t="s01">Model fit calculator</button><button class="to on" data-t="s02">3D scene</button><button class="to" data-t="s03">Product page</button><button class="to" data-t="s04">Platformer game</button><button class="to" data-t="s05">Time tracker</button><button class="to" data-t="s06">Dashboard</button><button class="to" data-t="s07">Interactive explainer</button><button class="to" data-t="s08">Bird flock</button><button class="to" data-t="s09">Invoice generator</button><button class="to" data-t="s10">Photo editor</button></div><div class="cmp" id="cmp"></div></section>
+<section id="how" class="cell how"><div class="ch"><div class="cls">How it was measured</div><h2>Same brief, same tools, <em>same clock</em></h2></div>
+<ol><li><b>One brief per app.</b> The model gets the prompt, a shell and a real browser. Nobody answers questions.</li><li><b>45 minutes, then stop.</b> The model commits its work as it goes. The version that counts is its last commit that passes the checks.</li><li><b>Automatic checks.</b> A script opens every app and clicks through it: buttons, keyboard, totals, level changes, dark mode and more (12 to 18 checks per app).</li><li><b>Everything runs at home.</b> Models run on my own machines, the agent is <a href="https://opencode.ai">OpenCode</a>. No cloud model was used to build any app.</li></ol>
+<p class="disc">The benchmark runs, the checks and this page were set up by AI agents working for me. The apps on this page were written entirely by the local models named above.</p></section></main>
+<footer><div class="wrap">Niklas Lenz · <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai on X</a> · <a href="https://github.com/Nipale-ai">GitHub</a> · Run from 29 Sep 2026</div></footer>
+<dialog id="dlg"><div class="dh"><b id="dt"></b><button onclick="dlg.close()" aria-label="Close">✕</button></div><pre id="dp"></pre></dialog>
+<script>
+const P={},C={"s01": [], "s02": [], "s03": [], "s04": [], "s05": [], "s06": [], "s07": [], "s08": [], "s09": [], "s10": []},N={"s01": "Model fit calculator", "s02": "3D scene", "s03": "Product page", "s04": "Platformer game", "s05": "Time tracker", "s06": "Dashboard", "s07": "Interactive explainer", "s08": "Bird flock", "s09": "Invoice generator", "s10": "Photo editor"};
+document.querySelectorAll('.pb').forEach(b=>b.onclick=()=>{dt.textContent='Prompt · '+N[b.dataset.t];dp.textContent=P[b.dataset.t];dlg.showModal()});
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+function show(t){cmp.innerHTML=C[t].filter(x=>x.has).map(x=>`<a class="cc" href="apps/${x.c}/${t}/" target="_blank" rel="noopener"><img loading="lazy" src="shots/${x.c}-${t}.png"><div><b>${x.m}</b><span>${x.hw}</span></div></a>`).join('');
+document.querySelectorAll('.to').forEach(b=>b.classList.toggle('on',b.dataset.t===t))}
+document.querySelectorAll('.to').forEach(b=>b.onclick=()=>show(b.dataset.t));show('s02');
+</script></body></html>
