@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check whether a local AI model fits on your graphics card.">
+  <meta name="theme-color" content="#0a0d13">
+  <title>Will It Fit? — GPU memory calculator for AI models</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='6' width='12' height='12' rx='3' fill='%2334d399'/%3E%3Crect x='10' y='10' width='4' height='4' rx='1' fill='%230a0d13'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-BXOj9jhx.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CUIZFd08.css">
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none">
+            <rect x="7" y="7" width="10" height="10" rx="2.2" stroke="currentColor" stroke-width="1.7"/>
+            <rect x="10.2" y="10.2" width="3.6" height="3.6" rx="0.9" fill="currentColor"/>
+            <path d="M9.2 3.5v3.5M14.8 3.5v3.5M9.2 17v3.5M14.8 17v3.5M3.5 9.2h3.5M3.5 14.8h3.5M17 9.2h3.5M17 14.8h3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Will It Fit?</h1>
+          <p class="tag">Does this AI model fit on your graphics card?</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="shareBtn" class="btn-ghost" type="button">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+          <span id="shareLabel">Copy link</span>
+        </button>
+        <button id="resetBtn" class="btn-ghost btn-sm" type="button">Reset</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card inputs" aria-label="Model inputs">
+        <div class="field">
+          <label for="preset">Load a known model</label>
+          <select id="preset">
+            <option value="">— pick a model —</option>
+            <option value="llama8">Llama 3.1 8B</option>
+            <option value="mistral7">Mistral 7B</option>
+            <option value="gemma27">Gemma 3 27B</option>
+            <option value="qwen14">Qwen 2.5 14B</option>
+            <option value="mixtral">Mixtral 8x7B</option>
+            <option value="llama70">Llama 3.3 70B</option>
+            <option value="deepseek">DeepSeek R1 70B</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="params">Model size</label>
+          <div class="unit-input">
+            <input id="params" type="number" min="0.1" step="0.1" value="14.8" inputmode="decimal">
+            <span class="unit">billion params</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="quant">Quantization</label>
+          <select id="quant">
+            <option value="Q3_K_M">Q3_K_M — small</option>
+            <option value="Q4_K_M" selected>Q4_K_M — sweet spot</option>
+            <option value="NVFP4">NVFP4 — 4-bit (NVIDIA)</option>
+            <option value="Q5_K_M">Q5_K_M — quality</option>
+            <option value="Q6_K">Q6_K — high quality</option>
+            <option value="Q8_0">Q8_0 — near lossless</option>
+            <option value="FP16">FP16 — full precision</option>
+          </select>
+          <div class="bpw" id="bpwNote">4.85 bits per weight</div>
+        </div>
+
+        <div class="field">
+          <label for="context">Context length</label>
+          <div class="unit-input">
+            <input id="context" type="number" min="256" step="256" value="32768" inputmode="numeric">
+            <span class="unit">tokens</span>
+          </div>
+          <input id="contextRange" type="range" min="256" max="131072" step="256" value="32768" aria-label="Context length slider">
+        </div>
+
+        <div class="field">
+          <label for="kv">Memory the context needs</label>
+          <div class="unit-input">
+            <input id="kv" type="number" min="0" step="0.01" value="0.15" inputmode="decimal">
+            <span class="unit">GB per 1,000 tokens</span>
+          </div>
+        </div>
+
+        <p class="hint">This is the model's KV cache — the memory used to remember the conversation. Typical values: 0.1–0.2&nbsp;GB per 1k tokens for 7–30B models, around 0.3–0.9 for 70B.</p>
+      </section>
+
+      <section class="results" aria-label="Results" aria-live="polite">
+        <div class="card verdict-card" id="verdictCard">
+          <div class="total-row">
+            <div class="total"><span id="total">0.0</span><span class="total-unit">GB</span></div>
+            <div class="total-sub">total memory needed</div>
+          </div>
+          <p id="verdict" class="verdict"></p>
+          <p id="verdictSub" class="verdict-sub"></p>
+          <div class="fit-chips" id="fitChips"></div>
+          <p id="tip" class="tip"></p>
+        </div>
+
+        <div class="legend" aria-hidden="true">
+          <span class="lg"><i class="dot w"></i>weights</span>
+          <span class="lg"><i class="dot k"></i>context (KV)</span>
+          <span class="lg"><i class="dot o"></i>overhead</span>
+          <span class="lg"><i class="dot f"></i>free</span>
+          <span class="lg fitline-legend"><i class="fitline-dot"></i>90% fit line</span>
+        </div>
+
+        <div class="devices" id="devices"></div>
+
+        <div class="card details">
+          <div class="details-head">
+            <h2>Under the hood</h2>
+            <button id="copySummary" class="btn-ghost btn-sm" type="button">Copy summary</button>
+          </div>
+          <table class="detail-table">
+            <tbody id="detailBody"></tbody>
+          </table>
+          <p class="formula">total&nbsp;=&nbsp;weights&nbsp;+&nbsp;context&nbsp;+&nbsp;1.5&nbsp;GB overhead &nbsp;·&nbsp; fits when total&nbsp;≤&nbsp;90% of the card</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Estimates only — real usage depends on your runtime, OS and what else is running.
+    </footer>
+  </div>
+</body>
+</html>

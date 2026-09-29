@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flocking simulation</title>
+  <script type="module" crossorigin src="./assets/index-BuTGnH0y.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BHoNF2M_.css">
+</head>
+<body>
+  <div id="stage">
+    <canvas id="sky"></canvas>
+    <canvas id="trail"></canvas>
+    <canvas id="birds"></canvas>
+  </div>
+  <div id="paused-badge">Paused</div>
+
+  <aside id="panel">
+    <div class="p-head">
+      <h1>Murmuration</h1>
+      <button id="hide-btn" title="Hide panel (H)">&ndash;</button>
+    </div>
+    <p class="sub">A living flock at dusk. Move your mouse &mdash; you are the hawk.</p>
+    <div class="slider">
+      <div class="s-row"><label for="s-cohesion">Cohesion</label><span id="v-cohesion" class="val"></span></div>
+      <input type="range" id="s-cohesion" min="0" max="1" step="0.01" value="0.55">
+    </div>
+    <div class="slider">
+      <div class="s-row"><label for="s-separation">Separation</label><span id="v-separation" class="val"></span></div>
+      <input type="range" id="s-separation" min="0" max="1" step="0.01" value="0.45">
+    </div>
+    <div class="slider">
+      <div class="s-row"><label for="s-speed">Speed</label><span id="v-speed" class="val"></span></div>
+      <input type="range" id="s-speed" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div class="slider">
+      <div class="s-row"><label for="s-count">Flock size</label><span id="v-count" class="val"></span></div>
+      <input type="range" id="s-count" min="150" max="900" step="25" value="500">
+    </div>
+    <div class="presets">
+      <span class="p-label">Presets</span>
+      <div class="chips">
+        <button class="chip active" data-preset="murmuration">Murmuration</button>
+        <button class="chip" data-preset="tight">Tight ball</button>
+        <button class="chip" data-preset="scatter">Scatter</button>
+        <button class="chip" data-preset="storm">Storm</button>
+        <button class="chip" data-preset="drift">Drift</button>
+      </div>
+    </div>
+    <div class="btns">
+      <button id="pause-btn">Pause</button>
+      <button id="restart-btn">Restart</button>
+    </div>
+    <p class="hint">space pause &middot; r restart &middot; h hide panel &middot; click to scatter</p>
+  </aside>
+  <button id="show-btn" title="Show panel (H)">&#9776;</button>
+</body>
+</html>

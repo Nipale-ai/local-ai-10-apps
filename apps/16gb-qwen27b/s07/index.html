@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Step through how a language model writes one word at a time: candidate bars, probabilities, and a temperature slider.">
+  <meta property="og:title" content="One word at a time — how a language model writes">
+  <meta property="og:description" content="An interactive explainer: candidate bars, probabilities and a temperature slider, stepped through word by word.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0d12'/%3E%3Crect x='10' y='38' width='8' height='16' rx='2' fill='%235c6478'/%3E%3Crect x='22' y='28' width='8' height='26' rx='2' fill='%235c6478'/%3E%3Crect x='34' y='16' width='8' height='38' rx='2' fill='%23f2b544'/%3E%3Crect x='46' y='22' width='8' height='32' rx='2' fill='%23f2b544'/%3E%3C/svg%3E">
+  <title>One word at a time — how a language model writes</title>
+  <script type="module" crossorigin src="./assets/index-C5IipbSK.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CZ3bMejL.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="head">
+      <div class="overline">an interactive explainer</div>
+      <h1>One word at a time</h1>
+      <p class="sub">How a language model writes: it looks at the text so far, gives every possible next word a chance, picks one — and repeats. Step through a real example, word by word.</p>
+      <div class="steps-strip" aria-hidden="true">
+        <span class="ss"><b>1</b>read the text so far</span>
+        <span class="ss-arrow">→</span>
+        <span class="ss"><b>2</b>score every next word</span>
+        <span class="ss-arrow">→</span>
+        <span class="ss"><b>3</b>pick one, repeat</span>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="the sentence being written">
+      <div class="sentence" id="sentence"></div>
+    </section>
+
+    <p class="caption" id="caption"></p>
+
+    <section class="panel" aria-label="candidate next words">
+      <div class="panel-head">
+        <h2>What could come next?</h2>
+        <span class="chip" id="pickChip">the model's pick: <b id="pickWord">The</b></span>
+      </div>
+      <div class="temp">
+        <span class="t-label">temperature</span>
+        <input type="range" id="temp" min="0.1" max="2" step="0.05" value="1" aria-label="temperature">
+        <span class="temp-val" id="tempVal">1.00</span>
+      </div>
+      <div class="temp-hint" id="tempHint"></div>
+      <div class="bars" id="bars"></div>
+      <div class="sample-row">
+        <button id="sampleBtn" class="btn ghost small" type="button">roll the dice</button>
+        <span class="sample-out" id="sampleOut"></span>
+      </div>
+      <div class="done-note" id="doneNote" hidden>That's the whole sentence — fourteen choices, each one a probability. Press <b>Replay</b> and try a different temperature.</div>
+    </section>
+
+    <div class="controls">
+      <button id="back" class="btn ghost" type="button">← Back</button>
+      <button id="play" class="btn ghost" type="button" title="autoplay">▶ play</button>
+      <button id="next" class="btn primary" type="button">Next word →</button>
+      <div class="progress">
+        <span id="stepLabel">word 1 of 14</span>
+        <div class="ptrack"><div class="pfill" id="fill"></div></div>
+      </div>
+    </div>
+
+    <section class="expert">
+      <button id="expertBtn" class="expert-btn" type="button" aria-expanded="false">the math, for the curious <span class="chev">▸</span></button>
+      <div class="expert-body" id="expertBody" hidden>
+        <div class="formula">p(w) = e<sup>s(w) / T</sup> &nbsp;÷&nbsp; Σ<sub>v</sub> e<sup>s(v) / T</sup></div>
+        <p class="exp-p">Each candidate word w carries a raw score s(w) — engineers call it a <b>logit</b>. Dividing by the temperature T and applying the <b>softmax</b> turns those scores into probabilities that add up to exactly 1. Low T sharpens the odds toward the favorite; high T flattens them and gives wilder words a real shot.</p>
+        <div class="exp-scroll">
+          <table class="exp-table" id="expTable">
+            <thead><tr><th>word</th><th>score s</th><th>e<sup>s/T</sup></th><th>probability</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="exp-p">Real models usually trim the list first — keeping only the top k candidates (<b>top-k</b>) or cutting where the cumulative probability reaches about 0.9 (<b>top-p</b>). We keep just five so you can see every bar.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>No real model runs on this page — the scores are hand-made, so the math you see is exactly the math a real model does. Built to be stepped through, not scrolled past.</p>
+      <button id="copyLink" class="btn ghost small" type="button">copy link to this step</button>
+    </footer>
+  </main>
+</body>
+</html>
