@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmuration — a flock at dusk</title>
+<style>:root{--ink:#eef1fa;--dim:#9aa3bd;--accent:#ffb27a;--accent2:#7fc6ff;--panel:#0c10208c;--line:#ffffff21}*{box-sizing:border-box}html,body{background:#0b0f22;height:100%;margin:0;overflow:hidden}body{color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,segoe ui,roboto,sans-serif}#sky{cursor:crosshair;width:100%;height:100%;display:block;position:fixed;inset:0}#brand{pointer-events:none;-webkit-user-select:none;user-select:none;letter-spacing:.14em;text-transform:uppercase;color:#ffffffb8;text-shadow:0 1px 12px #00000080;font-size:13px;font-weight:600;position:fixed;top:18px;left:22px}#brand small{letter-spacing:.06em;text-transform:none;color:#ffffff73;margin-top:4px;font-size:11.5px;font-weight:400;display:block}#panel{background:var(--panel);border:1px solid var(--line);-webkit-backdrop-filter:blur(16px)saturate(1.2);border-radius:16px;width:252px;padding:14px 16px 12px;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s;position:fixed;top:18px;right:18px;box-shadow:0 18px 50px #00000073}#panel.hidden{opacity:0;pointer-events:none;transform:translate(calc(100% + 26px))}.hd{justify-content:space-between;align-items:center;gap:8px;display:flex}.hd b{letter-spacing:.1em;text-transform:uppercase;font-size:12.5px;font-weight:600}.sub{color:var(--dim);margin:3px 0 12px;font-size:11px}button{font:inherit;color:var(--ink);border:1px solid var(--line);cursor:pointer;background:#ffffff12;border-radius:9px;padding:6px 10px;transition:background .15s,transform .1s}button:hover{background:#ffffff26}button:active{transform:translateY(1px)}#hide{color:var(--dim);padding:2px 8px;font-size:13px;line-height:1.4}.row{letter-spacing:.03em;color:var(--dim);justify-content:space-between;align-items:baseline;margin:11px 0 2px;font-size:11.5px;display:flex}.row b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:11.5px;font-weight:500}input[type=range]{appearance:none;cursor:pointer;background:0 0;width:100%;height:18px;margin:0;display:block}input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,#ffffff57,#ffffff1f);border-radius:4px;height:4px}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;background:var(--accent);border:2px solid #0a0e1ed9;border-radius:50%;width:14px;height:14px;margin-top:-5px;box-shadow:0 0 0 3px #ffb27a2e,0 2px 6px #00000080}input[type=range]::-moz-range-track{background:#ffffff38;border-radius:4px;height:4px}input[type=range]::-moz-range-thumb{background:var(--accent);border:2px solid #0a0e1ed9;border-radius:50%;width:14px;height:14px}.btns{gap:8px;margin-top:14px;display:flex}.btns button{flex:1}#pause.on{background:#ffb27a38;border-color:#ffb27a8c}.chips{flex-wrap:wrap;gap:6px;margin-top:10px;display:flex}.chips button{color:var(--dim);border-radius:20px;padding:4px 9px;font-size:11px}.chips button.sel{color:#10142a;background:var(--accent);border-color:#0000;font-weight:600}.foot{color:var(--dim);font-variant-numeric:tabular-nums;letter-spacing:.04em;border-top:1px solid #ffffff17;justify-content:space-between;margin-top:12px;padding-top:9px;font-size:10.5px;display:flex}#show{letter-spacing:.06em;opacity:0;pointer-events:none;border-radius:20px;padding:8px 13px;font-size:11.5px;transition:opacity .3s;position:fixed;top:18px;right:18px}#show.on{opacity:1;pointer-events:auto}.hint{color:#fff6;pointer-events:none;-webkit-user-select:none;user-select:none;letter-spacing:.03em;font-size:11px;position:fixed;bottom:16px;left:22px}</style>
+  <script type="module" crossorigin src="./assets/index-Bl3ursPV.js"></script>
+</head>
+<body>
+  <canvas id="sky"></canvas>
+  <div id="brand">Murmuration<small>Starlings at dusk · move the mouse — a hawk is hunting</small></div>
+
+  <div id="panel">
+    <div class="hd"><b>Controls</b><button id="hide" title="Hide panel (H)">✕</button></div>
+    <div class="sub">Three rules: stay close, keep space, match heading.</div>
+
+    <div class="row"><span>Cohesion</span><b id="v-coh">0.60</b></div>
+    <input id="s-coh" type="range" min="0" max="1" step="0.01" value="0.6">
+    <div class="row"><span>Separation</span><b id="v-sep">0.55</b></div>
+    <input id="s-sep" type="range" min="0" max="1" step="0.01" value="0.55">
+    <div class="row"><span>Speed</span><b id="v-spd">0.55</b></div>
+    <input id="s-spd" type="range" min="0" max="1" step="0.01" value="0.55">
+    <div class="row"><span>Flock size</span><b id="v-cnt">520</b></div>
+    <input id="s-cnt" type="range" min="300" max="1200" step="10" value="520">
+
+    <div class="btns">
+      <button id="pause">Pause</button>
+      <button id="reset">Restart</button>
+    </div>
+    <div class="chips" id="presets"></div>
+    <div class="foot"><span id="fps">— fps</span><span id="cnt">— birds</span></div>
+  </div>
+  <button id="show">Controls</button>
+  <div class="hint">Space pause · H hide panel · R restart</div>
+
+</body>
+</html>
