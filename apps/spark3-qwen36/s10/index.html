@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Workshop</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}body{color:#e0e0e0;-webkit-user-select:none;user-select:none;background:#1a1a1a;flex-direction:column;height:100vh;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;display:flex;overflow:hidden}.topbar{z-index:100;background:#2a2a2a;border-bottom:1px solid #3a3a3a;flex-wrap:wrap;flex-shrink:0;align-items:center;gap:6px;padding:6px 12px;display:flex}.topbar .title{color:#fff;letter-spacing:.5px;margin-right:12px;font-size:15px;font-weight:700}.topbar button{color:#e0e0e0;cursor:pointer;white-space:nowrap;background:#3a3a3a;border:1px solid #4a4a4a;border-radius:4px;padding:5px 10px;font-family:inherit;font-size:12px;font-weight:500;transition:all .15s}.topbar button:hover{background:#4a4a4a;border-color:#5a5a5a}.topbar button:active{background:#555}.topbar button:disabled{opacity:.4;cursor:default}.topbar button.primary{color:#fff;background:#3b82f6;border-color:#3b82f6}.topbar button.primary:hover{background:#2563eb}.topbar .sep{background:#4a4a4a;flex-shrink:0;width:1px;height:22px;margin:0 4px}.topbar .zoom-controls{align-items:center;gap:4px;margin-left:auto;display:flex}.topbar .zoom-controls button{text-align:center;min-width:28px;padding:5px 8px;font-size:14px}.topbar .zoom-controls span{color:#aaa;text-align:center;min-width:40px;font-size:12px}.main{flex:1;display:flex;overflow:hidden}.canvas-area{background-color:#111;background-image:linear-gradient(45deg,#1a1a1a 25%,#0000 25%),linear-gradient(-45deg,#1a1a1a 25%,#0000 25%),linear-gradient(45deg,#0000 75%,#1a1a1a 75%),linear-gradient(-45deg,#0000 75%,#1a1a1a 75%);background-position:0 0,0 10px,10px -10px,-10px 0;background-repeat:repeat;background-size:20px 20px;background-attachment:scroll;background-origin:padding-box;background-clip:border-box;flex:1;justify-content:center;align-items:center;display:flex;position:relative;overflow:auto}.canvas-wrapper{display:inline-block;position:relative;box-shadow:0 4px 30px #0009}#photoCanvas{max-width:100%;max-height:calc(100vh - 56px);display:block}.crop-overlay{pointer-events:none;width:100%;height:100%;display:none;position:absolute;top:0;left:0}.crop-overlay.active{pointer-events:auto;display:block}.crop-dim{background:#0009;position:absolute}.crop-selection{cursor:move;border:2px solid #3b82f6;position:absolute;box-shadow:0 0 0 9999px #00000080}.crop-handle{background:#fff;border:2px solid #3b82f6;border-radius:2px;width:12px;height:12px;position:absolute}.crop-handle.nw{cursor:nw-resize;top:-6px;left:-6px}.crop-handle.n{cursor:n-resize;margin-left:-6px;top:-6px;left:50%}.crop-handle.ne{cursor:ne-resize;top:-6px;right:-6px}.crop-handle.w{cursor:w-resize;margin-top:-6px;top:50%;left:-6px}.crop-handle.e{cursor:e-resize;margin-top:-6px;top:50%;right:-6px}.crop-handle.sw{cursor:sw-resize;bottom:-6px;left:-6px}.crop-handle.s{cursor:s-resize;margin-left:-6px;bottom:-6px;left:50%}.crop-handle.se{cursor:se-resize;bottom:-6px;right:-6px}.canvas-wrapper.before-after #photoCanvas{clip-path:inset(0 50% 0 0)}.split-line{cursor:ew-resize;z-index:10;background:#3b82f6;border-radius:2px;width:4px;height:100%;display:none;position:absolute;top:0;left:50%}.canvas-wrapper.before-after .split-line{display:block}.split-label{color:#fff;pointer-events:none;z-index:11;letter-spacing:.5px;background:#000000bf;border-radius:3px;padding:3px 10px;font-size:11px;font-weight:600;position:absolute;top:8px}.split-label.before{left:10px}.split-label.after{right:10px}.side-panel{background:#252525;border-left:1px solid #3a3a3a;flex-shrink:0;width:250px;overflow-y:auto}.panel-section{border-bottom:1px solid #333;padding:14px 14px 10px}.panel-section h3{text-transform:uppercase;letter-spacing:1px;color:#888;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:10px;font-weight:600;display:flex}.panel-section h3 .reset-btn{text-transform:none;letter-spacing:0;cursor:pointer;color:#888;background:#333;border:1px solid #444;border-radius:3px;padding:2px 6px;font-family:inherit;font-size:9px}.panel-section h3 .reset-btn:hover{color:#ccc;background:#444}.slider-row{margin-bottom:12px}.slider-row label{justify-content:space-between;margin-bottom:6px;font-size:13px;font-weight:500;display:flex}.slider-row label span:last-child{color:#60a5fa;font-variant-numeric:tabular-nums;font-size:12px;font-weight:600}input[type=range]{appearance:none;cursor:pointer;background:#3a3a3a;border-radius:3px;outline:none;width:100%;height:6px}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;cursor:pointer;background:#60a5fa;border:2px solid #1a1a1a;border-radius:50%;width:16px;height:16px;transition:background .15s;box-shadow:0 1px 4px #0006}input[type=range]::-webkit-slider-thumb:hover{background:#93c5fd}input[type=range]::-moz-range-thumb{cursor:pointer;background:#60a5fa;border:2px solid #1a1a1a;border-radius:50%;width:16px;height:16px;box-shadow:0 1px 4px #0006}.filter-grid{grid-template-columns:1fr 1fr;gap:5px;display:grid}.filter-btn{color:#ccc;cursor:pointer;background:#333;border:1px solid #444;border-radius:5px;padding:8px 10px;font-family:inherit;font-size:12px;font-weight:500;transition:all .15s}.filter-btn:hover{background:#444;border-color:#555}.filter-btn.active{color:#fff;background:#3b82f6;border-color:#3b82f6}.aspect-grid{grid-template-columns:repeat(3,1fr);gap:4px;display:grid}.aspect-btn{color:#ccc;cursor:pointer;background:#333;border:1px solid #444;border-radius:5px;padding:7px 4px;font-family:inherit;font-size:11px;font-weight:500;transition:all .15s}.aspect-btn:hover{background:#444}.aspect-btn.active{color:#fff;background:#3b82f6;border-color:#3b82f6}.crop-actions{gap:5px;margin-top:10px;display:flex}.crop-actions button{color:#e0e0e0;cursor:pointer;background:#333;border:1px solid #444;border-radius:5px;flex:1;padding:7px;font-family:inherit;font-size:12px;font-weight:500;transition:all .15s}.crop-actions button:hover{background:#444}.crop-actions button.apply{color:#fff;background:#3b82f6;border-color:#3b82f6}.crop-actions button.apply:hover{background:#2563eb}.history-list{max-height:120px;list-style:none;overflow-y:auto}.history-list li{color:#888;border-bottom:1px solid #2a2a2a;padding:4px 8px;font-size:11px}.history-list li:last-child{color:#ccc;font-weight:500}.statusbar{color:#888;font-variant-numeric:tabular-nums;background:#2a2a2a;border-top:1px solid #3a3a3a;flex-shrink:0;justify-content:space-between;padding:4px 14px;font-size:11px;display:flex}.shortcuts{color:#666;padding:12px 14px;font-size:11px;line-height:1.8}.shortcuts kbd{color:#aaa;background:#333;border:1px solid #444;border-radius:3px;padding:1px 5px;font-family:SF Mono,Fira Code,monospace;font-size:10px}</style>
+  <script type="module" crossorigin src="./assets/index-DPaGxFHW.js"></script>
+</head>
+<body>
+  <div class="topbar">
+    <span class="title">Photo Workshop</span>
+    <div class="sep"></div>
+    <div class="btn-group">
+      <button id="btnUndo" title="Ctrl+Z">Undo</button>
+      <button id="btnRedo" title="Ctrl+Y">Redo</button>
+    </div>
+    <div class="sep"></div>
+    <button id="btnRotate" title="Ctrl+R">Rotate</button>
+    <button id="btnFlipH" title="Flip H">Flip H</button>
+    <button id="btnFlipV" title="Flip V">Flip V</button>
+    <div class="sep"></div>
+    <button id="btnCrop">Crop</button>
+    <button id="btnBeforeAfter">Before/After</button>
+    <div class="sep"></div>
+    <button id="btnResetAll" title="Reset All">Reset All</button>
+    <div class="sep"></div>
+    <button id="btnExport" class="primary">Export PNG</button>
+    <div class="zoom-controls">
+      <button id="btnZoomOut" title="Zoom Out">−</button>
+      <span id="zoomLevel">100%</span>
+      <button id="btnZoomIn" title="Zoom In">+</button>
+      <button id="btnZoomFit" title="Fit to view">Fit</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="canvas-area" id="canvasArea">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="photoCanvas"></canvas>
+        <div class="crop-overlay" id="cropOverlay">
+          <div class="crop-dim" id="dimTop"></div>
+          <div class="crop-dim" id="dimLeft"></div>
+          <div class="crop-dim" id="dimRight"></div>
+          <div class="crop-dim" id="dimBottom"></div>
+          <div class="crop-selection" id="cropSelection">
+            <div class="crop-handle nw" data-handle="nw"></div>
+            <div class="crop-handle n" data-handle="n"></div>
+            <div class="crop-handle ne" data-handle="ne"></div>
+            <div class="crop-handle w" data-handle="w"></div>
+            <div class="crop-handle e" data-handle="e"></div>
+            <div class="crop-handle sw" data-handle="sw"></div>
+            <div class="crop-handle s" data-handle="s"></div>
+            <div class="crop-handle se" data-handle="se"></div>
+          </div>
+        </div>
+        <div class="split-line" id="splitLine"></div>
+        <span class="split-label before">BEFORE</span>
+        <span class="split-label after">AFTER</span>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="panel-section">
+        <h3>Adjustments <button class="reset-btn" id="btnResetAdjust">Reset</button></h3>
+        <div class="slider-row">
+          <label><span>Brightness</span><span id="brightnessVal">0</span></label>
+          <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+        </div>
+        <div class="slider-row">
+          <label><span>Contrast</span><span id="contrastVal">0</span></label>
+          <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+        </div>
+        <div class="slider-row">
+          <label><span>Saturation</span><span id="saturationVal">0</span></label>
+          <input type="range" id="saturationSlider" min="-100" max="100" value="0">
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Filters <button class="reset-btn" id="btnResetFilter">Reset</button></h3>
+        <div class="filter-grid" id="filterGrid">
+          <button class="filter-btn active" data-filter="none">None</button>
+          <button class="filter-btn" data-filter="grayscale">Grayscale</button>
+          <button class="filter-btn" data-filter="sepia">Sepia</button>
+          <button class="filter-btn" data-filter="vintage">Vintage</button>
+          <button class="filter-btn" data-filter="invert">Invert</button>
+          <button class="filter-btn" data-filter="warm">Warm</button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Crop Aspect</h3>
+        <div class="aspect-grid" id="aspectGrid">
+          <button class="aspect-btn active" data-ratio="free">Free</button>
+          <button class="aspect-btn" data-ratio="1">1:1</button>
+          <button class="aspect-btn" data-ratio="1.3333">4:3</button>
+          <button class="aspect-btn" data-ratio="1.5">3:2</button>
+          <button class="aspect-btn" data-ratio="0.6667">2:3</button>
+          <button class="aspect-btn" data-ratio="0.75">16:9</button>
+        </div>
+        <div class="crop-actions" id="cropActions" style="display:none;">
+          <button id="btnApplyCrop">Apply Crop</button>
+          <button id="btnCancelCrop">Cancel</button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>History</h3>
+        <ul class="history-list" id="historyList">
+          <li>Original</li>
+        </ul>
+      </div>
+
+      <div class="shortcuts">
+        <kbd>Ctrl+Z</kbd> Undo &nbsp;
+        <kbd>Ctrl+Y</kbd> Redo<br>
+        <kbd>Ctrl+R</kbd> Rotate &nbsp;
+        <kbd>Ctrl+E</kbd> Export<br>
+        <kbd>Ctrl+=</kbd> Zoom In &nbsp;
+        <kbd>Ctrl+-</kbd> Zoom Out<br>
+        <kbd>B</kbd> Before/After &nbsp;
+        <kbd>Esc</kbd> Cancel crop
+      </div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span id="statusLeft">800 × 600</span>
+    <span id="statusRight">Ready</span>
+  </div>
+
+</body>
+</html>

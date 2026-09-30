@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}html,body{background:#0a0a1a;width:100%;height:100%;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;overflow:hidden}canvas{width:100%;height:100%;display:block}#controls{z-index:10;-webkit-backdrop-filter:blur(16px);color:#ccc;-webkit-user-select:none;user-select:none;background:#0a0a1ecc;border:1px solid #ffffff1f;border-radius:14px;min-width:230px;padding:20px 24px;font-size:13px;transition:opacity .3s,transform .3s;position:fixed;top:16px;right:16px;box-shadow:0 8px 32px #0000004d}#controls.hidden{opacity:0;pointer-events:none;transform:translate(20px)}#controls h1{color:#fff;letter-spacing:.8px;margin-bottom:16px;font-size:16px;font-weight:600}.row{margin-bottom:14px}.row label{color:#aaa;justify-content:space-between;margin-bottom:5px;font-size:12px;display:flex}.row label span{color:#7eb8ff;text-align:right;min-width:28px;font-weight:500}input[type=range]{appearance:none;background:#ffffff1f;border-radius:3px;outline:none;width:100%;height:5px}input[type=range]::-webkit-slider-thumb{appearance:none;cursor:pointer;background:#7eb8ff;border-radius:50%;width:15px;height:15px;transition:box-shadow .2s;box-shadow:0 0 8px #7eb8ff99}input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 12px #7eb8ffe6}input[type=range]::-moz-range-thumb{cursor:pointer;background:#7eb8ff;border:none;border-radius:50%;width:15px;height:15px;box-shadow:0 0 8px #7eb8ff99}.btn-row{gap:8px;margin-top:16px;display:flex}.btn{color:#ddd;cursor:pointer;text-align:center;background:#ffffff0f;border:1px solid #ffffff26;border-radius:8px;flex:1;padding:8px 0;font-size:12px;font-weight:500;transition:all .2s}.btn:hover{background:#ffffff1f}.btn.active{color:#7eb8ff;background:#7eb8ff33;border-color:#7eb8ff80}.presets{flex-wrap:wrap;gap:6px;margin-top:12px;display:flex}.preset{color:#aaa;cursor:pointer;background:#ffffff0d;border:1px solid #ffffff1a;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:500;transition:all .2s}.preset:hover{color:#ddd;background:#ffffff1a}.preset.active{color:#7eb8ff;background:#7eb8ff26;border-color:#7eb8ff66}#toggle{z-index:11;color:#ccc;cursor:pointer;background:#0a0a1eb3;border:1px solid #ffffff26;border-radius:10px;justify-content:center;align-items:center;width:36px;height:36px;font-size:16px;transition:opacity .3s,background .2s;display:flex;position:fixed;top:16px;right:16px;box-shadow:0 4px 12px #0003}#toggle:hover{background:#ffffff1a}#toggle.hidden{opacity:0;pointer-events:none}#info{z-index:10;color:#ffffff59;letter-spacing:.3px;font-family:-apple-system,Segoe UI,monospace;font-size:11px;position:fixed;bottom:16px;left:16px}</style>
+  <script type="module" crossorigin src="./assets/index-DPhB0TqU.js"></script>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <button id="toggle" class="hidden" title="Show controls">☰</button>
+
+  <div id="controls">
+    <h1>Murmuration</h1>
+
+    <div class="row">
+      <label>Cohesion <span id="cohVal">0.6</span></label>
+      <input type="range" id="coh" min="0" max="1" step="0.01" value="0.6">
+    </div>
+    <div class="row">
+      <label>Separation <span id="sepVal">0.5</span></label>
+      <input type="range" id="sep" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div class="row">
+      <label>Speed <span id="spdVal">0.5</span></label>
+      <input type="range" id="spd" min="0" max="1" step="0.01" value="0.5">
+    </div>
+
+    <div class="btn-row">
+      <div class="btn active" id="btnPause">Pause</div>
+      <div class="btn" id="btnRestart">Restart</div>
+    </div>
+
+    <div class="presets">
+      <div class="preset active" data-preset="dusk">Dusk</div>
+      <div class="preset" data-preset="tight">Tight</div>
+      <div class="preset" data-preset="scatter">Scatter</div>
+      <div class="preset" data-preset="swarm">Swarm</div>
+    </div>
+  </div>
+
+  <div id="info"></div>
+
+</body>
+</html>
