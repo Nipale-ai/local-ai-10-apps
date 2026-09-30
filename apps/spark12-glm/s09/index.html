@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Studio — print-ready invoices</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316324f'/%3E%3Cpath d='M10 23V9l12 14V9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-BhS4-ep4.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-fwoju6x_.css">
+</head>
+<body>
+  <header class="toolbar no-print">
+    <div class="tb-brand">
+      <svg class="tb-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#16324f"/><path d="M10 23V9l12 14V9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="tb-name">Invoice Studio</span>
+      <span class="tb-sub">A4 · print-ready</span>
+    </div>
+    <div class="tb-actions">
+      <button id="btn-save-sender" class="btn ghost" type="button" title="Save sender details as a reusable template">Save sender</button>
+      <button id="btn-load-sender" class="btn ghost" type="button" title="Load saved sender template">Load sender</button>
+      <button id="btn-reset" class="btn ghost" type="button">Reset</button>
+      <button id="btn-print" class="btn primary" type="button">Print / Save PDF</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="editor no-print" id="editor">
+
+      <div class="card">
+        <h2>Sender</h2>
+        <label class="fld">Company
+          <input data-bind="sender.name" type="text">
+        </label>
+        <label class="fld">Street &amp; number
+          <input data-bind="sender.street" type="text">
+        </label>
+        <div class="row2">
+          <label class="fld">ZIP · City
+            <input data-bind="sender.city" type="text">
+          </label>
+          <label class="fld">Country
+            <input data-bind="sender.country" type="text">
+          </label>
+        </div>
+        <div class="row2">
+          <label class="fld">Email
+            <input data-bind="sender.email" type="text">
+          </label>
+          <label class="fld">Phone
+            <input data-bind="sender.phone" type="text">
+          </label>
+        </div>
+        <div class="row2">
+          <label class="fld">VAT ID
+            <input data-bind="sender.vatId" type="text">
+          </label>
+          <label class="fld">IBAN
+            <input data-bind="sender.iban" type="text">
+          </label>
+        </div>
+        <div class="row2">
+          <label class="fld">BIC
+            <input data-bind="sender.bic" type="text">
+          </label>
+          <label class="fld">Bank
+            <input data-bind="sender.bank" type="text">
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Recipient</h2>
+        <label class="fld">Contact (optional)
+          <input data-bind="recipient.contact" type="text" placeholder="e.g. Ms. Jane Doe">
+        </label>
+        <label class="fld">Company / name
+          <input data-bind="recipient.name" type="text">
+        </label>
+        <label class="fld">Street &amp; number
+          <input data-bind="recipient.street" type="text">
+        </label>
+        <div class="row2">
+          <label class="fld">ZIP · City
+            <input data-bind="recipient.city" type="text">
+          </label>
+          <label class="fld">Country
+            <input data-bind="recipient.country" type="text">
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Invoice details</h2>
+        <div class="row3">
+          <label class="fld">Number
+            <input data-bind="number" type="text">
+          </label>
+          <label class="fld">Date
+            <input data-bind="date" type="date">
+          </label>
+          <label class="fld">Due date
+            <input data-bind="due" type="date">
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Line items</h2>
+        <div class="items-head">
+          <span>Description</span><span>Qty</span><span>Unit price</span><span>VAT</span><span></span>
+        </div>
+        <div id="items-rows"></div>
+        <button id="btn-add-item" class="btn add" type="button">+ Add line item</button>
+      </div>
+
+      <div class="card">
+        <h2>Discount</h2>
+        <div class="row2">
+          <label class="fld">Discount (%)
+            <input data-bind="discount_pct" type="number" min="0" max="100" step="0.5">
+          </label>
+          <div class="hint">Applied to every line item before VAT.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Payment terms / notes</h2>
+        <label class="fld">
+          <textarea data-bind="terms" rows="3"></textarea>
+        </label>
+      </div>
+
+      <div class="card totals-card">
+        <h2>Totals</h2>
+        <div class="chips">
+          <div class="chip"><span>Net</span><strong id="sum-net">0.00 €</strong></div>
+          <div class="chip"><span>VAT</span><strong id="sum-vat">0.00 €</strong></div>
+          <div class="chip gross"><span>Gross</span><strong id="sum-gross">0.00 €</strong></div>
+        </div>
+      </div>
+
+    </aside>
+
+    <main class="preview-pane" id="preview-pane">
+      <div class="pane-label no-print">Live preview · A4 (794 × 1123 px) · what you see is what prints</div>
+      <div class="sheet-holder" id="sheet-holder">
+        <div class="scaler" id="scaler">
+          <div class="sheet" id="sheet"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

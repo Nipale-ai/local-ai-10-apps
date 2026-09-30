@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How a language model writes — one word at a time</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffb454'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%230c0f16'/%3E%3Ccircle cx='22' cy='22' r='3' fill='%230c0f16'/%3E%3Ccircle cx='22' cy='10' r='3' fill='%230c0f16'/%3E%3Ccircle cx='10' cy='22' r='3' fill='%230c0f16'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-CeowdN7D.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DuA3LXjX.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Interactive explainer · no math degree required</p>
+      <h1>How a language model <em>writes</em></h1>
+      <p class="tagline">One word at a time. You press the button, the machine rolls a dice.</p>
+    </header>
+
+    <section class="card story" aria-label="The text so far">
+      <div class="card-head">
+        <span class="label">The text so far</span>
+        <span class="dots" id="dots" aria-hidden="true"></span>
+        <span class="stepcount" id="stepcount"></span>
+      </div>
+      <p class="sentence" id="sentence" aria-live="polite"></p>
+      <p class="legend"><span class="dot dot-prompt"></span>your prompt&nbsp;&nbsp;<span class="dot dot-gen"></span>model's words&nbsp;&nbsp;<span class="dot dot-fresh"></span>latest pick</p>
+    </section>
+
+    <section class="card cand" aria-label="Candidate next words">
+      <div class="card-head">
+        <span class="label">Next-word candidates</span>
+        <label class="expert-toggle" for="expert">
+          <input type="checkbox" id="expert">
+          <span class="switch" aria-hidden="true"></span>
+          For experts
+        </label>
+      </div>
+      <p class="caption" id="caption" role="status" aria-live="polite"></p>
+      <p class="pickline" id="pickline" role="status" aria-live="polite"></p>
+      <div class="bars" id="bars"></div>
+      <div class="expert" id="expertcard" hidden>
+        <p class="formula">p(token<sub>i</sub>) = e<sup>s<sub>i</sub> / T</sup> / &Sigma;<sub>j</sub> e<sup>s<sub>j</sub> / T</sup></p>
+        <p class="expert-live" id="expertlive"></p>
+        <p class="expert-note">Each candidate has a raw score <em>s</em> (its logit). Temperature <em>T</em> divides the scores before the softmax: cold&nbsp;T stretches the gaps, hot&nbsp;T squeezes them. A real model scores ~50,000 tokens at once and keeps the top-k — here k&nbsp;=&nbsp;6. All scores are hand-made; no real model runs in this page.</p>
+      </div>
+    </section>
+
+    <section class="card temp" aria-label="Temperature">
+      <div class="temp-head">
+        <span class="label">Temperature — how risky is the dice?</span>
+        <span class="temp-right">
+          <span class="presets" id="presets">
+            <button data-t="0.3" title="Cold: the favorite almost always wins">0.3</button>
+            <button data-t="1" title="Balanced: the model's honest odds">1.0</button>
+            <button data-t="1.8" title="Hot: surprises welcome">1.8</button>
+          </span>
+          <span class="tval" id="tval">T = 1.00</span>
+        </span>
+      </div>
+      <input type="range" id="tslider" min="0.2" max="2" step="0.05" value="1" aria-label="Temperature">
+      <div class="temp-scale"><span>cold · predictable</span><span id="tmood">balanced</span><span>hot · surprising</span></div>
+    </section>
+
+    <div class="controls">
+      <button class="btn ghost" id="backBtn" data-test="back">
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 3 5.5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+      <button class="btn ghost" id="autoBtn" aria-pressed="false">
+        <svg id="autoIcon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+        <span id="autoLabel">Auto play</span>
+      </button>
+      <button class="btn primary" id="nextBtn" data-test="next">
+        <span id="nextLabel">Write the next word</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <footer class="foot">
+      <p>Hand-made example scores — no real model inside. A language model does exactly this for every word it writes: look back, score every option, roll the dice, repeat.</p>
+      <p class="kbd-hint">Keyboard tip: <kbd>←</kbd> / <kbd>→</kbd> step between words, <kbd>space</kbd> writes the next one.</p>
+    </footer>
+  </main>
+</body>
+</html>
