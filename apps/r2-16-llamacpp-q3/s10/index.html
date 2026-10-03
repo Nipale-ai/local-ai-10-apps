@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lumen · Photo Workshop</title>
+    <script type="module" crossorigin src="./assets/index-KZx9lFPu.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BCq2yZ7Z.css">
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="brand">
+          <span class="logo">
+            <svg viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="#fff"/></svg>
+          </span>
+          Lumen<span class="sub">photo workshop</span>
+        </div>
+        <div class="tools">
+          <button id="btn-undo" class="icon" title="Undo (Ctrl+Z)" disabled>
+            <svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+          </button>
+          <button id="btn-redo" class="icon" title="Redo (Ctrl+Shift+Z)" disabled>
+            <svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg>
+          </button>
+          <span class="sep"></span>
+          <button id="btn-rotl" class="icon" title="Rotate left (Shift+R)">
+            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+          <button id="btn-rotr" class="icon" title="Rotate right (R)">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </button>
+          <button id="btn-fliph" class="icon" title="Flip horizontal (F)">
+            <svg viewBox="0 0 24 24"><path d="M12 3v18" stroke-dasharray="3 3"/><path d="M9 7 4 12l5 5z" fill="currentColor" stroke="none"/><path d="M15 7l5 5-5 5z"/></svg>
+          </button>
+          <button id="btn-flipv" class="icon" title="Flip vertical (G)">
+            <svg viewBox="0 0 24 24"><path d="M3 12h18" stroke-dasharray="3 3"/><path d="M7 9l5-5 5 5z" fill="currentColor" stroke="none"/><path d="M7 15l5 5 5-5z"/></svg>
+          </button>
+          <span class="sep"></span>
+          <button id="btn-compare" title="Compare before / after (B)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M5 6a1 1 0 0 1 1-1h6v14H6a1 1 0 0 1-1-1z" fill="currentColor" stroke="none" opacity="0.35"/></svg>
+            Compare
+          </button>
+        </div>
+        <div class="right">
+          <button id="btn-export" class="primary" title="Export as PNG (E)">
+            <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Export PNG
+          </button>
+        </div>
+      </header>
+      <div id="main">
+        <div id="stage">
+          <canvas id="view"></canvas>
+          <div id="compare-wrap" class="hidden">
+            <canvas id="compare"></canvas>
+            <div id="divider"></div>
+            <span class="tag before">Before</span>
+            <span class="tag after">After</span>
+          </div>
+          <div id="crop-overlay" class="hidden">
+            <div id="crop-rect">
+              <div class="grid"></div>
+              <span id="crop-label">0 × 0</span>
+              <div class="h nw" data-h="nw"></div>
+              <div class="h n" data-h="n"></div>
+              <div class="h ne" data-h="ne"></div>
+              <div class="h e" data-h="e"></div>
+              <div class="h se" data-h="se"></div>
+              <div class="h s" data-h="s"></div>
+              <div class="h sw" data-h="sw"></div>
+              <div class="h w" data-h="w"></div>
+            </div>
+          </div>
+        </div>
+        <aside id="panel">
+          <section>
+            <h2>Adjust</h2>
+            <div class="slider-row">
+              <label for="sl-b">Brightness</label>
+              <input id="sl-b" type="range" min="-100" max="100" value="0" step="1" />
+              <span class="val" id="val-b">0</span>
+            </div>
+            <div class="slider-row">
+              <label for="sl-c">Contrast</label>
+              <input id="sl-c" type="range" min="-100" max="100" value="0" step="1" />
+              <span class="val" id="val-c">0</span>
+            </div>
+            <div class="slider-row">
+              <label for="sl-s">Saturation</label>
+              <input id="sl-s" type="range" min="-100" max="100" value="0" step="1" />
+              <span class="val" id="val-s">0</span>
+            </div>
+          </section>
+          <section>
+            <h2>Filters</h2>
+            <div id="filters"></div>
+          </section>
+          <section>
+            <h2>Crop</h2>
+            <div id="aspects"></div>
+            <div class="crop-actions">
+              <button id="btn-crop-toggle">
+                <svg viewBox="0 0 24 24"><path d="M6 2v16a2 2 0 0 0 2 2h14"/><path d="M2 6h16a2 2 0 0 1 2 2v14"/></svg>
+                <span id="crop-toggle-label">Crop</span>
+              </button>
+              <button id="btn-crop-apply" class="hidden">Apply</button>
+              <button id="btn-crop-cancel" class="hidden">Cancel</button>
+            </div>
+          </section>
+          <section>
+            <h2>Image</h2>
+            <div class="info" id="img-info"></div>
+          </section>
+        </aside>
+      </div>
+      <footer id="statusbar">
+        <span id="img-dims">–</span>
+        <span id="zoom-lvl">–</span>
+        <span id="edit-count">no edits</span>
+        <span class="hints"><kbd>Ctrl+Z</kbd> undo · <kbd>R</kbd> rotate · <kbd>F</kbd>/<kbd>G</kbd> flip · <kbd>C</kbd> crop · <kbd>B</kbd> compare · <kbd>E</kbd> export</span>
+      </footer>
+    </div>
+  </body>
+</html>

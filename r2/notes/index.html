@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local AI ranking · Notes and checks</title><meta name="description" content="Late regressions, the cross-run interference audit, what was re-scored and re-run, and how tiers and the counted commit are defined.">
+<meta property="og:title" content="Notes and checks"><meta property="og:description" content="What was corrected, and what the numbers mean.">
+<meta property="og:image" content="../../shots/16gb-qwen27b-s02.jpg"><meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--tx:#ececef;--mu:#8e8e96;--acc:#ffb020;--ok:#35d07f;--part:#f5a524;--t1:#7ea8d8;--t2:#f5a524;--t3:#35d07f;--t0:#6a6a72;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--bg:#fafaf9;--card:#ffffff;--line:#e2e2df;--tx:#1a1a1c;--mu:#6a6a70;--acc:#a35c00;--ok:#0d7a3f;--part:#8f5b00;--t1:#2f5f8f;--t2:#8f5b00;--t3:#0d7a3f;--t0:#8a8a90;color-scheme:light}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--acc)}.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.hero{padding:64px 0 48px;background:radial-gradient(900px 420px at 15% 0%,rgba(255,176,32,.14),transparent 70%),radial-gradient(700px 380px at 90% 10%,rgba(80,120,255,.10),transparent 70%);border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:light){.hero{background:radial-gradient(900px 420px at 15% 0%,rgba(255,176,32,.12),transparent 70%),radial-gradient(700px 380px at 90% 10%,rgba(80,120,255,.07),transparent 70%)}}
+.kick{font:500 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--acc);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(34px,6vw,68px);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px;font-weight:800}h1 span{color:var(--mu)}
+.lead{max-width:680px;color:var(--tx);opacity:.82;font-size:18px;margin:0 0 34px}
+.hs{display:flex;gap:34px;flex-wrap:wrap}.hs b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em}.hs span{color:var(--mu);font-size:14px}
+.top{position:sticky;top:0;z-index:6;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:8px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:15px;text-decoration:none;color:var(--tx);margin-right:auto;letter-spacing:-.01em}
+.rt{display:flex;gap:6px}
+.rt a{text-decoration:none;color:var(--tx);font-size:15px;font-weight:700;padding:9px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card)}
+.rt a.on{border-color:var(--acc);color:var(--acc)}
+.rt a small{display:block;font:500 10.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mu);letter-spacing:.04em}
+.nav{border-bottom:1px solid var(--line);background:var(--bg)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--tx);font-size:14px;font-weight:600;padding:8px 13px;border:1px solid var(--line);border-radius:99px;background:var(--card)}
+.nav a span{font:500 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc);margin-right:7px}.nav a:hover{border-color:#444}
+.cell{padding:70px 0 10px}.ch{margin-bottom:26px}
+.cls{font:500 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+h2{font-size:clamp(28px,3.6vw,42px);letter-spacing:-.025em;line-height:1.1;margin:0 0 10px}h2 em{font-style:normal;color:var(--mu);font-weight:600}
+h3{font-size:20px;letter-spacing:-.01em;margin:34px 0 12px}
+.rec{font:14px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mu);margin:0 0 6px}.note{color:var(--mu);font-size:14px;margin:4px 0 0}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;min-width:170px}
+.stat b{display:block;font-size:22px;letter-spacing:-.01em}.stat span{color:var(--mu);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.card:hover{border-color:#3a3a40;transform:translateY(-2px)}
+.shot{position:relative;display:block;aspect-ratio:16/10;background:#000;overflow:hidden}.shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s}
+.card:hover .shot img{transform:scale(1.03)}
+.open{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.72);color:#fff;font-size:13px;font-weight:600;padding:6px 10px;border-radius:99px;opacity:0;transition:opacity .2s}.card:hover .open{opacity:1}
+@media (hover:none){.open{opacity:1}}
+.cb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}.tn{font-weight:700;font-size:16px}.ts{color:var(--mu);font-size:13.5px;line-height:1.4}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.b{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
+.b.ok{color:var(--t3);background:rgba(53,208,127,.12)}.b.t2{color:var(--t2);background:rgba(245,165,36,.14)}.b.t1{color:var(--t1);background:rgba(126,168,216,.13)}.b.t0{color:var(--t0);background:rgba(120,120,128,.12)}
+.b.part{color:var(--part);background:rgba(245,165,36,.12)}.mt{font-size:12px;color:var(--mu);padding:3px 0}
+.pb{margin-top:auto;align-self:flex-start;background:none;border:1px solid var(--line);color:var(--tx);font-size:13px;font-weight:600;font-family:inherit;padding:7px 12px;border-radius:10px;cursor:pointer}.pb:hover{border-color:#555}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}.to{background:var(--card);border:1px solid var(--line);color:var(--tx);font-size:13px;font-weight:600;font-family:inherit;padding:8px 12px;border-radius:99px;cursor:pointer}.to.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}.cc{text-decoration:none;color:var(--tx);background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cc img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;display:block}.cc div{padding:10px 12px}.cc b{display:block;font-size:14px}.cc span{color:var(--mu);font-size:12.5px}
+.how ol{max-width:760px;padding-left:20px;color:var(--tx)}.how li{margin-bottom:12px}.disc{max-width:760px;color:var(--mu);font-size:14px;border-left:2px solid var(--acc);padding-left:14px;margin-top:24px}
+footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;color:var(--mu);font-size:14px}
+dialog{max-width:760px;width:calc(100% - 32px);background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:16px;padding:0}dialog::backdrop{background:rgba(0,0,0,.7)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}.dh button{background:none;border:0;color:var(--tx);font-size:18px;cursor:pointer}
+dialog pre{margin:0;padding:18px;max-height:70vh;overflow:auto;white-space:pre-wrap;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tx)}
+h1,h2,.rec,.note,.lead{overflow-wrap:anywhere}body{overflow-x:hidden}
+@media (max-width:560px){.wrap{padding:0 16px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{min-width:0;padding:10px 12px}.stat b{font-size:19px}.hs{gap:22px}.grid{grid-template-columns:1fr}.hero{padding:44px 0 36px}.cell{padding:48px 0 6px}.rt a{padding:8px 12px;font-size:14px}}
+.rk{max-width:680px;color:var(--mu);font-size:15px;margin:-18px 0 30px;border-left:2px solid var(--acc);padding-left:12px}
+.lock .ch{opacity:.75}.lk{border:1px dashed #3a3a40;border-radius:16px;padding:40px 20px;text-align:center;color:var(--mu);font-weight:600}
+@media (prefers-color-scheme:light){.lk{border-color:#c9c9c4;background:repeating-linear-gradient(135deg,#f3f3f0 0 14px,#ececea 14px 28px)}}
+@media (prefers-color-scheme:dark){.lk{background:repeating-linear-gradient(135deg,#111 0 14px,#131316 14px 28px)}}
+.pl{margin-top:auto;font-size:12.5px;color:var(--mu)}
+.rounds{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+@media (max-width:700px){.rounds{grid-template-columns:1fr}}
+.rcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:10px}
+.rcard h3{margin:0;font-size:24px}.rcard .sub{color:var(--mu);font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:13px;font-weight:600;padding:7px 12px;border-radius:99px;border:1px solid var(--line);text-decoration:none;color:var(--tx);background:var(--bg)}
+.chip.live{border-color:var(--t3);color:var(--t3)}.chip.soon{color:var(--mu);border-style:dashed;cursor:default}
+.sumtab{width:100%;border-collapse:collapse;margin:8px 0 4px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.sumtab th,.sumtab td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:14.5px}
+.sumtab th{background:var(--card);font-size:13px;color:var(--mu);font-weight:600}
+.sumtab tr:last-child td,.sumtab tr:last-child th{border-bottom:0}
+.sumtab td.hd{font-weight:700}
+.fine{max-width:860px;color:var(--mu);font-size:14px;line-height:1.6;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-top:18px}
+.fine b{color:var(--tx)}
+.mtab{border-collapse:collapse;margin-top:10px;font-size:13px}
+.mtab th{font:600 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mu);padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtab td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center}
+.mtab td.tk{text-align:left;font-weight:600;white-space:nowrap}
+.mtab tr:last-child td{border-bottom:0}
+.t3d,.t2d,.t1d,.t0d{display:inline-block;min-width:22px;padding:2px 6px;border-radius:7px;font-weight:700;font-size:12px}
+.t3d{color:var(--t3);background:rgba(53,208,127,.13)}.t2d{color:var(--t2);background:rgba(245,165,36,.15)}.t1d{color:var(--t1);background:rgba(126,168,216,.13)}.t0d{color:var(--t0);background:rgba(120,120,128,.12)}
+.mxwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--card)}
+.legend{color:var(--mu);font-size:13px;margin-top:10px}
+.notesec{max-width:860px}.notesec p{color:var(--tx);opacity:.9}
+.notesec .fine{margin-top:10px}
+</style></head><body>
+<header class="top"><div class="wrap"><a class="brand" href="../../">Local AI ranking</a><nav class="rt" aria-label="Rounds"><a href="../../#round-1">Round 1<small>45 min · 5 setups</small></a><a href="../../r2/">Round 2<small>up to 150 min · 9 cells</small></a><a href="../../r2/notes/" class="on">Notes &amp; checks<small>corrections</small></a></nav></div></header>
+<main class="wrap">
+<section class="cell notesec"><div class="ch"><div class="cls">Round 2 · documentation</div><h2>Notes &amp; checks</h2><p class="rec">Everything below is the wording of the public audit posts, kept verbatim. <a href="../">← Round 2</a></p></div>
+
+<h3>Definitions</h3>
+<div class="fine"><p><b>Counted commit</b> = the last commit at the hard stop that passes all must-pass checks (the runner also commits leftover work at the stop; only a commit that passes counts). Tasks s02, s04 and s08 ran up to 150 minutes, the other seven up to 45.</p>
+<p><b>Tier 3</b> = must-pass, quality and top checks all pass. <b>Tier 2</b> = must-pass and quality pass, not all top. <b>Tier 1</b> = must-pass checks only. <b>x/y</b> = quality and top checks passed on the counted commit.</p>
+<p><b>First working</b> = minute of the first commit that passed the must-pass checks. <b>Checkpoints</b> = the same rule applied at fixed minutes (15 / 45, and 150 for the big tasks); the final checkpoint is always the counted state.</p></div>
+
+<h3>Late regressions (two runs got worse after the 45-minute mark)</h3>
+<div class="fine"><p>In Round 2, two runs went from tier 3 at the 45-minute mark to tier 1 at the end, both on @MiaAI_lab&#x27;s setups (2 of her 12 150-minute runs that were tier 3 at 45 min; 0 of 5 on the other kits). No foreign kill reached either run, and both apps still ran fine at the end. One run per task, seed 1.</p><p>the RTX 5060 Ti box, 16 GB, Mia&#x27;s EXL3 kit, task s02 (150 min): at 16.9 min my checker rated it top tier, 9/9. My harness makes every model keep polishing until the end, and only the last passing commit counts. Its last commit, at 139.5 min, &#x27;realistic&#x27; dark monitor screens, killed the night glow (0.135% against the 0.3% bar). Its own check showed the miss (0.13%). It meant to fix it, but its replies turned into one repeated harness line, and my harness&#x27;s gate told it to commit the working state. It did. Counted: still runs, 8/9, tier 1.</p><p>the Gigabyte AI TOP ATOM + Lenovo ThinkStation PGX pair, 256 GB, Mia&#x27;s GLM kit v1.3 (978b225, newer versions exist), task s08: tier 3 at 44.2 min (8/8), counted tier 1 at 141.6 min (7/8). The miss: hawk (the flock has to scatter from the mouse) at 0.503 against the 0.50 bar, 76 of 151 birds still near the pointer, one too many. I did not trace which commit moved it and did not re-measure the same commit, so it can be noise.</p><p>Footnote: no foreign kill reached either run (the s08 cell ran under its own user, and the s02 audit found none in its window). For s02 the miss traces to the last commit; for s08 the cause was not traced. Same task s02 went the other way on my llama.cpp setup (tier 1 at the 45-minute mark, counted tier 3). One run each, seed 1, a repeat could land differently.</p></div>
+
+<h3>Cross-run interference: the pkill audit</h3>
+<div class="fine"><p>Round 2 (16, 32, 128 and 256 GB classes), audited up to 02.10., 10:50. Almost every benchmark agent ran as the same Linux user. Did they disturb each other? I went through the logs in two passes: all 3,359 tool calls of the runs up to 01.10., 14:15, then the cells that were still running, up to 02.10., 10:50. Mia&#x27;s GLM cell on the ASUS Ascent GX10 pair (10 runs, finished 03.10. 01:20) ran after the cutoff and is not covered.</p><p>Short answer: yes. As far as the logs show, no final counted result got worse because of it. One run (NVFP4 s07) may have lost its 15-minute mark to a foreign kill.</p><p>Broad kill commands like pkill -f &quot;vite preview&quot; (and a few port-based ones) fired 91 times by 01.10., 14:15 (95 kill segments, because some calls chain several kills). They hit 12 runs during agent work plus 5 scoring runs that first read tier 0 (two runs appear in both lists). All 5 rescored to tier 3 on the same commits.</p><p>Most of those commands hit the caller itself: the command text matches the pattern, so pkill killed the caller&#x27;s own shell in 72 of the 91 calls, and 61 of those hung until the tool timeout. The hang only costs the caller time. These same commands also killed other runs&#x27; servers; that is how most of the hits above happened. In one case a foreign cleanup command (ps | grep | xargs kill -9, not a pkill) killed another run&#x27;s bench harness mid-run. The harness resumed, and the counted result stayed the same.</p><p>Then my scoring got an automatic re-check for test-box errors: up to 2 retries when a check aborts for infrastructure reasons (active from 01.10., 13:46; not in every older runner). In the follow-up audit (42 runs from cells that were still running or missing; 37 with a counted commit) the retry fired in exactly one run: two foreign pkills from another run each killed one of its scoring rechecks, and both retries passed fully. That audit found 11 more broad kills; 10 of them hung the caller&#x27;s own shell. As far as the logs show, no counted result got worse because of them. The one cell that already ran as its own user answered a foreign pkill with &quot;Operation not permitted&quot;.</p><p>Footnote: the first audit&#x27;s line &quot;no broad kill after 11:23&quot; held only at the time it was written; the follow-up found more. Two late regressions in these runs have their own post; no foreign kill reached either run. The audit recommends, for a later round, one Linux user per cell, its own tmp dir per run and a fixed port range per run.</p></div>
+
+<h3>What was corrected</h3>
+<div class="fine"><p><b>Re-score:</b> five early scoring runs read tier 0 because another run's cleanup command killed their test server or browser mid-check. Same commits, same checker, scored again: all five are tier 3 and are shown as tier 3 on this page. Since 01.10. the scorer retries a check up to twice when it aborts for infrastructure reasons.</p>
+<p><b>Re-runs:</b> in the 256 GB class the counted s04 and s02 runs of Mia's vLLM cell are re-runs — the earlier tries on 01.10. were cut off by my own setup, not model results. The re-runs ran in the same engine session as the other eight tasks. In the 32 GB class, the counted NVFP4 s05 is a re-run after the engine was unreachable for two minutes (cause not found). Failed first tries are not model results and are not on the page.</p>
+<p><b>Isolation:</b> Mia's TensorFold cell on the Gigabyte + Lenovo pair ran as its own Linux user; a foreign pkill against it answered "Operation not permitted". For a later round the audit recommends one Linux user per cell, its own tmp dir per run and a fixed port range per run.</p></div>
+</section></main>
+<footer><div class="wrap">Niklas Lenz · <a href="https://x.com/niklaslenz_ai">@niklaslenz_ai on X</a> · <a href="https://github.com/Nipale-ai">GitHub</a> · Round 1 from 29 Sep 2026 · Round 2 from 30 Sep 2026<br>This page was built and is published by an AI agent working for me. The apps were written entirely by the local models named above.</div></footer></body></html>

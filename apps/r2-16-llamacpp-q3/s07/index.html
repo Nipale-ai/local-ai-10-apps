@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How a language model writes, one word at a time</title>
+  <script type="module" crossorigin src="./assets/index-CvHIVxIK.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DssHwqa8.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <main class="wrap">
+    <header>
+      <span class="badge">Interactive explainer</span>
+      <h1>How a language model writes, one word at a time</h1>
+      <p class="sub">It doesn't plan the whole sentence. It looks at the words so far, gives every possible next word a probability, picks one — and repeats.</p>
+      <div class="progress" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    </header>
+
+    <section class="card" aria-label="Word-by-word demo">
+      <div class="sentence-box">
+        <div class="row-head">
+          <span class="label">The model's output so far</span>
+          <span class="step-ind" id="stepInd">Step 0 of 9</span>
+        </div>
+        <div class="sentence" id="sentence" aria-live="polite"></div>
+      </div>
+
+      <p class="caption" id="caption"></p>
+
+      <div class="cands">
+        <div class="row-head">
+          <span class="label">Possible next words</span>
+          <span class="hint" id="topHint">probabilities add up to 100 %</span>
+        </div>
+        <div class="bars" id="bars"></div>
+      </div>
+
+      <div class="temp">
+        <div class="row-head">
+          <span class="label">Temperature</span>
+          <span class="temp-val" id="tempVal">1.00</span>
+        </div>
+        <input type="range" id="tempSlider" min="0.2" max="2" step="0.05" value="1" aria-label="Temperature">
+        <div class="temp-scale"><span>careful · low</span><span>high · creative</span></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="backBtn" aria-label="Back one step">← Back</button>
+        <button class="btn" id="playBtn" aria-label="Autoplay: play the sentence word by word">▶ Play</button>
+        <button class="btn primary" id="nextBtn" aria-label="Next word">Next word</button>
+      </div>
+
+      <button class="btn ghost" id="expertBtn" aria-expanded="false" aria-controls="expertPanel">Expert: logits &amp; softmax</button>
+      <div class="expert" id="expertPanel" hidden>
+        <div class="formula">p(w) = exp(s<sub>w</sub> ÷ T) / Σ<sub>w′</sub> exp(s<sub>w′</sub> ÷ T)</div>
+        <table class="exp-table">
+          <thead><tr><th>token</th><th>logit s</th><th>s ÷ T</th><th>p</th></tr></thead>
+          <tbody id="expBody"></tbody>
+        </table>
+        <p class="exp-note">Low T divides the logits by a small number, so the largest score wins almost everything — careful, predictable text. High T flattens the scores, giving weaker candidates a real chance — more creative, more risky.</p>
+      </div>
+    </section>
+
+    <footer>Hand-made example data — no model runs in this page. Every bar is softmax(score ÷ temperature), so the probabilities always add up to 100 %.</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check whether an AI model fits on your graphics card: enter model size, quantization and context length, see the memory it needs.">
+  <title>GPU Fit — Will this AI model fit on your graphics card?</title>
+  <script type="module" crossorigin src="./assets/index-BDdaUiGW.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B4Gfwi6I.css">
+</head>
+<body>
+<main id="app">
+  <header class="head">
+    <div class="logo" aria-hidden="true">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <rect x="6" y="6" width="24" height="24" rx="5" stroke="#38bdf8" stroke-width="2.5"/>
+        <rect x="12" y="12" width="12" height="12" rx="2.5" fill="#38bdf8"/>
+        <path d="M10 2v4M16 2v4M22 2v4M28 2v4M10 30v4M16 30v4M22 30v4M28 30v4M2 10h4M2 16h4M2 22h4M2 28h4M30 10h4M30 16h4M30 22h4M30 28h4" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Will this AI model fit on your graphics card?</h1>
+    <p class="sub">Enter the model size, quantization and context length. See how much memory it needs — and whether it fits on a 16, 32 or 128 GB card.</p>
+  </header>
+
+  <section class="card presets" aria-label="Model presets">
+    <h2>Start with a known model</h2>
+    <div class="preset-row">
+      <button class="preset" data-p="8" data-q="Q4_K_M" data-c="8192" data-kv="0.128">Llama 3.1 8B</button>
+      <button class="preset" data-p="70" data-q="Q4_K_M" data-c="8192" data-kv="0.32">Llama 3.1 70B</button>
+      <button class="preset" data-p="7.3" data-q="Q4_K_M" data-c="32768" data-kv="0.128">Mistral 7B</button>
+      <button class="preset" data-p="32.5" data-q="Q4_K_M" data-c="32768" data-kv="0.256">Qwen 2.5 32B</button>
+      <button class="preset" data-p="67.1" data-q="Q4_K_M" data-c="32768" data-kv="0.224">DeepSeek 67B</button>
+      <button class="preset" data-p="27" data-q="Q4_K_M" data-c="8192" data-kv="0.16">Gemma 2 27B</button>
+      <button class="preset" data-p="12.8" data-q="Q4_K_M" data-c="8192" data-kv="0.06">Phi-3 12.8B</button>
+      <button class="preset" data-p="117" data-q="NVFP4" data-c="131072" data-kv="0.35">gpt-oss-120b</button>
+    </div>
+  </section>
+
+  <section class="card inputs" aria-label="Model inputs">
+    <h2>Your model</h2>
+    <div class="field">
+      <label for="params">Model size — billions of parameters</label>
+      <input id="params" type="number" inputmode="decimal" min="0" step="0.1" value="8">
+    </div>
+    <div class="field">
+      <label for="quant">Quantization</label>
+      <select id="quant">
+        <option value="Q3_K_M">Q3_K_M — 3.91 bits per weight</option>
+        <option value="Q4_K_M" selected>Q4_K_M — 4.85 bits per weight</option>
+        <option value="Q5_K_M">Q5_K_M — 5.69 bits per weight</option>
+        <option value="Q6_K">Q6_K — 6.56 bits per weight</option>
+        <option value="Q8_0">Q8_0 — 8.50 bits per weight</option>
+        <option value="FP16">FP16 — 16.00 bits per weight</option>
+        <option value="NVFP4">NVFP4 — 4.50 bits per weight</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="context">Context length — tokens</label>
+      <input id="context" type="number" inputmode="numeric" min="0" step="1" value="8192">
+    </div>
+    <div class="field">
+      <label for="kv">KV cache per 1,000 tokens — GB</label>
+      <input id="kv" type="number" inputmode="decimal" min="0" step="0.001" value="0.128">
+    </div>
+  </section>
+
+  <section class="card result" aria-label="Result">
+    <div class="total-row">
+      <span class="total-label">Total memory needed</span>
+      <span class="total" id="total">7.4</span>
+      <span class="total-unit">GB</span>
+    </div>
+    <p class="verdict" id="verdict">Good news: it fits on a 16 GB card.</p>
+  </section>
+
+  <section class="card devices" aria-label="Device comparison">
+    <h2>Does it fit?</h2>
+    <div class="device-grid">
+      <div class="device">
+        <div class="dev-head"><span class="dev-name">16 GB card</span><span class="dev-status" id="status16">FITS</span></div>
+        <div class="bar" id="bar16"><div class="seg seg-w" id="w16"></div><div class="seg seg-k" id="k16"></div><div class="seg seg-o" id="o16"></div><div class="seg seg-f" id="f16"></div><div class="limit-marker" aria-hidden="true"></div></div>
+        <p class="dev-break" id="break16">weights 4.9 · context 1.0 · overhead 1.5</p>
+        <p class="dev-note" id="note16">14.4 GB usable · 7.0 GB free</p>
+      </div>
+      <div class="device">
+        <div class="dev-head"><span class="dev-name">32 GB card</span><span class="dev-status" id="status32">FITS</span></div>
+        <div class="bar" id="bar32"><div class="seg seg-w" id="w32"></div><div class="seg seg-k" id="k32"></div><div class="seg seg-o" id="o32"></div><div class="seg seg-f" id="f32"></div><div class="limit-marker" aria-hidden="true"></div></div>
+        <p class="dev-break" id="break32">weights 4.9 · context 1.0 · overhead 1.5</p>
+        <p class="dev-note" id="note32">28.8 GB usable · 21.4 GB free</p>
+      </div>
+      <div class="device">
+        <div class="dev-head"><span class="dev-name">128 GB card</span><span class="dev-status" id="status128">FITS</span></div>
+        <div class="bar" id="bar128"><div class="seg seg-w" id="w128"></div><div class="seg seg-k" id="k128"></div><div class="seg seg-o" id="o128"></div><div class="seg seg-f" id="f128"></div><div class="limit-marker" aria-hidden="true"></div></div>
+        <p class="dev-break" id="break128">weights 4.9 · context 1.0 · overhead 1.5</p>
+        <p class="dev-note" id="note128">115.2 GB usable · 107.8 GB free</p>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="sw sw-w"></i>model weights</span>
+      <span><i class="sw sw-k"></i>context (KV cache)</span>
+      <span><i class="sw sw-o"></i>overhead</span>
+      <span><i class="sw sw-f"></i>free space</span>
+    </div>
+  </section>
+
+  <section class="card expert" aria-label="Expert details">
+    <h2>Details for experts</h2>
+    <table class="expert-table">
+      <tbody>
+        <tr><th scope="row">Bits per weight</th><td id="bpw">4.85</td></tr>
+        <tr><th scope="row">Model weights</th><td id="wgt">4.9 GB</td></tr>
+        <tr><th scope="row">KV cache (context)</th><td id="kvc">1.0 GB</td></tr>
+        <tr><th scope="row">Overhead</th><td>1.5 GB</td></tr>
+        <tr><th scope="row">Total</th><td id="tot2">7.4 GB</td></tr>
+        <tr><th scope="row">Fits on 16 GB (needs ≤ 14.4 GB)</th><td id="f16">yes</td></tr>
+        <tr><th scope="row">Fits on 32 GB (needs ≤ 28.8 GB)</th><td id="f32">yes</td></tr>
+        <tr><th scope="row">Fits on 128 GB (needs ≤ 115.2 GB)</th><td id="f128">yes</td></tr>
+      </tbody>
+    </table>
+    <p class="formula">Formula: weights = params × bits ÷ 8 · KV = context ÷ 1000 × GB per 1k · overhead 1.5 GB · a model fits when its total is at most 90 % of the card's memory.</p>
+  </section>
+
+  <footer class="foot">
+    <button id="copyBtn" class="copy">Copy share link</button>
+    <p class="fine">Estimates assume the model runs on a single GPU with 10 % of the memory kept free.</p>
+  </footer>
+</main>
+</body>
+</html>

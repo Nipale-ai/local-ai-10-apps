@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local AI Benchmarks</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='8' width='3' height='7' rx='1' fill='%232563eb'/%3E%3Crect x='6' y='4' width='3' height='11' rx='1' fill='%23059669'/%3E%3Crect x='11' y='1' width='3' height='14' rx='1' fill='%23d97706'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-hiNs0MSm.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DNTmp-cM.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Local AI Benchmarks</h1>
+      <p class="subtitle" id="source">Loading…</p>
+    </div>
+    <div class="controls">
+      <div class="seg" id="filter" role="group" aria-label="Memory class filter">
+        <button data-f="all" class="active">All</button>
+        <button data-f="16gb">16 GB</button>
+        <button data-f="32gb">32 GB</button>
+        <button data-f="128gb">128 GB</button>
+        <button data-f="256gb">256 GB</button>
+      </div>
+      <button class="iconbtn" id="theme" title="Toggle theme" aria-label="Toggle theme"></button>
+    </div>
+  </header>
+
+  <p class="insight" id="insight"></p>
+
+  <section class="kpis">
+    <div class="kpi"><div class="label">Runs</div><div class="value" id="kpi-runs">–</div><div class="sub">benchmark runs in view</div></div>
+    <div class="kpi"><div class="label">Models</div><div class="value" id="kpi-models">–</div><div class="sub">distinct models</div></div>
+    <div class="kpi"><div class="label">Best prose speed</div><div class="value"><span id="kpi-prose">–</span> <span class="unit">tps</span></div><div class="sub" id="kpi-prose-sub">–</div></div>
+    <div class="kpi"><div class="label">Best code speed</div><div class="value"><span id="kpi-code">–</span> <span class="unit">tps</span></div><div class="sub" id="kpi-code-sub">–</div></div>
+  </section>
+
+  <section class="charts">
+    <div class="card">
+      <h2>Fastest machine</h2>
+      <p class="desc">Best prose decode speed per machine (tokens/s)</p>
+      <div class="chart" data-test="chart" id="chart-machines"></div>
+    </div>
+    <div class="card">
+      <h2>Prose vs code</h2>
+      <p class="desc">Best run per machine (tokens/s)
+        <span class="legend"><span class="dotl" style="background:#2563eb"></span>prose<span class="dotl" style="background:#7c3aed"></span>code</span>
+      </p>
+      <div class="chart" data-test="chart" id="chart-pvc"></div>
+    </div>
+    <div class="card wide">
+      <h2>Every run</h2>
+      <p class="desc">All runs by recipe, sorted by prose speed (tokens/s)</p>
+      <div class="chart tall" data-test="chart" id="chart-runs"></div>
+    </div>
+    <div class="card">
+      <h2>Prose vs code per run</h2>
+      <p class="desc">Each dot is one run; dashed line marks code = prose
+        <span class="legend"><span class="dotl" style="background:#2563eb"></span>16 GB<span class="dotl" style="background:#059669"></span>32 GB<span class="dotl" style="background:#d97706"></span>128 GB<span class="dotl" style="background:#dc2626"></span>256 GB</span>
+      </p>
+      <div class="chart" data-test="chart" id="chart-scatter"></div>
+    </div>
+    <div class="card">
+      <h2>Models</h2>
+      <p class="desc">Best prose speed per model (tokens/s)</p>
+      <div class="chart" data-test="chart" id="chart-models"></div>
+    </div>
+  </section>
+
+  <section class="card tablecard">
+    <h2>All runs</h2>
+    <p class="desc">One row per run — click a column header to sort</p>
+    <div class="tablewrap">
+      <table id="table">
+        <thead>
+          <tr>
+            <th data-key="class">Class<span class="arrow"></span></th>
+            <th data-key="machine">Machine<span class="arrow"></span></th>
+            <th data-key="model">Model<span class="arrow"></span></th>
+            <th data-key="recipe">Recipe<span class="arrow"></span></th>
+            <th data-key="prose_tps" class="num">Prose (tps)<span class="arrow"></span></th>
+            <th data-key="code_tps" class="num">Code (tps)<span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+</body>
+</html>

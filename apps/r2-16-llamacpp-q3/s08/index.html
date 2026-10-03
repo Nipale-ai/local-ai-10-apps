@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flock at dusk</title>
+  <script type="module" crossorigin src="./assets/index-D6yHrGep.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cnm2cpFT.css">
+</head>
+<body>
+  <canvas id="sky"></canvas>
+  <canvas id="birds"></canvas>
+  <div id="vignette"></div>
+  <div id="app">
+    <div id="panel">
+      <div class="row title-row">
+        <span class="title">Murmuration</span>
+        <button id="hideBtn" class="ghost" aria-label="Hide panel">Hide</button>
+      </div>
+      <div class="ctl">
+        <div class="lbl"><label for="sCoh">Cohesion</label><span id="vCoh" class="val">0.50</span></div>
+        <input type="range" id="sCoh" min="0" max="1" step="0.01" value="0.5">
+      </div>
+      <div class="ctl">
+        <div class="lbl"><label for="sSep">Separation</label><span id="vSep" class="val">0.50</span></div>
+        <input type="range" id="sSep" min="0" max="1" step="0.01" value="0.5">
+      </div>
+      <div class="ctl">
+        <div class="lbl"><label for="sSpd">Speed</label><span id="vSpd" class="val">0.50</span></div>
+        <input type="range" id="sSpd" min="0" max="1" step="0.01" value="0.5">
+      </div>
+      <div class="ctl">
+        <div class="lbl"><label for="sCnt">Birds</label><span id="vCnt" class="val">500</span></div>
+        <input type="range" id="sCnt" min="50" max="4000" step="50" value="500">
+      </div>
+      <div class="row btns">
+        <button id="pauseBtn">Pause</button>
+        <button id="restartBtn">Restart</button>
+      </div>
+      <div class="row presets">
+        <button class="chip" data-p="murmuration">Murmuration</button>
+        <button class="chip" data-p="tight">Tight ball</button>
+        <button class="chip" data-p="drift">Loose drift</button>
+        <button class="chip" data-p="storm">Storm</button>
+      </div>
+      <div class="hint">Move the mouse across the sky — the birds fear the hawk.</div>
+      <div class="stats"><span id="fps">–</span> fps · <span id="cnt">500</span> birds</div>
+    </div>
+    <button id="showBtn" class="show hidden" aria-label="Show panel">Show panel</button>
+  </div>
+</body>
+</html>

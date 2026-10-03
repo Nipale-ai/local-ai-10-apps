@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="Check whether a local AI model fits on your 16, 32 or 128 GB graphics card.">
+  <title>Will it fit? — AI model GPU memory calculator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='8' y='8' width='24' height='24' rx='5' fill='%234f46e5'/%3E%3Crect x='13' y='13' width='14' height='14' rx='3' fill='%23c7d2fe'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-B0TfWJ2b.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-I58Ro-MA.css">
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+            <rect x="8" y="8" width="24" height="24" rx="5" fill="#4f46e5"/>
+            <rect x="13" y="13" width="14" height="14" rx="3" fill="#c7d2fe"/>
+            <path d="M20 8V4M20 36v-4M8 20H4M36 20h-4M8 14H5M8 26H5M35 14h-3M35 26h-3" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Will it fit?</h1>
+          <p class="tagline">Find out if an AI model fits on your graphics card.</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card" aria-labelledby="h-inputs">
+        <h2 id="h-inputs">Your model</h2>
+        <div class="grid2">
+          <div class="field">
+            <label for="in-params">Model size (billion parameters)</label>
+            <input id="in-params" name="params_b" type="number" min="0" step="any" inputmode="decimal" value="70" aria-describedby="hint-params">
+            <p class="hint" id="hint-params">8, 13, 70… — the “B” in Llama 3.1 8B.</p>
+          </div>
+          <div class="field">
+            <label for="in-quant">Quantization</label>
+            <select id="in-quant" name="quant">
+              <option value="Q3_K_M">Q3_K_M — 3.91 bits, small, a bit rough</option>
+              <option value="Q4_K_M" selected>Q4_K_M — 4.85 bits, the usual choice</option>
+              <option value="Q5_K_M">Q5_K_M — 5.69 bits, higher quality</option>
+              <option value="Q6_K">Q6_K — 6.56 bits, near full quality</option>
+              <option value="Q8_0">Q8_0 — 8.50 bits, almost lossless</option>
+              <option value="NVFP4">NVFP4 — 4.50 bits, NVIDIA 4-bit</option>
+              <option value="FP16">FP16 — 16.00 bits, full precision</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="in-context">Context length (tokens)</label>
+            <input id="in-context" name="context" type="number" min="0" step="any" inputmode="decimal" value="8192">
+          </div>
+          <div class="field">
+            <label for="in-kv">Context memory (GB per 1k tokens)</label>
+            <input id="in-kv" name="kv_gb_per_1k" type="number" min="0" step="any" inputmode="decimal" value="0.33" aria-describedby="hint-kv">
+            <p class="hint" id="hint-kv">Typical: 0.13 for an 8B model, 0.33 for a 70B model.</p>
+          </div>
+        </div>
+        <div class="ctx-row" role="group" aria-label="Context length shortcuts">
+          <span class="presets-label">Context:</span>
+          <button type="button" class="chip chip-sm" data-ctx="2048" aria-label="Set context length to 2048 tokens">2k</button>
+          <button type="button" class="chip chip-sm" data-ctx="8192" aria-label="Set context length to 8192 tokens">8k</button>
+          <button type="button" class="chip chip-sm" data-ctx="32768" aria-label="Set context length to 32768 tokens">32k</button>
+          <button type="button" class="chip chip-sm" data-ctx="131072" aria-label="Set context length to 131072 tokens">128k</button>
+        </div>
+        <div class="presets" role="group" aria-label="Model presets">
+          <span class="presets-label" id="presets-label">Presets:</span>
+          <div class="preset-row" role="group" aria-labelledby="presets-label">
+            <button type="button" class="chip" data-preset="0" aria-label="Load preset Llama 3.1 8B">Llama 3.1 8B</button>
+            <button type="button" class="chip" data-preset="1" aria-label="Load preset Llama 3.1 70B">Llama 3.1 70B</button>
+            <button type="button" class="chip" data-preset="2" aria-label="Load preset Mistral 7B">Mistral 7B</button>
+            <button type="button" class="chip" data-preset="3" aria-label="Load preset Gemma 2 27B">Gemma 2 27B</button>
+            <button type="button" class="chip" data-preset="4" aria-label="Load preset Qwen 2.5 32B">Qwen 2.5 32B</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card result-card" aria-labelledby="h-result">
+        <h2 id="h-result">Result</h2>
+        <div class="verdict">
+          <div class="total-row">
+            <span class="total" id="total">–</span>
+            <span class="total-unit">GB needed</span>
+          </div>
+          <p class="verdict-text" id="verdict-text" role="status" aria-live="polite"></p>
+        </div>
+        <div class="devices" id="devices"></div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--bar-w)"></i>Weights</span>
+          <span><i class="dot" style="background:var(--bar-k)"></i>Context memory</span>
+          <span><i class="dot" style="background:var(--bar-o)"></i>Overhead</span>
+          <span><i class="dot" style="background:var(--bar-f)"></i>Free space</span>
+          <span class="legend-limit"><i class="limit-line" aria-hidden="true"></i>90 % safe limit</span>
+        </div>
+        <div class="share-row">
+          <button type="button" class="btn" id="share-btn" aria-label="Copy shareable link">Copy share link</button>
+          <span class="share-msg" id="share-msg" role="status" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-details">
+        <h2 id="h-details">Details for the curious</h2>
+        <div class="details-grid">
+          <table class="tbl" id="tbl-breakdown">
+            <caption class="tbl-caption">Where the memory goes</caption>
+            <tbody></tbody>
+          </table>
+          <table class="tbl" id="tbl-devices">
+            <caption class="tbl-caption">Headroom per card</caption>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="formula" id="formula"></p>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>Estimates only — real usage varies with runtime, batch size and what else is running. A 10&nbsp;% safety margin is kept free on every card.</p>
+    </footer>
+  </div>
+</body>
+</html>
