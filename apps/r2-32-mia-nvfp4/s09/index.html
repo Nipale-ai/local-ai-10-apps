@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fill in an invoice and get a beautifully typeset, print-ready A4 page with exact VAT and discount math.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect x='1' y='1' width='32' height='32' rx='8' fill='%231a56db'/%3E%3Cpath d='M10 25V9h3.4l8.2 10.6V9H25v16h-3.4L13.4 14.4V25H10z' fill='%23fff'/%3E%3C/svg%3E">
+  <title>Invoice Studio — print-ready A4 invoices</title>
+  <script type="module" crossorigin src="./assets/index-BNfI_p95.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DUqUpNoG.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-mark" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+          <rect x="1" y="1" width="32" height="32" rx="8" fill="#1a56db"/>
+          <path d="M10 25V9h3.4l8.2 10.6V9H25v16h-3.4L13.4 14.4V25H10z" fill="#fff"/>
+        </svg>
+        <div>
+          <div class="brand-name">Invoice Studio</div>
+          <div class="brand-sub">Print-ready A4 invoices</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="btn-save-sender" class="btn btn-ghost" type="button">Save sender</button>
+        <button id="btn-print" class="btn btn-primary" type="button">Print / Save PDF</button>
+      </div>
+    </header>
+    <main class="workbench">
+      <section class="panel form-panel" aria-label="Invoice form">
+        <div class="form-scroll">
+          <section class="fgroup">
+            <h2 class="fgroup-title">Sender</h2>
+            <div class="grid2">
+              <label class="span2">Company name<input id="f-sender-name" type="text" autocomplete="off"></label>
+              <label>VAT ID<input id="f-sender-vatid" type="text" autocomplete="off"></label>
+              <label>Phone<input id="f-sender-phone" type="text" autocomplete="off"></label>
+              <label class="span2">Street &amp; number<input id="f-sender-street" type="text" autocomplete="off"></label>
+              <label class="span2">City &amp; postal code<input id="f-sender-city" type="text" autocomplete="off"></label>
+              <label class="span2">Email<input id="f-sender-email" type="text" autocomplete="off"></label>
+            </div>
+          </section>
+          <section class="fgroup">
+            <h2 class="fgroup-title">Customer</h2>
+            <div class="grid2">
+              <label class="span2">Name<input id="f-cust-name" type="text" autocomplete="off"></label>
+              <label class="span2">Street &amp; number<input id="f-cust-street" type="text" autocomplete="off"></label>
+              <label>City &amp; postal code<input id="f-cust-city" type="text" autocomplete="off"></label>
+              <label>Phone<input id="f-cust-phone" type="text" autocomplete="off"></label>
+            </div>
+          </section>
+          <section class="fgroup">
+            <h2 class="fgroup-title">Invoice</h2>
+            <div class="grid2">
+              <label>Invoice number<input id="f-number" type="text" autocomplete="off"></label>
+              <label>Issue date<input id="f-date" type="date"></label>
+              <label>Payment terms (days)<select id="f-terms"><option value="14">14</option><option value="30">30</option></select></label>
+              <label>Discount %<input id="f-discount" type="number" min="0" max="100" step="0.1" autocomplete="off"></label>
+            </div>
+          </section>
+          <section class="fgroup">
+            <h2 class="fgroup-title">Line items</h2>
+            <p class="fgroup-hint">The discount applies to every line. Amounts are shown net of discount.</p>
+            <div class="li-head" aria-hidden="true">
+              <span>Description</span><span class="c-qty">Qty</span><span class="c-price">Unit price</span><span class="c-vat">VAT</span><span class="c-amt">Amount</span><span class="c-del"></span>
+            </div>
+            <div id="li-rows"></div>
+            <button id="btn-add-line" class="btn btn-ghost btn-block" type="button">+ Add line item</button>
+          </section>
+        </div>
+      </section>
+      <section class="panel preview-panel" aria-label="Invoice preview">
+        <div class="preview-head">
+          <span class="preview-title">Live preview</span>
+          <span class="preview-meta">A4 · 210 × 297 mm · updates as you type</span>
+        </div>
+        <div class="preview-clip" id="preview-clip">
+          <div class="sheet-scale" id="sheet-scale">
+            <div class="sheet" id="screen-invoice"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="print-invoice" class="sheet"></div>
+</body>
+</html>

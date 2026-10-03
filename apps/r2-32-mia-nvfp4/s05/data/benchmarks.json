@@ -1,0 +1,17 @@
+{
+  "source": "niklaslenz.com lab measurements, 23.-28.09.2026 (median decode tokens per second)",
+  "runs": [
+    { "class": "16gb", "machine": "RTX 5060 Ti 16 GB", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-IQ4_XS, MTP 3, 64K", "prose_tps": 48.31, "code_tps": 65.91 },
+    { "class": "16gb", "machine": "RTX 5060 Ti 16 GB", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-Q3_K_XL + vision, MTP 3, 32K", "prose_tps": 47.54, "code_tps": 65.22 },
+    { "class": "16gb", "machine": "RTX 5060 Ti 16 GB", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-Q3_K_XL, MTP 2, 96K", "prose_tps": 45.99, "code_tps": 58.05 },
+    { "class": "16gb", "machine": "RTX 5060 Ti 16 GB", "model": "MiMo-V2.6-Distill-Qwen-9B", "recipe": "llama.cpp Q8_0 + vision, 64K", "prose_tps": 45.7, "code_tps": 45.69 },
+    { "class": "32gb", "machine": "RTX 5090", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-IQ4_XS, MTP 3, 128K", "prose_tps": 146.79, "code_tps": 193.85 },
+    { "class": "32gb", "machine": "RTX 5090", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-Q6_K_XL, MTP 3, 128K", "prose_tps": 112.61, "code_tps": 141.72 },
+    { "class": "32gb", "machine": "RTX 5090", "model": "Qwen3.8-27B", "recipe": "vLLM 0.30 NVFP4, MTP 3, 128K", "prose_tps": 139.11, "code_tps": 186.04 },
+    { "class": "32gb", "machine": "RTX 5090", "model": "Qwen3.8-27B", "recipe": "SGLang NVFP4, MTP off, 128K", "prose_tps": 78.14, "code_tps": 77.82 },
+    { "class": "32gb", "machine": "2x RTX 5060 Ti", "model": "Qwen3.8-27B", "recipe": "llama.cpp UD-Q4_K_XL tensor split, MTP 3, 64K", "prose_tps": 65.84, "code_tps": 86.52 },
+    { "class": "128gb", "machine": "1x DGX Spark", "model": "Qwen3.8-Flash-Next", "recipe": "vLLM NVFP4, MTP 3, 262K (Mia kit)", "prose_tps": 45.87, "code_tps": 63.31 },
+    { "class": "128gb", "machine": "1x DGX Spark", "model": "Qwen3.8-Flash-Next", "recipe": "vLLM NVFP4, MTP 6, BF16 KV, FP8 draft head", "prose_tps": 54.5, "code_tps": 83.7 },
+    { "class": "256gb", "machine": "2x DGX Spark", "model": "GLM-5.3-Flash", "recipe": "EXL3 4 bpw, TP 2 (Mia kit)", "prose_tps": 20.45, "code_tps": 43.99 }
+  ]
+}

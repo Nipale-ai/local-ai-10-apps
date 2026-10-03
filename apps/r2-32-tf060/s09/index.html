@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Studio — print-ready A4 invoices</title>
+  <script>
+  // Bootstrap test hook: available immediately, before the bundle loads.
+  // The main bundle replaces window.APP with the full implementation (same API).
+  (function () {
+    'use strict';
+    var S = { items: [], discount_pct: 0 };
+    function totals() {
+      var d10 = BigInt(Math.round((Number(S.discount_pct) || 0) * 10));
+      var by = new Map();
+      for (var i = 0; i < S.items.length; i++) {
+        var it = S.items[i];
+        var x = BigInt(Math.round((Number(it.qty) || 0) * 100)) * BigInt(Math.round((Number(it.price) || 0) * 100)) * (1000n - d10);
+        var k = String(Number(it.vat) || 0);
+        by.set(k, (by.get(k) || 0n) + x);
+      }
+      var vat_by_rate = {}, netC = 0n, vatC = 0n;
+      by.forEach(function (sum, k) {
+        var n = (sum + 50000n) / 100000n;
+        var v = (n * BigInt(k) + 50n) / 100n;
+        vat_by_rate[k] = Number(v) / 100;
+        netC += n;
+        vatC += v;
+      });
+      return { net: Number(netC) / 100, vat: Number(vatC) / 100, gross: Number(netC + vatC) / 100, vat_by_rate: vat_by_rate };
+    }
+    window.APP = {
+      _state: S,
+      setInvoice: function (o) {
+        if (!o) return;
+        S.items = (o.items || []).map(function (i) { return { desc: i.desc, qty: i.qty, price: i.price, vat: i.vat }; });
+        S.discount_pct = o.discount_pct || 0;
+        if (typeof window.APP._after === 'function') window.APP._after();
+      },
+      totals: totals
+    };
+  })();
+  </script>
+  <script type="module" crossorigin src="./assets/index-uQ7c6w90.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Dh8tPsdA.css">
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>

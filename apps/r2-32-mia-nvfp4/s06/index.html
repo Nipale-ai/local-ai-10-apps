@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Local AI Benchmarks · decode speed</title>
+  <meta name="description" content="Analytics dashboard for local AI model decode speeds on home hardware."/>
+  <meta name="theme-color" content="#f4f6f8" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect x='1' y='1' width='32' height='32' rx='9' fill='%232563eb'/%3E%3Cpath d='M8 19h4.2l2.6-7 3.4 11.5 2.8-5.5H26' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+  <script type="module" crossorigin src="./assets/index-D_ZBye1x.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BUjiRLh5.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <rect x="1" y="1" width="32" height="32" rx="9" fill="var(--accent)"/>
+        <path d="M8 19 h4.2 l2.6-7 3.4 11.5 2.8-5.5 H26" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <h1>Local AI Benchmarks</h1>
+        <p class="sub">Median decode speed on home hardware · tokens per second</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="seg" role="group" aria-label="Filter by memory class">
+        <button data-f="all" class="on" aria-pressed="true">All</button>
+        <button data-f="16gb" aria-pressed="false">16 GB</button>
+        <button data-f="32gb" aria-pressed="false">32 GB</button>
+        <button data-f="128gb" aria-pressed="false">128 GB</button>
+        <button data-f="256gb" aria-pressed="false">256 GB</button>
+      </div>
+      <button id="theme" class="theme" aria-label="Toggle dark mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.4"/>
+          <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/>
+        </svg>
+        <span id="theme-label">Dark</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="kpis" aria-label="Key numbers">
+    <div class="kpi">
+      <div class="kpi-label">Runs</div>
+      <div class="kpi-value" id="k-runs">–</div>
+      <div class="kpi-sub">benchmark measurements</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Models</div>
+      <div class="kpi-value" id="k-models">–</div>
+      <div class="kpi-sub">distinct model names</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Best prose</div>
+      <div class="kpi-value" id="k-prose">–<small> tok/s</small></div>
+      <div class="kpi-sub" id="k-prose-sub">fastest prose run</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Best code</div>
+      <div class="kpi-value" id="k-code">–<small> tok/s</small></div>
+      <div class="kpi-sub" id="k-code-sub">fastest code run</div>
+    </div>
+  </section>
+
+  <section class="insight" id="insight" aria-live="polite"></section>
+
+  <section class="panel hero" data-test="chart">
+    <h2>Throughput per run <span class="hint" id="hero-hint">prose tok/s, fastest first · hover a bar for details</span></h2>
+    <div id="c1" class="chart chart-hero"></div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" data-test="chart">
+      <h2>Prose vs code <span class="hint">one row per run · blue = prose, teal = code · hover for details</span></h2>
+      <div id="c2" class="chart"></div>
+    </section>
+    <section class="panel" data-test="chart">
+      <h2>By memory class <span class="hint">best prose and code per class</span></h2>
+      <div id="c3" class="chart"></div>
+    </section>
+    <section class="panel" data-test="chart">
+      <h2>By inference engine <span class="hint">best prose tok/s per engine</span></h2>
+      <div id="c4" class="chart"></div>
+    </section>
+    <section class="panel about">
+      <h2>About this data</h2>
+      <ul>
+        <li><b>What is measured:</b> median decode speed in tokens per second (tok/s) for prose and code prompts.</li>
+        <li><b>Hardware:</b> consumer and prosumer GPUs, from 16 GB to 256 GB of memory.</li>
+        <li><b>Recipe:</b> quantization, inference engine and context length used for each run.</li>
+        <li><b>Source:</b> <span id="src"></span></li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="panel table-panel">
+    <h2>All runs <span class="hint" id="tbl-hint"></span></h2>
+    <div class="table-wrap">
+      <table id="tbl">
+        <caption class="sr-only">All benchmark runs with machine, model, recipe, memory class and decode speed in tokens per second</caption>
+        <thead>
+          <tr>
+            <th data-k="machine">Machine</th>
+            <th data-k="model">Model</th>
+            <th data-k="recipe">Recipe</th>
+            <th data-k="class">Class</th>
+            <th data-k="prose_tps" class="num">Prose tok/s</th>
+            <th data-k="code_tps" class="num">Code tok/s</th>
+            <th data-k="diff" class="num">Δ code−prose</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>Data: <span id="foot-src"></span> · all numbers are median decode tokens per second</footer>
+</main>
+
+<div id="tip" class="tooltip" role="tooltip" aria-hidden="true"></div>
+<noscript><p style="max-width:700px;margin:40px auto;padding:0 20px">This dashboard needs JavaScript to render the charts.</p></noscript>
+</body>
+</html>

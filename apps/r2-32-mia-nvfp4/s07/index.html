@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How a language model writes, one word at a time</title>
+  <meta name="description" content="Step through how an AI language model picks each next word: candidate probabilities, a temperature slider, and plain-language explanations.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0e1a'/%3E%3Crect x='6' y='18' width='5' height='8' rx='2' fill='%236d5cff'/%3E%3Crect x='13' y='12' width='5' height='14' rx='2' fill='%238b7cff'/%3E%3Crect x='20' y='6' width='5' height='20' rx='2' fill='%2343d9ff'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-DjbbFo77.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-tr50Pqmd.css">
+</head>
+<body>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+  <main class="wrap">
+    <header>
+      <div class="badge">Interactive explainer</div>
+      <h1>How a language model writes,<br><span class="grad">one word at a time</span></h1>
+      <p class="lede">A language model reads the text so far, gives every possible next word a probability, picks one — and repeats. Step through a real example below.</p>
+      <button id="expertBtn" class="chip" aria-expanded="false" aria-controls="expertPanel">For experts</button>
+    </header>
+
+    <div class="layout">
+    <section class="card sent-card">
+      <div class="card-head">
+        <span class="card-label">The sentence, so far</span>
+        <span id="doneBadge" class="done-badge" hidden>complete</span>
+      </div>
+      <div id="sentence" class="sentence" aria-live="polite"></div>
+    </section>
+
+    <section class="card cap-card">
+      <div id="caption" class="caption" aria-live="polite"></div>
+    </section>
+
+    <section class="card bars-card">
+      <div class="card-head">
+        <span class="card-label">What comes next?</span>
+        <span id="stepInfo" class="step-info">Step 0 of 10</span>
+      </div>
+      <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
+      <div id="bars"></div>
+    </section>
+
+    <section class="card ctrl-card">
+      <div class="temp-row">
+        <label class="temp-label" for="temp">Temperature</label>
+        <input type="range" id="temp" min="0.2" max="2" step="0.05" value="1" aria-label="Temperature">
+        <span id="tempVal" class="temp-val">1.0</span>
+      </div>
+      <div id="tempDesc" class="temp-desc">balanced — the model's natural confidence</div>
+      <div class="btn-row">
+        <button id="backBtn" class="btn" aria-label="Previous step">◀ Back</button>
+        <button id="nextBtn" class="btn primary" aria-label="Next step">Next word</button>
+        <button id="playBtn" class="btn" aria-label="Autoplay">▶ Autoplay</button>
+      </div>
+    </section>
+    </div>
+
+    <section id="expertPanel" class="card expert" hidden>
+      <div class="card-label">Under the hood</div>
+      <p>The model outputs raw numbers called <b>logits</b> — the "score" column above. <b>Softmax</b> turns them into probabilities that add up to one:</p>
+      <div class="formula">p(word) = e<sup>score ÷ T</sup> ÷ Σ e<sup>score′ ÷ T</sup></div>
+      <ul>
+        <li><b>Low temperature</b> divides the scores by a small number, so the biggest score wins even more → focused, predictable text.</li>
+        <li><b>High temperature</b> flattens the scores → weaker candidates get a real chance → creative, sometimes odd text.</li>
+        <li>Real systems often use <b>top-k sampling</b>: keep only the k best candidates before softmax, so the unlikely tail can never win.</li>
+      </ul>
+    </section>
+
+    <footer class="foot">No real model runs in this page — the scores are hand-made for clarity.</footer>
+  </main>
+</body>
+</html>

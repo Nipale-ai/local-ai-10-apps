@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flock of birds at dusk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 18 Q10 10 16 16 Q22 10 28 18 Q22 15 16 20 Q10 15 4 18 Z' fill='%23f2a65e'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-Dhb1_Ywo.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DCBvpyU9.css">
+</head>
+<body>
+  <canvas id="sky"></canvas>
+  <canvas id="birds"></canvas>
+
+  <div id="panel">
+    <div class="p-head">
+      <div>
+        <h1>Murmuration</h1>
+        <p class="sub">A flock of birds at dusk</p>
+      </div>
+      <button id="hideBtn" title="Hide the control panel">Hide panel</button>
+    </div>
+
+    <div class="ctl">
+      <div class="lbl"><label for="cohesion">Cohesion</label><span id="cohesionVal">0.55</span></div>
+      <input type="range" id="cohesion" min="0" max="1" step="0.01" value="0.55">
+    </div>
+    <div class="ctl">
+      <div class="lbl"><label for="separation">Separation</label><span id="separationVal">0.50</span></div>
+      <input type="range" id="separation" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div class="ctl">
+      <div class="lbl"><label for="speed">Speed</label><span id="speedVal">0.55</span></div>
+      <input type="range" id="speed" min="0" max="1" step="0.01" value="0.55">
+    </div>
+
+    <div class="presets">
+      <button data-preset="murmur" class="on">Murmuration</button>
+      <button data-preset="ball">Tight ball</button>
+      <button data-preset="scatter">Scattered</button>
+      <button data-preset="fast">Fast</button>
+    </div>
+
+    <div class="row">
+      <button id="pauseBtn">Pause</button>
+      <button id="restartBtn">Restart</button>
+    </div>
+    <p class="hint">Move the mouse — it is a hawk the birds flee from.</p>
+  </div>
+
+  <button id="showBtn" hidden>Controls</button>
+
+</body>
+</html>

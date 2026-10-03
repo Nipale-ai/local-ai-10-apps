@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hearth — the quiet AI box for your home</title>
+  <meta name="description" content="Hearth runs large AI models on your own hardware. Private, fast and whisper-quiet — nothing ever leaves the house.">
+  <meta name="theme-color" content="#f6f4f0">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('hearth-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { document.documentElement.dataset.theme = 'light'; }
+    })();
+  </script>
+  <script type="module" crossorigin src="./assets/index-BUPfESxq.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DrJ2DpUW.css">
+</head>
+<body>
+  <header class="nav" role="navigation" aria-label="Main">
+    <div class="nav-inner">
+      <a class="brand" href="#hero">
+        <svg class="brand-mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M12 2c1.2 2.6-.4 4.2-1.6 5.6C8.9 9.4 8 11 8 13a4 4 0 0 0 8 0c0-1.1-.4-2.2-1-3.2-.9 1-1.7 1.4-2.5 1.5.8-2.3.4-5.2-.5-7.3-.3.9-.9 1.7-1.6 2.3C10.5 5.2 11.2 3.6 12 2Z" fill="currentColor"/>
+          <path d="M12 21a6.5 6.5 0 0 1-6.5-6.5c0-2.6 1.5-4.6 2.9-6.1.6 1.1 1.5 1.9 2.6 2.3-.9 1.6-1.5 3-1.5 3.8a2.5 2.5 0 0 0 5 0c0-.8-.6-2.2-1.5-3.8 1.1-.4 2-1.2 2.6-2.3 1.4 1.5 2.9 3.5 2.9 6.1A6.5 6.5 0 0 1 12 21Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span>Hearth</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#specs">Specs</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+          <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6 8.6 8.6 0 1 0 20.4 14.2Z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Introducing Hearth</p>
+        <h1>Intelligence that<br>stays home.</h1>
+        <p class="lede">Hearth is a small, quiet box that runs large AI models on your own hardware. Ask questions, automate your home, search your files — and nothing ever leaves the house.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#pricing">Pre-order from $349</a>
+          <a class="btn btn-ghost" href="#specs">Read the specs</a>
+        </div>
+        <ul class="hero-points">
+          <li>100% on-device inference</li>
+          <li>Whisper-quiet at 19 dB</li>
+          <li>Wi-Fi 7 &amp; Thread built in</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg class="device" viewBox="0 0 640 520">
+          <defs>
+            <linearGradient id="d-body" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#332e28"/>
+              <stop offset="0.5" stop-color="#262119"/>
+              <stop offset="1" stop-color="#181410"/>
+            </linearGradient>
+            <linearGradient id="d-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4a4238"/>
+              <stop offset="1" stop-color="#2b2620"/>
+            </linearGradient>
+            <radialGradient id="d-halo" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#f59e0b" stop-opacity="0.5"/>
+              <stop offset="0.55" stop-color="#f59e0b" stop-opacity="0.14"/>
+              <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="d-core" cx="0.5" cy="0.42" r="0.62">
+              <stop offset="0" stop-color="#fde68a"/>
+              <stop offset="0.55" stop-color="#f59e0b"/>
+              <stop offset="1" stop-color="#b45309"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="320" cy="452" rx="215" ry="30" fill="#000" opacity="0.16"/>
+          <g class="halo"><ellipse cx="320" cy="212" rx="250" ry="150" fill="url(#d-halo)"/></g>
+          <rect x="150" y="196" width="340" height="238" rx="58" fill="url(#d-body)"/>
+          <rect x="150" y="196" width="340" height="238" rx="58" fill="none" stroke="#57503f" stroke-opacity="0.5" stroke-width="1.5"/>
+          <ellipse cx="320" cy="200" rx="170" ry="46" fill="url(#d-top)"/>
+          <ellipse cx="320" cy="200" rx="170" ry="46" fill="none" stroke="#6b6250" stroke-opacity="0.55" stroke-width="1.5"/>
+          <g class="ring" transform="translate(320 200) scale(1 0.27)">
+            <circle r="128" fill="none" stroke="#f59e0b" stroke-opacity="0.3" stroke-width="3"/>
+            <circle r="92" fill="none" stroke="#fbbf24" stroke-opacity="0.5" stroke-width="3"/>
+            <circle r="56" fill="none" stroke="#fcd34d" stroke-opacity="0.75" stroke-width="4"/>
+            <circle r="20" fill="url(#d-core)"/>
+          </g>
+          <g class="vents">
+            <rect x="238" y="300" width="164" height="7" rx="3.5" fill="#0e0c0a" opacity="0.85"/>
+            <rect x="238" y="320" width="164" height="7" rx="3.5" fill="#0e0c0a" opacity="0.85"/>
+            <rect x="238" y="340" width="164" height="7" rx="3.5" fill="#0e0c0a" opacity="0.85"/>
+            <rect x="238" y="360" width="164" height="7" rx="3.5" fill="#0e0c0a" opacity="0.85"/>
+            <rect x="238" y="380" width="164" height="7" rx="3.5" fill="#0e0c0a" opacity="0.85"/>
+          </g>
+          <circle cx="320" cy="412" r="4" fill="#fbbf24"/>
+        </svg>
+        <div class="float-badge fb-1">45 TOPS</div>
+        <div class="float-badge fb-2">19 dB</div>
+        <div class="float-badge fb-3">128K context</div>
+      </div>
+      <div class="press" aria-label="As seen in">
+        <span class="press-label">As seen in</span>
+        <span class="press-name">The Localist</span>
+        <span class="press-name">Home Signal</span>
+        <span class="press-name">Quiet Tech</span>
+        <span class="press-name">The Domestic Review</span>
+        <span class="press-name">North of Home</span>
+      </div>
+    </section>
+    <section id="features" class="section section-alt">
+      <header class="section-head reveal">
+        <p class="eyebrow">Why Hearth</p>
+        <h2>Everything local. Nothing watched.</h2>
+        <p class="section-sub">Your conversations, files and habits are the most personal data you own. Hearth keeps all of it where it belongs — in your home.</p>
+      </header>
+      <div class="feature-grid">
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3 4.5 6v5c0 4.6 3.2 8.4 7.5 10 4.3-1.6 7.5-5.4 7.5-10V6L12 3Z"/>
+            <path d="m9 12 2.2 2.2L15.5 9.7"/>
+          </svg>
+          <h3>Private by design</h3>
+          <p>Models, prompts and answers never touch a server. There is no account, no telemetry and no way to look in — because there is nothing to look at.</p>
+        </article>
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M13 2 4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2Z"/>
+          </svg>
+          <h3>Fast where it matters</h3>
+          <p>The Ember H1 chip sustains 45 TOPS, so a 27-billion-parameter model answers in well under a second — no spinner, no queue, no cloud round-trip.</p>
+        </article>
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20v-8m0 0 4.5-4.5M12 12 7.5 7.5"/>
+            <circle cx="12" cy="20" r="1.6"/>
+            <path d="M4.5 9.5a10.5 10.5 0 0 1 15 0M6.8 12.2a7 7 0 0 1 10.4 0"/>
+          </svg>
+          <h3>Whole-home reach</h3>
+          <p>Wi-Fi 7, Thread and Matter built in. Talk to it from the kitchen, the office or the garden — it bridges to the devices you already own.</p>
+        </article>
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v3m0 12v3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M3 12h3m12 0h3M5.6 18.4l2.1-2.1m8.6-8.6 2.1-2.1"/>
+            <circle cx="12" cy="12" r="3.4"/>
+          </svg>
+          <h3>Works offline</h3>
+          <p>Internet goes, Hearth doesn't. Every model runs on the box itself, so the assistant, the summaries and the automations keep working through any outage.</p>
+        </article>
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 10v4m4-7v10m4-13v16m4-12v8m4-5v2"/>
+          </svg>
+          <h3>Whisper-quiet</h3>
+          <p>A passive-friendly thermal design idles at 19 decibels — quieter than a library. You will notice it only when you want to.</p>
+        </article>
+        <article class="card feature reveal">
+          <svg class="f-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/>
+          </svg>
+          <h3>Updates that respect you</h3>
+          <p>Model updates download and verify on the box. Your data is never used for training, and you can pin any model version you like.</p>
+        </article>
+      </div>
+      <div class="compare reveal" role="table" aria-label="Hearth compared with cloud assistants">
+        <div class="compare-row compare-head" role="row">
+          <span role="columnheader"></span>
+          <span role="columnheader">Hearth</span>
+          <span role="columnheader">Cloud assistants</span>
+        </div>
+        <div class="compare-row" role="row">
+          <span role="cell">Your conversations</span>
+          <span role="cell" class="ok"><span class="mark" aria-hidden="true">✓</span>Stay on the box</span>
+          <span role="cell" class="no"><span class="mark" aria-hidden="true">✕</span>Stored by the provider</span>
+        </div>
+        <div class="compare-row" role="row">
+          <span role="cell">When the internet drops</span>
+          <span role="cell" class="ok"><span class="mark" aria-hidden="true">✓</span>Keeps working</span>
+          <span role="cell" class="no"><span class="mark" aria-hidden="true">✕</span>Goes silent</span>
+        </div>
+        <div class="compare-row" role="row">
+          <span role="cell">Voice response</span>
+          <span role="cell" class="ok"><span class="mark" aria-hidden="true">✓</span>Under 300 ms</span>
+          <span role="cell" class="no"><span class="mark" aria-hidden="true">✕</span>600 ms to 2 s</span>
+        </div>
+        <div class="compare-row" role="row">
+          <span role="cell">Monthly cost</span>
+          <span role="cell" class="ok"><span class="mark" aria-hidden="true">✓</span>$0, after purchase</span>
+          <span role="cell" class="no"><span class="mark" aria-hidden="true">✕</span>$8–20 per month</span>
+        </div>
+        <div class="compare-row" role="row">
+          <span role="cell">Who can look in</span>
+          <span role="cell" class="ok"><span class="mark" aria-hidden="true">✓</span>You</span>
+          <span role="cell" class="no"><span class="mark" aria-hidden="true">✕</span>The provider</span>
+        </div>
+      </div>
+    </section>
+    <section id="how" class="section">
+      <header class="section-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2>From box to home in ten minutes.</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num">01</span>
+          <h3>Plug it in</h3>
+          <p>Power, Wi-Fi, done. The Hearth app finds the box and walks you through setup — no account required.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">02</span>
+          <h3>Pair your home</h3>
+          <p>Lamps, locks, speakers and sensors join over Thread and Matter. They stay on your network, controlled locally.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">03</span>
+          <h3>Talk to it</h3>
+          <p>Ask questions, run routines, search your own files. Every word is processed on the box and then forgotten.</p>
+        </li>
+      </ol>
+    </section>
+    <section id="specs" class="section section-alt">
+      <header class="section-head reveal">
+        <p class="eyebrow">Under the hood</p>
+        <h2>Boring hardware, remarkable results.</h2>
+        <p class="section-sub">No fans screaming, no blinking light show. Just a dense little computer that does one job exceptionally well.</p>
+      </header>
+      <dl class="specs-grid reveal">
+        <div class="spec"><dt>Chip</dt><dd>Ember H1 — 45 TOPS NPU, 8-core CPU</dd></div>
+        <div class="spec"><dt>Memory</dt><dd>32 GB unified LPDDR5x</dd></div>
+        <div class="spec"><dt>Models</dt><dd>7B to 27B parameters, 128K context</dd></div>
+        <div class="spec"><dt>Audio</dt><dd>4-mic far-field array, dual 40 mm drivers</dd></div>
+        <div class="spec"><dt>Connectivity</dt><dd>Wi-Fi 7, Thread, 2 × USB-C, 2.5 GbE</dd></div>
+        <div class="spec"><dt>Power</dt><dd>45 W adapter, 11 W at idle</dd></div>
+        <div class="spec"><dt>Footprint</dt><dd>120 × 120 × 38 mm, 640 g</dd></div>
+        <div class="spec"><dt>Noise</dt><dd>19 dB(A) idle, 24 dB(A) sustained load</dd></div>
+      </dl>
+    </section>
+    <section id="pricing" class="section">
+      <header class="section-head reveal">
+        <p class="eyebrow">Pricing</p>
+        <h2>One box. Three sizes.</h2>
+        <p class="section-sub">Every Hearth includes the assistant, the app and lifetime model updates. No subscription, ever.</p>
+      </header>
+      <div class="price-grid">
+        <article class="card plan reveal">
+          <h3>Hearth Mini</h3>
+          <p class="plan-for">For a desk, a bedroom, a first try</p>
+          <p class="price"><span class="amount">$349</span><span class="per">one-time</span></p>
+          <ul class="plan-list">
+            <li>7B and 13B models</li>
+            <li>16 GB unified memory</li>
+            <li>Assistant + file search</li>
+            <li>Wi-Fi 7 &amp; Thread</li>
+          </ul>
+          <a class="btn btn-ghost plan-cta" href="#faq">Choose Mini</a>
+        </article>
+        <article class="card plan plan-popular reveal">
+          <p class="plan-badge">Most popular</p>
+          <h3>Hearth</h3>
+          <p class="plan-for">For the whole home</p>
+          <p class="price"><span class="amount">$649</span><span class="per">one-time</span></p>
+          <ul class="plan-list">
+            <li>7B to 27B models</li>
+            <li>32 GB unified memory</li>
+            <li>Assistant, search &amp; automations</li>
+            <li>Matter &amp; home control</li>
+            <li>Dual speakers, 19 dB idle</li>
+          </ul>
+          <a class="btn btn-primary plan-cta" href="#faq">Pre-order Hearth</a>
+        </article>
+        <article class="card plan reveal">
+          <h3>Hearth Pro</h3>
+          <p class="plan-for">For heavy users and small studios</p>
+          <p class="price"><span class="amount">$1,199</span><span class="per">one-time</span></p>
+          <ul class="plan-list">
+            <li>27B models at full precision</li>
+            <li>64 GB unified memory</li>
+            <li>256K context window</li>
+            <li>Second unit for mesh audio</li>
+            <li>2.5 GbE + 4 × USB-C</li>
+          </ul>
+          <a class="btn btn-ghost plan-cta" href="#faq">Choose Pro</a>
+        </article>
+      </div>
+    </section>
+    <section id="quotes" class="section section-alt">
+      <header class="section-head reveal">
+        <p class="eyebrow">Early testers</p>
+        <h2>Quiet. Fast. Worth it.</h2>
+      </header>
+      <div class="quote-grid">
+        <figure class="card quote reveal">
+          <blockquote>The internet went down for six hours last week. Hearth didn't notice. Neither did my family.</blockquote>
+          <figcaption>— M. Okafor, beta tester · Lisbon</figcaption>
+        </figure>
+        <figure class="card quote reveal">
+          <blockquote>It summarized a month of meeting notes in ninety seconds, on my own network. I stopped being afraid of my smart home.</blockquote>
+          <figcaption>— J. Lindqvist, beta tester · Malmö</figcaption>
+        </figure>
+        <figure class="card quote reveal">
+          <blockquote>Six months in, the only thing I notice is the silence. It is the first gadget I forget is there.</blockquote>
+          <figcaption>— A. Tanaka, beta tester · Osaka</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section id="faq" class="section">
+      <header class="section-head reveal">
+        <p class="eyebrow">Questions</p>
+        <h2>Asked, honestly answered.</h2>
+      </header>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>Does any of my data leave the house?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>No. Inference, memory and storage all live on the box. The only network traffic Hearth ever makes is for model updates, and those are signed, verified and optional — you can set the box to fully offline and everything keeps working.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>Which models can I run on it?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>Out of the box, Hearth ships with a tuned 27B model for conversation, a 7B model for fast tasks, and a vision model for photos. Any open model that fits in memory can be added from the app — the box handles quantization automatically.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>What happens when the internet goes down?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>Nothing, as far as you can tell. The assistant, file search, summaries and home automations all run locally. Cloud-only conveniences like web search pause until you reconnect — the box tells you plainly when that happens.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>Is it loud? Will it heat up my room?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>Hearth idles at 19 decibels, which is below the noise floor of most rooms, and draws 11 W at rest. Under sustained heavy load it rises to 24 dB and 45 W — you will feel a gentle warmth on the top, never a fan.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>How does it connect to my home devices?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>Through Matter and Thread, both built in. Lamps, thermostats, locks and sensors pair from the app and are controlled locally — so "lights off" still works at 2 a.m. with no cloud in the loop. Plain Wi-Fi devices work too.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" data-test="faq-q" type="button" aria-expanded="false">
+            <span>What does the price include? Any subscription?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a" data-test="faq-a"><div class="faq-a-inner"><p>The full price is the box. The companion app, the assistant, model updates and a two-year hardware warranty are all included, with no monthly fee. When a better model comes out, you download it — that is the whole business model.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="cta-band" aria-labelledby="cta-title">
+      <div class="cta-inner reveal">
+        <p class="eyebrow">Pre-orders open</p>
+        <h2 id="cta-title">Ready to bring intelligence home?</h2>
+        <p class="cta-sub">The first 1,000 boxes ship in December, with a 60-day no-questions refund window. If Hearth is not quieter and faster than your cloud assistant, send it back.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="#pricing">Pre-order from $349</a>
+          <a class="btn btn-ghost" href="#faq">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a class="brand" href="#hero">
+        <svg class="brand-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M12 2c1.2 2.6-.4 4.2-1.6 5.6C8.9 9.4 8 11 8 13a4 4 0 0 0 8 0c0-1.1-.4-2.2-1-3.2-.9 1-1.7 1.4-2.5 1.5.8-2.3.4-5.2-.5-7.3-.3.9-.9 1.7-1.6 2.3C10.5 5.2 11.2 3.6 12 2Z" fill="currentColor"/>
+        </svg>
+        <span>Hearth</span>
+      </a>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#features">Features</a>
+        <a href="#specs">Specs</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <p class="footer-note">Hearth is a fictional product, made for demonstration. © 2026 Hearth Labs</p>
+    </div>
+  </footer>
+
+</body>
+</html>

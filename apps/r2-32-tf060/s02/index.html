@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Home AI Lab</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}html,body{background:#05070c;width:100%;height:100%;overflow:hidden}body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}canvas{display:block;position:fixed;inset:0}#ui{pointer-events:none;z-index:10;color:#e8ecf4;position:fixed;inset:0}.panel{pointer-events:none;-webkit-backdrop-filter:blur(10px);background:#080b1285;border:1px solid #ffffff1f;border-radius:14px;position:absolute}#title{padding:12px 18px 13px;top:18px;left:18px}#title h1{letter-spacing:.14em;text-transform:uppercase;font-size:15px;font-weight:700}#title p{color:#e8ecf49e;letter-spacing:.02em;margin-top:3px;font-size:11.5px}#hint{color:#e8ecf4a8;letter-spacing:.05em;padding:8px 16px;font-size:11.5px;bottom:18px;left:50%;transform:translate(-50%)}#hint b{color:#e8ecf4f2;font-weight:600}#toggleWrap{pointer-events:auto;padding:0;top:18px;right:18px}#toggle{pointer-events:auto;cursor:pointer;color:#e8ecf4;font:inherit;letter-spacing:.08em;background:0 0;border:0;align-items:center;gap:10px;padding:11px 16px;font-size:12.5px;font-weight:600;display:flex}#toggle .track{background:#ffffff24;border-radius:12px;align-items:center;width:46px;height:24px;transition:background .4s;display:flex;position:relative}#toggle .knob{background:#ffd76a;border-radius:50%;width:18px;height:18px;transition:transform .4s cubic-bezier(.6,-.2,.3,1.4),background .4s;position:absolute;left:3px;box-shadow:0 0 10px #ffd76acc}#toggle.night .track{background:#5a82ff40}#toggle.night .knob{background:#cfe0ff;transform:translate(22px);box-shadow:0 0 10px #a0beffe6}#toggle .icon{width:16px;height:16px}#vignette{pointer-events:none;z-index:5;background:radial-gradient(72% 62% at 50% 46%,#0000 58%,#0204086b 100%);position:fixed;inset:0}</style>
+  <script type="module" crossorigin src="./assets/index-BujEQiyq.js"></script>
+</head>
+<body>
+  <div id="vignette"></div>
+  <div id="ui">
+    <div class="panel" id="title">
+      <h1>The Home AI Lab</h1>
+      <p>a small room, glowing at night</p>
+    </div>
+    <div class="panel" id="toggleWrap">
+      <button id="toggle" aria-label="Toggle day and night">
+        <span class="track"><span class="knob"></span></span>
+        <span id="toggleLabel">Night</span>
+      </button>
+    </div>
+    <div class="panel" id="hint"><b>drag</b> to orbit &nbsp;·&nbsp; <b>scroll</b> to zoom</div>
+  </div>
+</body>
+</html>

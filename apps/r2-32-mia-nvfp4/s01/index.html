@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will this AI model fit on your GPU?</title>
+  <meta name="description" content="Check how much memory an AI model needs and whether it fits on a 16, 32 or 128 GB graphics card.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f46e5'/%3E%3Crect x='26' y='26' width='48' height='48' rx='10' fill='white'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-C0HOJ3So.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-8a2ml7G1.css">
+</head>
+<body>
+<header class="top">
+  <svg class="chip" viewBox="0 0 48 48" aria-hidden="true">
+    <rect x="4" y="4" width="40" height="40" rx="9" fill="#4f46e5"/>
+    <rect x="14" y="14" width="20" height="20" rx="4" fill="#fff"/>
+    <rect x="19" y="19" width="10" height="10" rx="2" fill="#4f46e5"/>
+    <path d="M18 4v6M24 4v6M30 4v6M18 38v6M24 38v6M30 38v6M4 18h6M4 24h6M4 30h6M38 18h6M38 24h6M38 30h6" stroke="#4f46e5" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <h1>Will this AI model fit on your graphics card?</h1>
+    <p class="sub">Enter the model, the quantization and the context length — see the memory it needs and which card it runs on.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="inputs-h">
+    <h2 id="inputs-h">Your model</h2>
+    <div class="presets" role="group" aria-label="Model presets">
+      <button type="button" class="chip-btn" data-preset='{"params_b":8,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.131}'>Llama 3.1 8B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":70,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.328}'>Llama 3.1 70B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":32,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.262}'>Qwen 2.5 32B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":7.3,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.131}'>Mistral 7B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":27,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.188}'>Gemma 3 27B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":3.8,"quant":"Q4_K_M","context":8192,"kv_gb_per_1k":0.131}'>Phi-3 3.8B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":21,"quant":"NVFP4","context":16384,"kv_gb_per_1k":0.025}'>GPT-OSS 20B</button>
+      <button type="button" class="chip-btn" data-preset='{"params_b":671,"quant":"Q4_K_M","context":32768,"kv_gb_per_1k":0.32}'>DeepSeek V3 671B</button>
+    </div>
+
+    <div class="fields">
+      <label class="field">
+        <span class="lbl">Model size <small>billions of parameters</small></span>
+        <input id="in-params" type="number" inputmode="decimal" min="0" step="0.1" value="8">
+      </label>
+      <label class="field">
+        <span class="lbl">Quantization</span>
+        <select id="in-quant">
+          <option value="Q3_K_M">Q3_K_M — 3.91 bits per weight</option>
+          <option value="Q4_K_M" selected>Q4_K_M — 4.85 bits per weight</option>
+          <option value="Q5_K_M">Q5_K_M — 5.69 bits per weight</option>
+          <option value="Q6_K">Q6_K — 6.56 bits per weight</option>
+          <option value="Q8_0">Q8_0 — 8.50 bits per weight</option>
+          <option value="FP16">FP16 — 16.00 bits per weight</option>
+          <option value="NVFP4">NVFP4 — 4.50 bits per weight</option>
+        </select>
+      </label>
+      <label class="field">
+        <span class="lbl">Context length <small>tokens</small></span>
+        <input id="in-context" type="number" inputmode="numeric" min="0" step="1024" value="8192">
+      </label>
+      <label class="field">
+        <span class="lbl">Context memory per 1,000 tokens <small>GB</small></span>
+        <input id="in-kv" type="number" inputmode="decimal" min="0" step="0.001" value="0.131">
+      </label>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="result-h">
+    <h2 id="result-h">Result</h2>
+    <div class="verdict" id="verdict" aria-live="polite">
+      <span class="v-ico" id="v-ico" aria-hidden="true"></span>
+      <span id="verdict-text"></span>
+    </div>
+    <p class="fitline" id="fitline"></p>
+    <div class="total-row">
+      <div class="total"><span id="total">–</span><span class="unit">GB total</span></div>
+      <div class="share">
+        <label class="share-lbl" for="share-url">Share link</label>
+        <div class="share-row">
+          <input id="share-url" type="text" readonly aria-label="Share link">
+          <button id="copy-btn" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="devices">
+      <article class="device" id="dev-16">
+        <div class="dev-head"><span class="dev-name">16 GB card</span><span class="dev-status" id="st-16">–</span></div>
+        <div class="bar"><div class="bar-fill" id="bar-16"></div><i class="mark" aria-hidden="true"></i></div>
+        <p class="dev-note" id="note-16">–</p>
+      </article>
+      <article class="device" id="dev-32">
+        <div class="dev-head"><span class="dev-name">32 GB card</span><span class="dev-status" id="st-32">–</span></div>
+        <div class="bar"><div class="bar-fill" id="bar-32"></div><i class="mark" aria-hidden="true"></i></div>
+        <p class="dev-note" id="note-32">–</p>
+      </article>
+      <article class="device" id="dev-128">
+        <div class="dev-head"><span class="dev-name">128 GB card</span><span class="dev-status" id="st-128">–</span></div>
+        <div class="bar"><div class="bar-fill" id="bar-128"></div><i class="mark" aria-hidden="true"></i></div>
+        <p class="dev-note" id="note-128">–</p>
+      </article>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span><i class="sw w"></i>Weights</span>
+      <span><i class="sw k"></i>Context (KV)</span>
+      <span><i class="sw o"></i>Overhead</span>
+      <span><i class="sw f"></i>Free</span>
+      <span><i class="sw x"></i>Does not fit</span>
+    </div>
+
+    <section class="expert" aria-label="Details">
+      <h3>Details</h3>
+      <table>
+        <tbody>
+          <tr><th scope="row">Weights</th><td id="d-weights">–</td><th scope="row">Bits per weight</th><td id="d-bpw">–</td></tr>
+          <tr><th scope="row">Context memory</th><td id="d-kv">–</td><th scope="row">Overhead</th><td>1.5 GB</td></tr>
+          <tr><th scope="row">Total</th><td id="d-total">–</td><th scope="row">Fits when total ≤</th><td>14.4 / 28.8 / 115.2 GB</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+</main>
+
+<footer class="foot">Formula: weights = params × bits-per-weight ÷ 8 · context = tokens ÷ 1000 × GB-per-1k · + 1.5 GB overhead · it fits when the total is at most 90&nbsp;% of the card's memory.</footer>
+</body>
+</html>

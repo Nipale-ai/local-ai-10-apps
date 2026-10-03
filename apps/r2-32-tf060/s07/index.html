@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive explainer: how a language model writes one word at a time, with probabilities and temperature.">
+  <title>One Word at a Time — how a language model writes</title>
+  <script type="module" crossorigin src="./assets/index-D44n2asm.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Dg1-cNGo.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="head">
+      <h1>How a language model writes,<br><em>one word at a time</em></h1>
+      <p class="sub">The model reads the sentence so far, gives every possible next word a probability, picks one, and repeats. Step through a real example — and drag the temperature to see how creative it gets.</p>
+    </header>
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    <section class="grid">
+      <div class="card sent-card">
+        <div class="card-label">The sentence</div>
+        <div class="sentence" id="sentence" aria-live="polite"></div>
+        <p class="caption" id="caption"></p>
+        <div class="loop" aria-hidden="true">
+          <span class="loop-step">read</span><span class="loop-arrow">→</span>
+          <span class="loop-step">score</span><span class="loop-arrow">→</span>
+          <span class="loop-step">pick</span><span class="loop-arrow">→</span>
+          <span class="loop-step">repeat</span>
+        </div>
+      </div>
+      <div class="card bars-card">
+        <div class="card-label">What comes next? <span class="step-count" id="stepCount"></span></div>
+        <div class="bars-legend" id="barsLegend" aria-hidden="true"><span class="legend-dot"></span>green = most likely</div>
+        <div class="bars" id="bars"></div>
+        <div class="temp">
+          <label class="temp-head" for="temp">
+            <span>Temperature</span>
+            <span class="temp-val" id="tempVal">1.0</span>
+          </label>
+          <input type="range" id="temp" min="0.1" max="2" step="0.05" value="1" aria-label="Temperature">
+          <div class="temp-desc" id="tempDesc"></div>
+        </div>
+        <div class="controls">
+          <button id="backBtn" type="button">← Back</button>
+          <button id="nextBtn" type="button">Next word →</button>
+          <button id="autoBtn" type="button" aria-label="Auto-play">▶ Auto-play</button>
+          <button id="resetBtn" type="button">Reset</button>
+        </div>
+      </div>
+    </section>
+    <div class="expert-row">
+      <button id="expertBtn" type="button" aria-expanded="false">Expert mode: the math behind the bars</button>
+    </div>
+    <section class="card expert" id="expertPanel" hidden>
+      <div class="expert-grid">
+        <div>
+          <h3>Logits</h3>
+          <p>For every word in its vocabulary the model outputs a raw number called a <strong>logit</strong> — a score, not a percentage. Here are the six highest for the current step.</p>
+        </div>
+        <div>
+          <h3>Softmax</h3>
+          <p>Softmax turns scores into probabilities: <code>p = e<sup>s/T</sup> ÷ Σ e<sup>s/T</sup></code>. The temperature T divides every score first. Small T sharpens the peak, large T flattens the bars.</p>
+        </div>
+        <div>
+          <h3>Top-k &amp; sampling</h3>
+          <p>In practice, models keep only the top k words, renormalize, and sample one from the distribution — that is the pick you see fly into the sentence.</p>
+        </div>
+      </div>
+      <div class="table-wrap"><table id="expertTable"></table></div>
+    </section>
+    <footer class="foot">Hand-made example data · no real model runs in this page</footer>
+  </main>
+</body>
+</html>
