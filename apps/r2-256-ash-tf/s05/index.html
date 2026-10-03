@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billable — Time Tracking &amp; Billing</title>
+    <link rel="icon" href="data:," />
+    <script type="module" crossorigin src="./assets/index-ISHgA0tS.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D0NrPdPR.css">
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand"><span class="logo">◆</span> Billable</div>
+        <div class="timerbar">
+          <label class="timer-label" for="timerProject">Timer</label>
+          <select id="timerProject" aria-label="Timer project"></select>
+          <span id="clock" class="clock">0:00:00</span>
+          <button id="timerBtn" type="button" aria-label="Start timer">Start</button>
+        </div>
+      </header>
+      <main class="grid">
+        <section class="card" id="quickCard">
+          <h2>Log time</h2>
+          <form id="quickForm">
+            <label class="field">Date
+              <input type="date" id="quickDate" aria-label="Entry date" required />
+            </label>
+            <label class="field">Project
+              <select id="quickProject" aria-label="Entry project"></select>
+            </label>
+            <label class="field">Duration
+              <input type="text" id="quickMinutes" inputmode="decimal" placeholder="e.g. 90 or 1:30" aria-label="Duration in minutes" required />
+            </label>
+            <button type="submit" id="quickSubmit" class="primary">Add entry</button>
+          </form>
+        </section>
+        <section class="card" id="projectsCard">
+          <h2>Projects</h2>
+          <ul id="projectList" class="project-list"></ul>
+          <form id="projectForm" class="row-form">
+            <label class="field grow">Name
+              <input type="text" id="projectName" aria-label="Project name" required />
+            </label>
+            <label class="field">Rate
+              <input type="number" id="projectRate" min="0" step="0.01" aria-label="Hourly rate" required />
+            </label>
+            <button type="submit" class="primary">Add project</button>
+          </form>
+        </section>
+        <section class="card" id="reportCard">
+          <h2>Report</h2>
+          <div class="report-controls">
+            <label class="field">From
+              <input type="date" id="reportFrom" aria-label="Report from date" />
+            </label>
+            <label class="field">To
+              <input type="date" id="reportTo" aria-label="Report to date" />
+            </label>
+            <button type="button" class="chip" data-preset="week">This week</button>
+            <button type="button" class="chip" data-preset="month">This month</button>
+            <button type="button" class="chip" data-preset="all">All time</button>
+          </div>
+          <table id="reportTable">
+            <thead>
+              <tr><th>Project</th><th>Time</th><th>Amount</th></tr>
+            </thead>
+            <tbody id="reportBody"></tbody>
+            <tfoot id="reportFoot"></tfoot>
+          </table>
+          <div class="charts">
+            <svg id="chartProjects" class="chart" role="img" aria-label="Hours by project" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid meet"></svg>
+            <svg id="chartDays" class="chart" role="img" aria-label="Hours by day" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <button type="button" id="exportBtn" class="primary">Export CSV</button>
+        </section>
+        <section class="card" id="logCard">
+          <h2>Time log</h2>
+          <ul id="logList" class="log-list"></ul>
+        </section>
+      </main>
+      <div id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </body>
+</html>

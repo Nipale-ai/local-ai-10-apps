@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05070d">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%237ee2a8' d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E">
+  <title>Home Lab — Night Shift</title>
+  <style>:root{--lightningcss-light: ;--lightningcss-dark:initial;color-scheme:dark}*{box-sizing:border-box;margin:0;padding:0}html,body{background:#05070d;width:100%;height:100%;overflow:hidden}body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}#app{position:fixed;inset:0}canvas{touch-action:none;display:block}.vignette{pointer-events:none;z-index:2;background:radial-gradient(at 50% 42%,#0000 55%,#00000052 100%);position:fixed;inset:0}#fade{z-index:5;pointer-events:none;opacity:1;background:#05070d;transition:opacity .9s;position:fixed;inset:0}.hud{z-index:3;color:#e8ecf2;-webkit-user-select:none;user-select:none;position:fixed}.title,.hint{pointer-events:none}.title{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);background:#080b128c;border:1px solid #ffffff17;border-radius:12px;padding:14px 18px 12px;top:22px;left:26px}.title h1{letter-spacing:.22em;color:#f2f5f9;font-size:15px;font-weight:700}.title p{letter-spacing:.08em;color:#aeb8c6;margin-top:4px;font-size:11.5px}.title p b{color:#7ee2a8;font-weight:600}.hint{letter-spacing:.1em;color:#c3ccd8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);white-space:nowrap;background:#080b1280;border:1px solid #ffffff14;border-radius:999px;padding:8px 16px;font-size:11.5px;transition:opacity 1.2s;bottom:20px;left:50%;transform:translate(-50%)}.hint.dim{opacity:.35}.hint b{color:#f2f5f9;font-weight:600}#toggle{font:inherit;letter-spacing:.14em;color:#0b0f16;cursor:pointer;background:#e8ecf2;border:none;border-radius:999px;align-items:center;gap:9px;padding:11px 18px;font-size:12px;font-weight:700;transition:transform .15s,background .25s,color .25s;display:flex;top:22px;right:26px}#toggle:hover{transform:translateY(-1px)}#toggle.night{color:#e8ecf2;background:#101623;border:1px solid #ffffff24}#toggle svg{width:15px;height:15px;display:block}</style>
+  <script type="module" crossorigin src="./assets/index-B8SEtPmg.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div class="vignette"></div>
+  <div id="fade"></div>
+  <div class="hud title">
+    <h1>HOME LAB</h1>
+    <p>night shift &middot; <b id="mode-label">lights out</b></p>
+  </div>
+  <button id="toggle" class="night" aria-label="Toggle day and night mode">
+    <svg id="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    <span id="toggle-label">NIGHT</span>
+  </button>
+  <div class="hint" id="hint"><b>drag</b> to orbit &nbsp;&middot;&nbsp; <b>scroll</b> to zoom &nbsp;&middot;&nbsp; <b>N</b> day / night</div>
+</body>
+</html>

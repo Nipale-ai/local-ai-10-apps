@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Studio — Print-ready A4 invoices</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='1' y='1' width='46' height='46' rx='10' fill='%231f4e79'/%3E%3Cpath d='M16 12v22h16' stroke='%23fff' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='16' r='4' fill='%23e8b64c'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-Bpeh-MMS.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cv086WJU.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" width="30" height="30" role="img" aria-label="Invoice Studio logo">
+          <rect x="1" y="1" width="46" height="46" rx="10" fill="#1f4e79"></rect>
+          <path d="M16 12v22h16" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="32" cy="16" r="4" fill="#e8b64c"></circle>
+        </svg>
+        <div class="brand-text">
+          <div class="brand-name">Invoice Studio</div>
+          <div class="brand-sub">Print-ready A4 invoices</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+        <button id="saveTpl" class="btn secondary" type="button">Save sender as template</button>
+        <button id="printBtn" class="btn primary" type="button">Print / Save PDF</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="form-pane" aria-label="Invoice form">
+        <form id="invoiceForm" autocomplete="off">
+          <section class="card">
+            <h2 class="card-title">Sender</h2>
+            <div class="grid" id="senderFields"></div>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title">Customer</h2>
+            <div class="grid" id="customerFields"></div>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title">Invoice details</h2>
+            <div class="grid" id="metaFields"></div>
+          </section>
+
+          <section class="card">
+            <div class="card-title-row">
+              <h2 class="card-title">Line items</h2>
+              <button id="addItem" class="btn small secondary" type="button">+ Add item</button>
+            </div>
+            <div class="items-head" aria-hidden="true">
+              <span class="ih-desc">Description</span>
+              <span class="ih-qty">Qty</span>
+              <span class="ih-price">Unit €</span>
+              <span class="ih-vat">VAT</span>
+              <span class="ih-del"></span>
+            </div>
+            <div id="items"></div>
+            <div class="discount-row">
+              <label for="f-discount">Discount</label>
+              <div class="discount-input">
+                <input id="f-discount" type="number" min="0" max="100" step="0.5" value="0">
+                <span class="unit">%</span>
+              </div>
+              <span class="hint">applied to every line item</span>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title">Payment details</h2>
+            <div class="grid" id="payFields"></div>
+          </section>
+        </form>
+      </section>
+
+      <section class="preview-pane" aria-label="Live preview">
+        <div class="pane-head">
+          <span class="pane-title">Live preview · A4</span>
+          <span class="pane-hint">Updates as you type</span>
+        </div>
+        <div class="preview-scroll">
+          <div class="sheet-wrap">
+            <div class="sheet" id="sheet"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>

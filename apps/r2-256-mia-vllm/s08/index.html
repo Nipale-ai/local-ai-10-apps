@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Murmuration — Birds at Dusk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 18 Q10 8 16 14 Q22 8 28 18 Q22 14 16 18 Q10 14 4 18 Z' fill='%23ffb36b'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-BhKMnzLy.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B-JFp2fD.css">
+</head>
+<body>
+  <canvas id="sky"></canvas>
+
+  <div id="hint">Your cursor is a hawk — the flock scatters around it</div>
+  <div id="fps" title="frames per second">— fps</div>
+
+  <button id="btn-show" class="pill" title="Show controls (H)">Controls</button>
+
+  <aside id="panel" aria-label="Flock controls">
+    <header class="panel-head">
+      <div class="titles">
+        <h1>Murmuration</h1>
+        <p>starlings at dusk</p>
+      </div>
+      <button id="btn-hide" class="btn ghost" title="Hide controls (H)">Hide</button>
+    </header>
+
+    <div class="sliders">
+      <div class="row">
+        <label for="s-coh">Cohesion</label>
+        <input id="s-coh" type="range" min="0" max="1" step="0.01" value="0.55">
+        <output id="o-coh">0.55</output>
+      </div>
+      <div class="row">
+        <label for="s-sep">Separation</label>
+        <input id="s-sep" type="range" min="0" max="1" step="0.01" value="0.45">
+        <output id="o-sep">0.45</output>
+      </div>
+      <div class="row">
+        <label for="s-ali">Alignment</label>
+        <input id="s-ali" type="range" min="0" max="1" step="0.01" value="0.60">
+        <output id="o-ali">0.60</output>
+      </div>
+      <div class="row">
+        <label for="s-spd">Speed</label>
+        <input id="s-spd" type="range" min="0" max="1" step="0.01" value="0.50">
+        <output id="o-spd">0.50</output>
+      </div>
+      <div class="row">
+        <label for="s-cnt">Flock size</label>
+        <input id="s-cnt" type="range" min="100" max="4000" step="50" value="800">
+        <output id="o-cnt">800</output>
+      </div>
+    </div>
+
+    <div class="presets" role="group" aria-label="Presets">
+      <button class="chip" data-preset="murmuration">Murmuration</button>
+      <button class="chip" data-preset="knot">Tight knot</button>
+      <button class="chip" data-preset="scatter">Scatter</button>
+      <button class="chip" data-preset="river">River</button>
+      <button class="chip" data-preset="drift">Drift</button>
+    </div>
+
+    <div id="stats" aria-live="off">800 birds · spread — px</div>
+    <div id="keys">space — pause · H — hide panel · R — restart</div>
+
+    <footer class="actions">
+      <button id="btn-pause" class="btn primary">Pause</button>
+      <button id="btn-restart" class="btn">Restart</button>
+    </footer>
+  </aside>
+
+</body>
+</html>

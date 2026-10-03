@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ember Run</title>
+  <script type="module" crossorigin src="./assets/index-eQ2hjQFk.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-COIEecPQ.css">
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game" width="1280" height="720"></canvas>
+    <div id="overlay">
+      <div id="title-screen" class="screen">
+        <div class="title-art">
+          <div class="t1">EMBER</div>
+          <div class="t2">RUN</div>
+        </div>
+        <div class="tagline">A tiny fox. Three worlds. One blazing trail.</div>
+        <div class="menu">
+          <div class="mi sel" data-i="0">START RUN</div>
+          <div class="mi" data-i="1">LEVEL SELECT</div>
+          <div class="mi" data-i="2">HOW TO PLAY</div>
+        </div>
+        <div class="hint">↑ ↓ choose · Enter confirm</div>
+        <div id="help-box" class="hidden">
+          <p>← → / A D — run</p><p>Space / ↑ / W — jump (hold = higher)</p>
+          <p>Stomp enemies. Grab coins. Reach the campfire.</p><p>P — pause · M — mute</p>
+        </div>
+        <div id="level-select" class="hidden">
+          <div class="ls" data-lv="1">1 · SUNNY STEPS</div>
+          <div class="ls" data-lv="2">2 · TWILIGHT WOODS</div>
+          <div class="ls" data-lv="3">3 · EMBER CAVES</div>
+        </div>
+      </div>
+      <div id="gameover-screen" class="screen hidden">
+        <div class="t1 small">GAME OVER</div>
+        <div id="go-score" class="tagline"></div>
+        <div class="hint">Enter — try again</div>
+      </div>
+      <div id="win-screen" class="screen hidden">
+        <div class="t1 small">YOU WIN!</div>
+        <div id="win-score" class="tagline"></div>
+        <div class="hint">Enter — play again</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

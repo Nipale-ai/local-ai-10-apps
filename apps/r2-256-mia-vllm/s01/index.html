@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will it fit? — Local LLM VRAM calculator</title>
+  <meta name="description" content="Enter a model's size, quantization and context length and see instantly whether it fits on a 16, 32 or 128 GB graphics card.">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' rx='5' fill='%234f8cff'/%3E%3Crect x='7' y='11' width='13' height='10' rx='2' fill='%230b0f17'/%3E%3Ccircle cx='25' cy='13' r='2' fill='%230b0f17'/%3E%3Ccircle cx='25' cy='19' r='2' fill='%230b0f17'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var BPW = { Q3_K_M: 3.91, Q4_K_M: 4.85, Q5_K_M: 5.69, Q6_K: 6.56, Q8_0: 8.50, FP16: 16.00, NVFP4: 4.50 };
+      function calc(i) {
+        var bpw = BPW[i.quant];
+        if (typeof bpw !== 'number') throw new Error('unknown quantization: ' + i.quant);
+        var weights_gb = i.params_b * bpw / 8;
+        var kv_gb = i.context / 1000 * i.kv_gb_per_1k;
+        var overhead_gb = 1.5;
+        var total_gb = weights_gb + kv_gb + overhead_gb;
+        return {
+          weights_gb: weights_gb, kv_gb: kv_gb, overhead_gb: overhead_gb, total_gb: total_gb,
+          fits: { 16: total_gb <= 14.4, 32: total_gb <= 28.8, 128: total_gb <= 115.2 }
+        };
+      }
+      window.APP = {
+        calc: calc,
+        setInputs: function (i) {
+          window.__pendingInputs = i;
+          if (typeof window.__applyInputs === 'function') window.__applyInputs(i);
+          return true;
+        }
+      };
+    })();
+  </script>
+  <script type="module" crossorigin src="./assets/index-DHesEOUV.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BGxVmwUq.css">
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="logo" aria-hidden="true">
+      <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
+        <rect x="1.5" y="5.5" width="29" height="21" rx="6" fill="#4f8cff"/>
+        <rect x="6.5" y="10.5" width="14" height="11" rx="2.5" fill="#0b0f17"/>
+        <circle cx="25.5" cy="12.5" r="2" fill="#0b0f17"/>
+        <circle cx="25.5" cy="19.5" r="2" fill="#0b0f17"/>
+        <rect x="9" y="27" width="3" height="3" rx="1" fill="#4f8cff"/>
+        <rect x="20" y="27" width="3" height="3" rx="1" fill="#4f8cff"/>
+      </svg>
+    </div>
+    <div class="headings">
+      <h1>Will it fit?</h1>
+      <p class="tagline">Check if a local AI model fits on your graphics card — before you download 40 GB.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- ============ INPUTS ============ -->
+    <section class="panel" aria-labelledby="inputs-h">
+      <h2 id="inputs-h" class="panel-title">Your setup</h2>
+
+      <div class="field">
+        <span class="field-label" id="presets-label">Try a well-known model</span>
+        <div class="preset-row" role="group" aria-labelledby="presets-label">
+          <button type="button" class="preset" data-preset="0">Llama 3.1 8B</button>
+          <button type="button" class="preset" data-preset="1">Qwen 2.5 32B</button>
+          <button type="button" class="preset" data-preset="2">Llama 3.3 70B</button>
+          <button type="button" class="preset" data-preset="3">Mixtral 8x7B</button>
+          <button type="button" class="preset" data-preset="4">DeepSeek-R1 671B</button>
+        </div>
+      </div>
+
+        <div class="field">
+          <label class="field-label" for="in-params">Model size <span class="hint">(billions of parameters)</span></label>
+          <div class="input-wrap">
+            <input id="in-params" type="number" inputmode="decimal" min="0" step="any" value="8" aria-label="Model size in billions of parameters">
+            <span class="unit" aria-hidden="true">B</span>
+          </div>
+          <p class="mini-hint" id="hint-file">the model file will be roughly 4.85 GB</p>
+        </div>
+
+      <div class="field">
+        <span class="field-label" id="quant-label">Quantization <span class="hint">(bits per weight)</span></span>
+        <div class="quant-grid" role="group" aria-labelledby="quant-label">
+          <button type="button" class="quant" data-quant="Q3_K_M" title="3.91 bits per weight — small file, lower quality">Q3_K_M<span class="bpw">3.91 bpw</span></button>
+          <button type="button" class="quant" data-quant="Q4_K_M" title="4.85 bits per weight — the usual sweet spot">Q4_K_M<span class="bpw">4.85 bpw</span></button>
+          <button type="button" class="quant" data-quant="Q5_K_M" title="5.69 bits per weight — better quality, bigger file">Q5_K_M<span class="bpw">5.69 bpw</span></button>
+          <button type="button" class="quant" data-quant="Q6_K" title="6.56 bits per weight — near-lossless">Q6_K<span class="bpw">6.56 bpw</span></button>
+          <button type="button" class="quant" data-quant="Q8_0" title="8.50 bits per weight — almost no quality loss">Q8_0<span class="bpw">8.50 bpw</span></button>
+          <button type="button" class="quant" data-quant="FP16" title="16 bits per weight — full precision, twice the memory of Q8">FP16<span class="bpw">16.00 bpw</span></button>
+          <button type="button" class="quant" data-quant="NVFP4" title="4.50 bits per weight — NVIDIA 4-bit format">NVFP4<span class="bpw">4.50 bpw</span></button>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="in-context">Context length <span class="hint">(tokens)</span></label>
+          <div class="input-wrap">
+            <input id="in-context" type="number" inputmode="numeric" min="0" step="1" value="8192" aria-label="Context length in tokens">
+          </div>
+          <div class="ctx-chips" role="group" aria-label="Common context lengths">
+            <button type="button" class="ctx" data-ctx="4096">4k</button>
+            <button type="button" class="ctx" data-ctx="8192">8k</button>
+            <button type="button" class="ctx" data-ctx="16384">16k</button>
+            <button type="button" class="ctx" data-ctx="32768">32k</button>
+            <button type="button" class="ctx" data-ctx="65536">64k</button>
+            <button type="button" class="ctx" data-ctx="131072">128k</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="in-kv">Context memory <span class="hint">(GB per 1k tokens)</span></label>
+          <div class="input-wrap">
+            <input id="in-kv" type="number" inputmode="decimal" min="0" step="any" value="0.128" aria-label="Context memory in GB per 1000 tokens">
+          </div>
+        </div>
+      </div>
+
+      <p class="field-note">Not sure what to put for context memory? Pick a preset above — each one fills in a realistic value. Longer conversations need more of it.</p>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <section class="panel results" aria-labelledby="results-h">
+      <div class="results-head">
+        <h2 id="results-h" class="panel-title">The verdict</h2>
+        <button type="button" id="copy-link" class="ghost-btn" aria-label="Copy a link to this calculation">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6.5 9.5a3 3 0 0 0 4.24 0l2.5-2.5a3 3 0 1 0-4.24-4.24l-1.1 1.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 6.5a3 3 0 0 0-4.24 0l-2.5 2.5a3 3 0 1 0 4.24 4.24l1.1-1.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Copy link
+        </button>
+      </div>
+
+      <div class="total-box">
+        <div class="total-num"><span id="r-total">7.4</span><span class="total-unit">GB</span></div>
+        <div class="total-sub" id="r-sub">needed in total — model + context + overhead</div>
+      </div>
+
+      <p class="verdict" id="r-verdict" role="status">Fits easily.</p>
+
+      <p class="tip" id="r-tip"></p>
+
+      <div class="devices" id="r-devices">
+        <div class="device" data-device="16">
+          <div class="device-head">
+            <span class="device-name">16 GB card <span class="device-eg">gaming PC</span></span>
+            <span class="badge" id="badge-16">FITS</span>
+          </div>
+          <div class="bar" aria-hidden="true">
+            <div class="seg seg-w" id="seg-w-16"></div>
+            <div class="seg seg-k" id="seg-k-16"></div>
+            <div class="seg seg-o" id="seg-o-16"></div>
+            <div class="seg seg-f" id="seg-f-16"></div>
+          </div>
+          <div class="device-detail" id="detail-16"></div>
+        </div>
+        <div class="device" data-device="32">
+          <div class="device-head">
+            <span class="device-name">32 GB card <span class="device-eg">RTX 5090</span></span>
+            <span class="badge" id="badge-32">FITS</span>
+          </div>
+          <div class="bar" aria-hidden="true">
+            <div class="seg seg-w" id="seg-w-32"></div>
+            <div class="seg seg-k" id="seg-k-32"></div>
+            <div class="seg seg-o" id="seg-o-32"></div>
+            <div class="seg seg-f" id="seg-f-32"></div>
+          </div>
+          <div class="device-detail" id="detail-32"></div>
+        </div>
+        <div class="device" data-device="128">
+          <div class="device-head">
+            <span class="device-name">128 GB machine <span class="device-eg">Mac Studio / server</span></span>
+            <span class="badge" id="badge-128">FITS</span>
+          </div>
+          <div class="bar" aria-hidden="true">
+            <div class="seg seg-w" id="seg-w-128"></div>
+            <div class="seg seg-k" id="seg-k-128"></div>
+            <div class="seg seg-o" id="seg-o-128"></div>
+            <div class="seg seg-f" id="seg-f-128"></div>
+          </div>
+          <div class="device-detail" id="detail-128"></div>
+        </div>
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <span><i class="dot dot-w"></i>Model weights</span>
+        <span><i class="dot dot-k"></i>Context (KV cache)</span>
+        <span><i class="dot dot-o"></i>Overhead</span>
+        <span><i class="dot dot-f"></i>Free</span>
+      </div>
+
+      <details class="expert">
+        <summary>Expert details</summary>
+        <div class="expert-body">
+          <div class="xrow"><span>Weights: <span id="x-formula">8 B × 4.85 bpw ÷ 8</span></span><b id="x-weights">4.85 GB</b></div>
+          <div class="xrow"><span>Context (KV cache): <span id="x-kvformula">8,192 tokens × 0.128 GB/1k</span></span><b id="x-kv">1.05 GB</b></div>
+          <div class="xrow"><span>Overhead (runtime, fixed)</span><b>1.50 GB</b></div>
+          <div class="xrow xtotal"><span>Total</span><b id="x-total">7.40 GB</b></div>
+          <p class="xnote">A device with D GB counts as fitting while the total stays at or below 0.9 × D — 10 % of the memory is kept free for the system and apps.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Numbers are estimates for planning, not guarantees. Weights = parameters × bits-per-weight ÷ 8. The context memory depends on the model's architecture — model cards or quantization tools usually list it.</p>
+  </footer>
+
+</body>
+</html>

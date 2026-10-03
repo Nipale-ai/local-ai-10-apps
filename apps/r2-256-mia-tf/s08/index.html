@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flock at dusk</title>
+  <script type="module" crossorigin src="./assets/index-CQKARunE.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DDJMWfTx.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+
+  <header id="brand">
+    <h1>Murmuration</h1>
+    <p>hundreds of starlings at dusk &middot; your mouse is a hawk</p>
+    <p class="keys">space pause &middot; h hide panel &middot; r restart</p>
+  </header>
+
+  <div id="hint">Move your mouse &mdash; a hawk hunts here</div>
+  <div id="pausedBadge" class="hidden">Paused</div>
+
+  <aside id="panel" aria-label="Flock controls">
+    <div class="panel-head">
+      <span class="panel-title">Flock</span>
+      <button id="hideBtn" class="btn ghost small" title="Hide panel (H)">Hide</button>
+    </div>
+
+    <div class="sec">Flock rules</div>
+    <div class="group">
+      <label for="cohesion">Cohesion <output id="cohesionOut">0.55</output></label>
+      <input type="range" id="cohesion" min="0" max="1" step="0.01" value="0.55">
+    </div>
+    <div class="group">
+      <label for="separation">Separation <output id="separationOut">0.40</output></label>
+      <input type="range" id="separation" min="0" max="1" step="0.01" value="0.4">
+    </div>
+    <div class="group">
+      <label for="alignment">Alignment <output id="alignmentOut">0.65</output></label>
+      <input type="range" id="alignment" min="0" max="1" step="0.01" value="0.65">
+    </div>
+
+    <div class="sec">Motion &amp; look</div>
+    <div class="group">
+      <label for="speed">Speed <output id="speedOut">0.60</output></label>
+      <input type="range" id="speed" min="0" max="1" step="0.01" value="0.6">
+    </div>
+    <div class="group">
+      <label for="trails">Trails <output id="trailsOut">0.50</output></label>
+      <input type="range" id="trails" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div class="group">
+      <label for="count">Birds <output id="countOut">700</output></label>
+      <input type="range" id="count" min="100" max="4000" step="50" value="700">
+    </div>
+
+    <div class="presets">
+      <button class="btn ghost active" data-preset="murmuration">Murmuration</button>
+      <button class="btn ghost" data-preset="ribbon">Ribbon</button>
+      <button class="btn ghost" data-preset="scatter">Scatter</button>
+      <button class="btn ghost" data-preset="calm">Calm</button>
+      <button class="btn ghost" data-preset="storm">Storm</button>
+    </div>
+
+    <div class="actions">
+      <button id="pauseBtn" class="btn primary">Pause</button>
+      <button id="restartBtn" class="btn ghost">Restart</button>
+    </div>
+
+    <div class="meta">
+      <span id="fps">— fps</span>
+      <span id="birds">— birds</span>
+      <span id="spreadEl">— spread</span>
+    </div>
+  </aside>
+
+  <button id="showBtn" class="chip hidden">Controls</button>
+
+</body>
+</html>

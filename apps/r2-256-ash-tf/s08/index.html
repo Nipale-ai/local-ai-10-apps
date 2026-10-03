@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration — a flock of starlings at dusk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23231c3f'/%3E%3Cpath d='M5 19 Q11 10 17 14 Q23 8 27 12 Q22 13 20 17 Q14 23 5 19 Z' fill='%23f2e3c8'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-4G-RLbhf.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-llf-COfo.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div id="hud">
+    <div id="brand">
+      <h1>Murmuration</h1>
+      <p>a flock of starlings at dusk</p>
+    </div>
+
+    <button id="panelToggle" class="pill-btn" aria-label="Hide controls">Hide</button>
+
+    <aside id="panel">
+      <div class="row sliders">
+        <label class="slider">
+          <span class="lab">Cohesion <b id="vCoh">0.55</b></span>
+          <input id="sCoh" type="range" min="0" max="1" step="0.01" value="0.55">
+        </label>
+        <label class="slider">
+          <span class="lab">Separation <b id="vSep">0.45</b></span>
+          <input id="sSep" type="range" min="0" max="1" step="0.01" value="0.45">
+        </label>
+        <label class="slider">
+          <span class="lab">Speed <b id="vSpd">0.55</b></span>
+          <input id="sSpd" type="range" min="0" max="1" step="0.01" value="0.55">
+        </label>
+        <label class="slider">
+          <span class="lab">Birds <b id="vCnt">1000</b></span>
+          <input id="sCnt" type="range" min="50" max="4000" step="10" value="1000">
+        </label>
+      </div>
+
+      <div class="row presets">
+        <span class="plabel">Presets</span>
+        <button class="preset" data-p="murmuration">Murmuration</button>
+        <button class="preset" data-p="ball">Starball</button>
+        <button class="preset" data-p="scatter">Scatter</button>
+        <button class="preset" data-p="river">River</button>
+      </div>
+
+      <div class="row actions">
+        <button id="btnPause" class="pill-btn">Pause</button>
+        <button id="btnRestart" class="pill-btn">Restart</button>
+        <span id="fpsRead">60 fps</span>
+      </div>
+
+      <div class="row hint">
+        <span>Click the sky to startle the flock · Space pauses · H hides this panel</span>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>

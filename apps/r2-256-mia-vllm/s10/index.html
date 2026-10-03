@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Darkroom — Photo Editor</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%230b0d10'/%3E%3Ccircle cx='12' cy='12' r='7' fill='none' stroke='%234da3ff' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2.6' fill='%234da3ff'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-CM0qRRrd.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DJ-eraGS.css">
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="3.2" fill="currentColor"/>
+        <path d="M12 3v5.5M21 12h-5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">Darkroom</span>
+      <span class="filename">photo.png</span>
+    </div>
+    <div class="top-actions">
+      <button id="openBtn" class="btn" title="Open an image file">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="2"/></svg>
+        Open
+      </button>
+      <input id="fileInput" type="file" accept="image/*" hidden>
+      <span class="vsep"></span>
+      <button id="undoBtn" class="btn" title="Undo (Ctrl+Z)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 14 4 9l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9h10a6 6 0 0 1 0 12h-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Undo
+      </button>
+      <button id="redoBtn" class="btn" title="Redo (Ctrl+Y)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m15 14 5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 9H10a6 6 0 0 0 0 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Redo
+      </button>
+      <span class="vsep"></span>
+      <button id="resetBtn" class="btn" title="Reset adjustments (0)">Reset</button>
+      <button id="revertBtn" class="btn" title="Revert everything back to the original photo">Revert all</button>
+      <span class="vsep"></span>
+      <button id="compareBtn" class="btn" title="Before / After (B)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
+        Compare
+      </button>
+      <button id="exportBtn" class="btn primary" title="Export PNG (Ctrl+S)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Export PNG
+      </button>
+    </div>
+  </header>
+
+  <main id="workspace">
+    <aside id="sidebar">
+      <div id="adjustPanel">
+        <div class="sec-title">Adjust</div>
+        <div id="sliders"></div>
+        <div class="sec-title">Presets</div>
+        <div id="presets" class="chips"></div>
+      </div>
+
+      <div id="cropPanel">
+        <div class="sec-title">Crop</div>
+        <div class="crop-nums">
+          <label>X<input id="cx" type="number"></label>
+          <label>Y<input id="cy" type="number"></label>
+          <label>W<input id="cw" type="number"></label>
+          <label>H<input id="ch" type="number"></label>
+        </div>
+        <div class="sec-title small">Aspect ratio</div>
+        <div id="aspects" class="chips"></div>
+        <div class="crop-actions">
+          <button id="applyCrop" class="btn primary">Apply crop</button>
+          <button id="cancelCrop" class="btn">Cancel</button>
+        </div>
+        <p class="tip">Drag the frame or handles to crop. Arrow keys nudge, Enter applies, Esc cancels.</p>
+      </div>
+
+      <div class="sec-title">Transform</div>
+      <div id="geomBtns">
+        <button id="rotCW" class="btn" title="Rotate 90° clockwise (R)">Rotate 90° ↻</button>
+        <button id="rotCCW" class="btn" title="Rotate 90° counter-clockwise (Shift+R)">90° ↺</button>
+        <button id="flipH" class="btn">Flip H</button>
+        <button id="flipV" class="btn">Flip V</button>
+      </div>
+    </aside>
+
+    <div id="stage">
+      <div id="placeholder">Loading photo…</div>
+      <div id="canvasWrap">
+        <canvas id="view"></canvas>
+        <canvas id="beforeCanvas"></canvas>
+        <div id="compareDivider"><div class="grip"></div></div>
+        <div id="cropLayer"><div id="cropRect"></div></div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="statusbar">
+    <span id="dims">—</span>
+    <span id="hist"></span>
+    <span class="spacer"></span>
+    <span class="hint">Ctrl+Z Undo · Ctrl+Y Redo · C Crop · R Rotate · B Compare · +/− Zoom · Ctrl+S Export</span>
+    <span class="zoomctl">
+      <button id="zoomOut" class="zbtn" title="Zoom out">−</button>
+      <button id="zoomPct" class="zbtn pct" title="Click for 100%">100%</button>
+      <button id="zoomIn" class="zbtn" title="Zoom in">+</button>
+      <button id="zoomFit" class="zbtn pct" title="Fit to screen">Fit</button>
+    </span>
+  </footer>
+
+  <div id="toast"></div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0f1d">
+  <meta name="description" content="Check whether a local AI model fits on your 16, 32 or 128 GB graphics card.">
+  <title>Will it fit? — GPU memory calculator for local AI models</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1424'/%3E%3Crect x='7' y='9' width='18' height='12' rx='2' fill='%236d8dff'/%3E%3Crect x='10' y='23' width='3' height='3' fill='%236d8dff'/%3E%3Crect x='19' y='23' width='3' height='3' fill='%236d8dff'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-Ct6idJfu.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B1_1Nnvn.css">
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="1" y="1" width="30" height="30" rx="7" fill="rgba(109,141,255,.14)"/>
+          <rect x="7" y="9" width="18" height="12" rx="2" fill="#6d8dff"/>
+          <rect x="10" y="23" width="3" height="3" rx="1" fill="#6d8dff"/>
+          <rect x="19" y="23" width="3" height="3" rx="1" fill="#6d8dff"/>
+          <rect x="10.5" y="12.5" width="7" height="5" rx="1" fill="#0f1424"/>
+        </svg>
+        <div>
+          <h1>Will it fit on my graphics card?</h1>
+          <p class="tagline">A quick memory check before you download a local AI model.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="mini" id="mini" role="status" aria-label="Live result summary">
+      <span class="mini-total"><b id="mini-total">7.4</b>&nbsp;GB needed</span>
+      <span class="mini-fits" id="mini-fits"><span class="ok">✓ 16</span><span class="ok">✓ 32</span><span class="ok">✓ 128</span></span>
+    </div>
+
+    <main>
+      <section class="col-inputs" aria-labelledby="setup-h">
+        <div class="card">
+          <h2 id="setup-h">Your setup</h2>
+
+          <div class="field">
+            <span class="label" id="presets-label">Popular models</span>
+            <div class="presets" role="group" aria-labelledby="presets-label" id="presets"><button type="button" class="preset" data-idx="0">Llama 3.1 8B</button><button type="button" class="preset" data-idx="1">Mistral 7B</button><button type="button" class="preset" data-idx="2">Qwen 2.5 14B</button><button type="button" class="preset" data-idx="3">Gemma 2 27B</button><button type="button" class="preset" data-idx="4">Mixtral 8x7B</button><button type="button" class="preset" data-idx="5">Llama 3.1 70B</button></div>
+          </div>
+
+          <div class="field">
+            <label for="inp-params">Model size <span class="hint">(billions of parameters)</span></label>
+            <div class="control">
+              <input id="inp-params" type="number" inputmode="decimal" min="0" step="0.01" value="8.03" aria-describedby="params-hint" autocomplete="off" enterkeyhint="done">
+              <span class="unit">B</span>
+            </div>
+            <p class="hint" id="params-hint">e.g. “Llama 3.1 8B” → 8.03</p>
+          </div>
+
+          <div class="field">
+            <label for="inp-quant">Quantization <span class="hint">(bits per weight)</span></label>
+            <div class="control">
+              <select id="inp-quant">
+                <option value="Q3_K_M">Q3_K_M — 3.91 bpw</option>
+                <option value="Q4_K_M" selected>Q4_K_M — 4.85 bpw</option>
+                <option value="Q5_K_M">Q5_K_M — 5.69 bpw</option>
+                <option value="Q6_K">Q6_K — 6.56 bpw</option>
+                <option value="Q8_0">Q8_0 — 8.50 bpw</option>
+                <option value="FP16">FP16 — 16.00 bpw</option>
+                <option value="NVFP4">NVFP4 — 4.50 bpw</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="inp-context">Context length <span class="hint">(tokens)</span></label>
+            <div class="control">
+              <input id="inp-context" type="number" inputmode="numeric" min="0" step="1" value="8192" autocomplete="off" enterkeyhint="done">
+            </div>
+            <div class="chips" role="group" aria-label="Common context lengths">
+              <button type="button" class="chip" data-ctx="4096">4k</button>
+              <button type="button" class="chip" data-ctx="8192">8k</button>
+              <button type="button" class="chip" data-ctx="16384">16k</button>
+              <button type="button" class="chip" data-ctx="32768">32k</button>
+              <button type="button" class="chip" data-ctx="131072">128k</button>
+            </div>
+            <p class="hint">1,000 tokens ≈ 750 words of text.</p>
+          </div>
+
+          <div class="field">
+            <label for="inp-kv">Context memory <span class="hint">(GB per 1,000 tokens)</span></label>
+            <div class="control">
+              <input id="inp-kv" type="number" inputmode="decimal" min="0" step="0.01" value="0.13" autocomplete="off" enterkeyhint="done">
+              <span class="unit">GB/1k</span>
+            </div>
+            <p class="hint">Depends on the model’s layers and attention heads. Presets fill this in.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="col-result" aria-labelledby="result-h">
+        <div class="card result-card">
+          <h2 id="result-h">Memory needed</h2>
+          <div class="total">
+            <span class="total-num" id="total-value">7.4</span>
+            <span class="total-unit">GB</span>
+          </div>
+          <p class="result-sub" id="result-sub">Llama 3.1 8B · Q4_K_M · 8.2k tokens</p>
+          <p class="verdict" id="verdict" aria-live="polite"><strong class="ok">Yes — it runs on all three.</strong> Even a 16 GB card has 8.6 GB to spare.</p>
+          <div class="breakdown" id="breakdown" role="list"><div class="brow" role="listitem"><span class="dot w" aria-hidden="true"></span><span class="bname">Model weights <span class="hint">· 8.03 B × 4.85 ÷ 8</span></span><span class="bval">4.87 GB</span></div><div class="brow" role="listitem"><span class="dot k" aria-hidden="true"></span><span class="bname">Context (KV cache) <span class="hint">· 8.2k tokens</span></span><span class="bval">1.06 GB</span></div><div class="brow" role="listitem"><span class="dot o" aria-hidden="true"></span><span class="bname">Runtime overhead <span class="hint">· fixed allowance</span></span><span class="bval">1.50 GB</span></div></div>
+          <button type="button" class="copy-btn" id="copy-link" aria-label="Copy shareable link to this result">
+            <svg viewBox="0 0 16 16" aria-hidden="true" width="14" height="14"><path d="M6.5 9.5l3-3M5 11l-1.2 1.2a2.5 2.5 0 0 1-3.5-3.5L3.5 5.5a2.5 2.5 0 0 1 3.5 0M11 5l1.2-1.2a2.5 2.5 0 0 1 3.5 3.5L12.5 10.5a2.5 2.5 0 0 1-3.5 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" transform="translate(-1.5 -1.5)"/></svg>
+            <span id="copy-label">Copy link</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <section class="devices" aria-labelledby="devices-h">
+      <h2 id="devices-h">Does it fit?</h2>
+      <div class="device-grid" id="device-grid"><article class="device fit" data-d="16"><div class="dhead"><svg class="dicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="6" y="6" width="4" height="4" rx="0.8" fill="currentColor"/><path d="M5.5 3V1M10.5 3V1M5.5 15v-2M10.5 15v-2M3 5.5H1M3 10.5H1M15 5.5h-2M15 10.5h-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="dname">16 GB machine</span><span class="dbadge">Fits</span></div><p class="dsub">14.4 GB usable of 16 GB</p><div class="bar" role="img" aria-label="16 GB device: fits — weights 4.9 GB, context 1.1 GB, overhead 1.5 GB, 8.6 GB free"><div class="seg w" style="width:30.426171874999998%" title="Weights: 4.9 GB"></div><div class="seg k" style="width:6.656000000000001%" title="Context: 1.1 GB"></div><div class="seg o" style="width:9.375%" title="Overhead: 1.5 GB"></div><div class="seg free" style="width:53.542828125%" title="Free: 8.6 GB"></div><div class="limit" style="left:90%" title="Safe limit: 14.4 GB"></div></div><p class="dstat">Uses <b>7.4 GB</b> · <span class="spare">8.6 GB free</span></p></article><article class="device fit" data-d="32"><div class="dhead"><svg class="dicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="6" y="6" width="4" height="4" rx="0.8" fill="currentColor"/><path d="M5.5 3V1M10.5 3V1M5.5 15v-2M10.5 15v-2M3 5.5H1M3 10.5H1M15 5.5h-2M15 10.5h-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="dname">32 GB machine</span><span class="dbadge">Fits</span></div><p class="dsub">28.8 GB usable of 32 GB</p><div class="bar" role="img" aria-label="32 GB device: fits — weights 4.9 GB, context 1.1 GB, overhead 1.5 GB, 24.6 GB free"><div class="seg w" style="width:15.213085937499999%" title="Weights: 4.9 GB"></div><div class="seg k" style="width:3.3280000000000003%" title="Context: 1.1 GB"></div><div class="seg o" style="width:4.6875%" title="Overhead: 1.5 GB"></div><div class="seg free" style="width:76.7714140625%" title="Free: 24.6 GB"></div><div class="limit" style="left:90%" title="Safe limit: 28.8 GB"></div></div><p class="dstat">Uses <b>7.4 GB</b> · <span class="spare">24.6 GB free</span></p></article><article class="device fit" data-d="128"><div class="dhead"><svg class="dicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="6" y="6" width="4" height="4" rx="0.8" fill="currentColor"/><path d="M5.5 3V1M10.5 3V1M5.5 15v-2M10.5 15v-2M3 5.5H1M3 10.5H1M15 5.5h-2M15 10.5h-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="dname">128 GB machine</span><span class="dbadge">Fits</span></div><p class="dsub">115.2 GB usable of 128 GB</p><div class="bar" role="img" aria-label="128 GB device: fits — weights 4.9 GB, context 1.1 GB, overhead 1.5 GB, 120.6 GB free"><div class="seg w" style="width:3.8032714843749997%" title="Weights: 4.9 GB"></div><div class="seg k" style="width:0.8320000000000001%" title="Context: 1.1 GB"></div><div class="seg o" style="width:1.171875%" title="Overhead: 1.5 GB"></div><div class="seg free" style="width:94.192853515625%" title="Free: 120.6 GB"></div><div class="limit" style="left:90%" title="Safe limit: 115.2 GB"></div></div><p class="dstat">Uses <b>7.4 GB</b> · <span class="spare">120.6 GB free</span></p></article></div>
+      <p class="note">A device “fits” when the model leaves 10&nbsp;% of its memory free — that headroom keeps everything responsive.</p>
+    </section>
+
+    <details class="expert card" id="expert">
+      <summary>Expert details</summary>
+      <div class="expert-body">
+        <table id="expert-table">
+          <caption class="sr-only">Memory breakdown</caption>
+          <tbody><tr><td>Bits per weight</td><td>4.85 bpw</td></tr><tr><td>Model weights</td><td>4.87 GB</td></tr><tr><td>Context memory</td><td>1.06 GB</td></tr><tr><td>Overhead</td><td>1.50 GB</td></tr><tr><td>Total</td><td>7.43 GB</td></tr><tr><td>Fits on 16 GB (usable 14.4 GB)</td><td>Yes · up to 61.8k tokens</td></tr><tr><td>Fits on 32 GB (usable 28.8 GB)</td><td>Yes · up to 172.5k tokens</td></tr><tr><td>Fits on 128 GB (usable 115.2 GB)</td><td>Yes · up to 837.2k tokens</td></tr><tr><td>Total with Q3_K_M (3.91 bpw)</td><td>6.5 GB</td></tr><tr><td>Total with Q4_K_M (4.85 bpw)</td><td>7.4 GB</td></tr><tr><td>Total with Q5_K_M (5.69 bpw)</td><td>8.3 GB</td></tr><tr><td>Total with Q6_K (6.56 bpw)</td><td>9.1 GB</td></tr><tr><td>Total with Q8_0 (8.50 bpw)</td><td>11.1 GB</td></tr><tr><td>Total with FP16 (16.00 bpw)</td><td>18.6 GB</td></tr><tr><td>Total with NVFP4 (4.50 bpw)</td><td>7.1 GB</td></tr></tbody>
+        </table>
+        <p class="hint">weights = params × bpw ÷ 8 · kv = context ÷ 1000 × kv-per-1k · overhead = 1.5 GB · fits when total ≤ 0.9 × device memory</p>
+      </div>
+    </details>
+
+    <footer class="foot">
+      <p>Rough estimate for GGUF-style local models — real usage varies with the runtime. Nothing leaves your browser.</p>
+    </footer>
+  </div>
+</body>
+</html>

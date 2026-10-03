@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice Studio — Invoice Generator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316213d'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='bold' fill='white' text-anchor='middle'%3ESN%3C/text%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-BX2l84qp.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D1p2om4f.css">
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="brand-mark">SN</div>
+      <div><div class="brand-name">Invoice Studio</div><div class="brand-sub">Invoice generator</div></div>
+    </div>
+    <form id="inv-form" autocomplete="off">
+      <fieldset>
+        <legend>Your company</legend>
+        <div class="grid2">
+          <div class="field span2"><label for="f-s-name">Company name</label><input id="f-s-name" data-k="sender.name"></div>
+          <div class="field span2"><label for="f-s-street">Street address</label><input id="f-s-street" data-k="sender.street"></div>
+          <div class="field"><label for="f-s-zip">Postal code</label><input id="f-s-zip" data-k="sender.zip"></div>
+          <div class="field"><label for="f-s-city">City</label><input id="f-s-city" data-k="sender.city"></div>
+          <div class="field span2"><label for="f-s-country">Country</label><input id="f-s-country" data-k="sender.country"></div>
+          <div class="field span2"><label for="f-s-email">Email</label><input id="f-s-email" data-k="sender.email"></div>
+          <div class="field span2"><label for="f-s-phone">Phone</label><input id="f-s-phone" data-k="sender.phone"></div>
+          <div class="field span2"><label for="f-s-vatid">VAT ID</label><input id="f-s-vatid" data-k="sender.vatid"></div>
+          <div class="field span2"><label for="f-s-bank">Bank</label><input id="f-s-bank" data-k="sender.bank"></div>
+          <div class="field span2"><label for="f-s-iban">IBAN</label><input id="f-s-iban" data-k="sender.iban"></div>
+          <div class="field span2"><label for="f-s-bic">BIC</label><input id="f-s-bic" data-k="sender.bic"></div>
+        </div>
+        <button type="button" id="btn-save-sender" class="btn ghost sm">Save sender template</button>
+      </fieldset>
+      <fieldset>
+        <legend>Bill to</legend>
+        <div class="grid2">
+          <div class="field span2"><label for="f-r-name">Recipient name</label><input id="f-r-name" data-k="recipient.name"></div>
+          <div class="field span2"><label for="f-r-attn">Attention</label><input id="f-r-attn" data-k="recipient.attn"></div>
+          <div class="field span2"><label for="f-r-street">Street address</label><input id="f-r-street" data-k="recipient.street"></div>
+          <div class="field"><label for="f-r-zip">Postal code</label><input id="f-r-zip" data-k="recipient.zip"></div>
+          <div class="field"><label for="f-r-city">City</label><input id="f-r-city" data-k="recipient.city"></div>
+          <div class="field span2"><label for="f-r-country">Country</label><input id="f-r-country" data-k="recipient.country"></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Invoice details</legend>
+        <div class="grid2">
+          <div class="field span2"><label for="f-number">Invoice number</label><input id="f-number" data-k="meta.number"></div>
+          <div class="field"><label for="f-date">Issue date</label><input id="f-date" type="date" data-k="meta.date"></div>
+          <div class="field"><label for="f-due">Due date</label><input id="f-due" type="date" data-k="meta.due"></div>
+          <div class="field span2"><label for="f-terms">Payment terms</label><input id="f-terms" data-k="meta.terms"></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Line items</legend>
+        <div id="items-rows"></div>
+        <button type="button" id="btn-add" class="btn ghost sm">Add line</button>
+        <div class="field disc-field"><label for="f-discount">Discount percent</label><input id="f-discount" type="number" step="any" min="0" max="100" data-k="discount_pct"></div>
+      </fieldset>
+    </form>
+  </aside>
+  <main class="preview">
+    <div class="toolbar">
+      <span id="zoom-label" class="zoom-label">100%</span>
+      <span class="toolbar-spacer"></span>
+      <button type="button" id="btn-reset" class="btn ghost">Reset</button>
+      <button type="button" id="btn-print" class="btn primary">Print</button>
+    </div>
+    <div class="preview-scroll" id="preview-scroll">
+      <div class="sheet-wrap" id="sheet-wrap">
+        <div class="sheet" id="sheet"></div>
+      </div>
+    </div>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+</div>
+</body>
+</html>

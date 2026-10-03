@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Home Lab — Night Shift</title>
+  <style>:root{--lightningcss-light: ;--lightningcss-dark:initial;color-scheme:dark}*{box-sizing:border-box}html,body{background:#07090d;width:100%;height:100%;margin:0;padding:0;overflow:hidden}body{font-family:ui-sans-serif,system-ui,Segoe UI,Helvetica,Arial,sans-serif}#scene{cursor:grab;touch-action:none;width:100%;height:100%;display:block;position:fixed;inset:0}#scene.dragging{cursor:grabbing}#ui{pointer-events:none;-webkit-user-select:none;user-select:none;position:fixed;inset:0}.panel{pointer-events:none;color:#e8edf5;-webkit-backdrop-filter:blur(6px);background:#090c1294;border:1px solid #96aac829;border-radius:10px}#title{padding:10px 16px 11px;position:absolute;top:18px;left:18px}#title h1{letter-spacing:.22em;text-transform:uppercase;color:#f2f5fa;margin:0;font-size:15px;font-weight:650}#title p{letter-spacing:.04em;color:#aeb9c9;margin:3px 0 0;font-size:11.5px}#hint{color:#c3ccd9;letter-spacing:.03em;padding:8px 14px;font-size:12px;transition:opacity 1.2s;position:absolute;bottom:20px;left:18px}#hint b{color:#eef2f8;font-weight:600}#hint.gone{opacity:0}#clock{text-align:right;padding:9px 16px 10px;position:absolute;top:18px;right:18px}#clock .t{letter-spacing:.06em;color:#f2f5fa;font-variant-numeric:tabular-nums;font-size:19px;font-weight:650}#clock .m{letter-spacing:.18em;text-transform:uppercase;color:#aeb9c9;margin-top:1px;font-size:10.5px}#vignette{pointer-events:none;background:radial-gradient(#0000 58%,#04060a42 100%);position:fixed;inset:0}#toggle{pointer-events:auto;letter-spacing:.08em;color:#eef2f8;text-transform:uppercase;cursor:pointer;-webkit-backdrop-filter:blur(6px);background:#090c129e;border:1px solid #96aac847;border-radius:999px;align-items:center;gap:9px;padding:10px 18px 10px 14px;font-family:inherit;font-size:13px;font-weight:600;transition:background .25s,border-color .25s,transform .15s;display:flex;position:absolute;bottom:20px;right:18px}#toggle:hover{background:#1c2434bf;border-color:#aabedc73}#toggle:active{transform:scale(.97)}#toggle svg{width:17px;height:17px;display:block}#toggle .lbl:after{content:"Night"}#toggle.day .lbl:after{content:"Day"}#fade{pointer-events:none;opacity:1;background:#07090d;transition:opacity .9s;position:fixed;inset:0}#fade.gone{opacity:0}</style>
+  <script type="module" crossorigin src="./assets/index-CIhjHEos.js"></script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="ui">
+    <div id="title" class="panel">
+      <h1>The Home Lab</h1>
+      <p>Night shift &middot; a little server room in real-time 3D</p>
+    </div>
+    <div id="clock" class="panel">
+      <div class="t" id="clock-time">--:--</div>
+      <div class="m" id="clock-mode">Night shift</div>
+    </div>
+    <div id="hint" class="panel"><b>Drag</b> to orbit &nbsp;&middot;&nbsp; <b>Scroll</b> to zoom &nbsp;&middot;&nbsp; <b>N</b> toggles night</div>
+    <button id="toggle" aria-label="Toggle between night and day mode">
+      <svg id="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+      <span class="lbl"></span>
+    </button>
+  </div>
+  <div id="vignette"></div>
+  <div id="fade"></div>
+</body>
+</html>

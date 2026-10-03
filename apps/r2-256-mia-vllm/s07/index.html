@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive explainer: how a language model picks the next word, one probability at a time.">
+  <meta name="theme-color" content="#0b0f1a">
+  <meta property="og:title" content="How a language model writes — one word at a time">
+  <meta property="og:description" content="Step through a sentence and watch an AI pick each word from animated probabilities — and see what the temperature slider does.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230b0f1a'/%3E%3Crect%20x='6'%20y='8'%20width='14'%20height='4'%20rx='2'%20fill='%236ea8ff'/%3E%3Crect%20x='6'%20y='14'%20width='20'%20height='4'%20rx='2'%20fill='%23ffc861'/%3E%3Crect%20x='6'%20y='20'%20width='9'%20height='4'%20rx='2'%20fill='%236ea8ff'/%3E%3C/svg%3E">
+  <title>How a language model writes — one word at a time</title>
+  <script type="module" crossorigin src="./assets/index-CrMEJtdy.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CaWKfyyl.css">
+</head>
+<body>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="kicker"><svg class="spark" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#ffc861" stroke-width="2.4" stroke-linecap="round"/></svg>Interactive explainer · no real AI inside</p>
+      <h1>How a language model writes, <span class="accent">one word at a time</span></h1>
+      <p class="sub">An AI never writes a whole sentence at once. It looks at everything so far, gives every possible next word a probability, picks one — then asks the same question again. Step through a real example below.</p>
+      <div class="loop" aria-hidden="true">
+        <span class="loop-step"><i>1</i>read the text so far</span>
+        <span class="loop-arrow">→</span>
+        <span class="loop-step"><i>2</i>score every possible next word</span>
+        <span class="loop-arrow">→</span>
+        <span class="loop-step"><i>3</i>pick one — and repeat</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="col">
+        <section class="card sentence-card">
+          <div class="card-head">
+            <span class="label">The text so far</span>
+            <span class="chip-label" id="stepChip">Step 0 of 8</span>
+          </div>
+          <div class="sentence" id="sentence" aria-live="polite"></div>
+          <div class="progress" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+          <p class="caption" id="caption"></p>
+        </section>
+
+        <div class="controls">
+          <button id="backBtn" class="btn" type="button">← Back</button>
+          <button id="nextBtn" class="btn primary" type="button">Next word →</button>
+          <button id="autoBtn" class="btn" type="button" aria-label="Auto-play the steps">▶ Auto-play</button>
+          <button id="restartBtn" class="btn ghost" type="button" aria-label="Restart from the beginning" title="Restart from the beginning">↺</button>
+        </div>
+        <p class="kbd-hint">Tip: the ← and → arrow keys also step through the sentence.</p>
+      </div>
+
+      <div class="col">
+        <section class="card bars-card">
+          <div class="card-head">
+            <span class="label">What comes next?</span>
+            <span class="chip-label" id="sumChip">sum = 100%</span>
+          </div>
+          <div class="bars" id="bars"></div>
+        </section>
+
+        <section class="card temp-card">
+          <div class="temp-row">
+            <label class="temp-label" for="temp">Temperature — how creative is the pick?</label>
+            <output id="tempOut" class="temp-out" for="temp">1.00</output>
+          </div>
+          <input type="range" id="temp" min="0.2" max="2" step="0.05" value="1" aria-label="Temperature">
+          <div class="temp-scale" aria-hidden="true">
+            <span>0.2 · focused</span><span>1.0 · default</span><span>2.0 · chaotic</span>
+          </div>
+          <p class="temp-hint" id="tempHint"></p>
+        </section>
+      </div>
+    </div>
+
+    <section class="expert">
+      <button id="expertBtn" class="btn ghost expert-btn" type="button" aria-expanded="false" aria-controls="expertPanel">For experts: logits, softmax &amp; top-k</button>
+      <div id="expertPanel" class="expert-panel" hidden>
+        <p>Before any picking happens, the model gives every candidate word a raw score, called a <b>logit</b> (z). A bigger logit means the model likes that word more. These raw scores are what the bars start from.</p>
+        <p>To turn logits into probabilities, the scores are squashed through the <b>softmax</b> function, with a temperature T:</p>
+        <p class="formula">p(word<sub>i</sub>) = e<sup>z<sub>i</sub> / T</sup> / Σ<sub>j</sub> e<sup>z<sub>j</sub> / T</sup></p>
+        <p>Dividing z by T is the whole trick: a small T stretches the differences apart, so the favourite dominates. A large T squashes them together, so nearly everything becomes equally likely. Try T = 0.3 versus T = 2.0 above and watch the bars.</p>
+        <p>Real systems also use <b>top-k</b> (keep only the k highest-scoring words) or top-p, and throw everything else away before sampling. With top-k = 1 the model always takes the winner — no creativity at all.</p>
+        <table class="ztable" id="ztable" aria-label="Logits and probabilities for the current candidates">
+          <thead><tr><th>word</th><th>logit z</th><th>z ÷ T</th><th>softmax p</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="foot">All numbers on this page are hand-made for the demo — no language model runs here. Built with plain HTML, CSS and JavaScript.</footer>
+  </main>
+
+</body>
+</html>
