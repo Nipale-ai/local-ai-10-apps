@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmuration — a flock at dusk</title>
+<style>html,body{background:radial-gradient(120% 70% at 78% 108%,#ffbe6e8c,#ff965000 55%),linear-gradient(#171126 0%,#241a38 22%,#45264d 45%,#7c3a5c 66%,#b9564f 82%,#e08a52 94%,#f2b06a 100%);height:100%;margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;overflow:hidden}#bg,#sky{display:block;position:fixed;inset:0}#sky{z-index:1}#panel{z-index:3;-webkit-backdrop-filter:blur(8px);color:#f3e9dc;background:#160e1cd1;border:1px solid #ffe0be24;border-radius:14px;width:234px;padding:14px 16px 16px;position:fixed;top:18px;right:18px;box-shadow:0 10px 40px #0a051073}#panel.hidden{display:none}#panel .head{justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;display:flex}#panel h1{letter-spacing:.12em;text-transform:uppercase;color:#ffe9c9;margin:0;font-size:15px;font-weight:700}#panel h1 small{letter-spacing:.04em;text-transform:none;color:#d9c9b8;margin-top:3px;font-size:10px;font-weight:400;display:block}.ctl{color:#eadfce;margin:10px 0 2px;font-size:12px;display:block}.ctl span{justify-content:space-between;margin-bottom:4px;display:flex}.ctl output{color:#ffc98a;font-variant-numeric:tabular-nums}input[type=range]{accent-color:#ff9d5c;background:0 0;width:100%;height:22px;margin:0}.presets{grid-template-columns:1fr 1fr;gap:6px;margin:12px 0 4px;display:grid}.row{gap:6px;margin-top:6px;display:flex}button{font:inherit;color:#f3e9dc;cursor:pointer;background:#ffffff17;border:1px solid #ffe0be2e;border-radius:8px;padding:7px 9px;font-size:12px}button:hover{background:#ffffff29}.row button{flex:1}#hideBtn{white-space:nowrap;padding:4px 8px;font-size:11px}#gearBtn{z-index:3;position:fixed;top:18px;right:18px}#gearBtn[hidden]{display:none}#readout{letter-spacing:.03em;color:#e8dccb;opacity:.9;margin-top:12px;font-size:11px}#hint{letter-spacing:.04em;color:#ffeed7bf;font-size:11px;position:fixed;bottom:16px;left:18px}</style>
+  <script type="module" crossorigin src="./assets/index-CziUgETB.js"></script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<canvas id="sky"></canvas>
+<aside id="panel" aria-label="Flock controls">
+  <div class="head">
+    <h1>Murmuration<small>starlings at dusk</small></h1>
+    <button id="hideBtn" type="button" title="Hide controls" aria-label="Hide controls">Hide controls</button>
+  </div>
+  <label class="ctl"><span>Cohesion <output id="oCoh">0.75</output></span>
+    <input id="coh" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Cohesion"></label>
+  <label class="ctl"><span>Separation <output id="oSep">0.4</output></span>
+    <input id="sep" type="range" min="0" max="1" step="0.01" value="0.4" aria-label="Separation"></label>
+  <label class="ctl"><span>Speed <output id="oSpd">0.55</output></span>
+    <input id="spd" type="range" min="0" max="1" step="0.01" value="0.55" aria-label="Speed"></label>
+  <label class="ctl"><span>Birds <output id="oCnt">600</output></span>
+    <input id="cnt" type="range" min="100" max="4000" step="20" value="600" aria-label="Number of birds"></label>
+  <div class="presets">
+    <button type="button" data-preset="murmur">Murmuration</button>
+    <button type="button" data-preset="ball">Tight ball</button>
+    <button type="button" data-preset="scatter">Scatter</button>
+    <button type="button" id="scatterBtn">Scatter now</button>
+  </div>
+  <div class="row">
+    <button id="pauseBtn" type="button">Pause</button>
+    <button id="resetBtn" type="button">Restart</button>
+  </div>
+  <div id="readout"></div>
+</aside>
+<button id="gearBtn" type="button" hidden title="Show controls" aria-label="Show controls">Controls</button>
+<div id="hint">Move the mouse — the hawk strikes. Space = pause · H = hide panel · R = restart</div>
+</body>
+</html>

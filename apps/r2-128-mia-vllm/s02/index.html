@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home AI Lab — Night Mode</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}html,body{background:#05070c;width:100%;height:100%;overflow:hidden}body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}#app{position:fixed;inset:0}canvas{cursor:grab;touch-action:none;display:block}canvas.dragging{cursor:grabbing}.ui{pointer-events:none;z-index:10;color:#dfe8f2;position:fixed;inset:0}.brand{text-shadow:0 2px 12px #0009;position:absolute;top:22px;left:26px}.brand h1{letter-spacing:.34em;font-size:15px;font-weight:650}.brand p{letter-spacing:.16em;opacity:.55;text-transform:uppercase;margin-top:5px;font-size:11px}.hud{pointer-events:auto;align-items:center;gap:10px;display:flex;position:absolute;top:20px;right:22px}.chip{letter-spacing:.08em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#9fc3e8;font-variant-numeric:tabular-nums;background:#0a10188c;border:1px solid #8cb4dc2e;border-radius:999px;padding:8px 11px;font-size:11px}#toggleDayNight{pointer-events:auto;cursor:pointer;font:inherit;letter-spacing:.14em;text-transform:uppercase;color:#0b1220;background:linear-gradient(#ffd98a,#ffb454);border:none;border-radius:999px;padding:10px 18px;font-size:12px;font-weight:600;transition:transform .15s,box-shadow .3s,background .5s;box-shadow:0 4px 18px #ffb45459}#toggleDayNight:hover{transform:translateY(-1px)}#toggleDayNight.night{color:#04121f;background:linear-gradient(#7fd9ff,#35a7ff);box-shadow:0 4px 22px #35a7ff73}.ico{vertical-align:-1px;background:radial-gradient(circle at 35% 35%,#fff8e0,#ff9c3a);border-radius:50%;width:12px;height:12px;margin-right:7px;display:inline-block;box-shadow:0 0 8px 2px #ffbe5ab3}#toggleDayNight.night .ico{background:radial-gradient(circle at 62% 38%,#0a2a44 42%,#bfe8ff 43%);box-shadow:0 0 8px 2px #78c8ff99}.hint{letter-spacing:.12em;opacity:.6;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);white-space:nowrap;background:#080c1280;border:1px solid #8cb4dc24;border-radius:999px;padding:8px 16px;font-size:11.5px;transition:opacity 1.2s;position:absolute;bottom:24px;left:50%;transform:translate(-50%)}.hint.gone{opacity:0}.vig{pointer-events:none;z-index:5;background:radial-gradient(at 50% 45%,#0000 55%,#00000061 100%);position:fixed;inset:0}</style>
+  <script type="module" crossorigin src="./assets/index-Y0xMKWsv.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div class="vig"></div>
+  <div class="ui">
+    <div class="brand">
+      <h1>HOME&nbsp;AI&nbsp;LAB</h1>
+      <p>real-time three.js diorama</p>
+    </div>
+    <div class="hud">
+      <div class="chip" id="fps">-- fps</div>
+      <button id="toggleDayNight">Night</button>
+    </div>
+    <div class="hint" id="hint">drag to orbit &nbsp;·&nbsp; scroll to zoom &nbsp;·&nbsp; double-click resets &nbsp;·&nbsp; N toggles day / night</div>
+  </div>
+</body>
+</html>

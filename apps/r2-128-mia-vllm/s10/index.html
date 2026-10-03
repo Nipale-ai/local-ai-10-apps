@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Workshop</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%235b9dff'/%3E%3Cpath d='M7 15l3-4 2.5 3 2-2.5L18 15z' fill='%23fff'/%3E%3Ccircle cx='9' cy='8.5' r='1.6' fill='%23fff'/%3E%3C/svg%3E">
+  <script type="module" crossorigin src="./assets/index-DWYxJuXL.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CY6aOLFf.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#5b9dff"/><path d="M7 15l3-4 2.5 3 2-2.5L18 15z" fill="#fff"/><circle cx="9" cy="8.5" r="1.6" fill="#fff"/></svg>
+        <span>Photo Workshop</span>
+      </div>
+      <div class="toolbar" role="toolbar" aria-label="Edit tools">
+        <button id="undoBtn" class="tbtn" title="Undo (Ctrl+Z)" aria-label="Undo">
+          <svg viewBox="0 0 24 24"><path d="M8 7 3 12l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12h11a6 6 0 0 1 0 12h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button id="redoBtn" class="tbtn" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">
+          <svg viewBox="0 0 24 24"><path d="M16 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H10a6 6 0 0 0 0 12h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <span class="sep"></span>
+        <button id="rotLBtn" class="tbtn" title="Rotate left (Shift+R)" aria-label="Rotate left">
+          <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="rotRBtn" class="tbtn" title="Rotate right (R)" aria-label="Rotate right">
+          <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="flipHBtn" class="tbtn" title="Flip horizontal" aria-label="Flip horizontal">
+          <svg viewBox="0 0 24 24"><path d="M12 3v18" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M9 7 4 12l5 5z" fill="currentColor"/><path d="M15 7l5 5-5 5z" fill="currentColor" opacity=".45"/></svg>
+        </button>
+        <button id="flipVBtn" class="tbtn" title="Flip vertical" aria-label="Flip vertical">
+          <svg viewBox="0 0 24 24"><path d="M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M7 9 12 4l5 5z" fill="currentColor"/><path d="M7 15l5 5 5-5z" fill="currentColor" opacity=".45"/></svg>
+        </button>
+        <span class="sep"></span>
+        <button id="cropBtn" class="tbtn wide" title="Crop tool (X)" aria-label="Crop tool">
+          <svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2 6h14a2 2 0 0 1 2 2v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Crop</span>
+        </button>
+        <button id="compareBtn" class="tbtn wide" title="Before / after (C)" aria-label="Before after compare">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+          <span>Compare</span>
+        </button>
+        <span class="spacer"></span>
+        <button id="openBtn" class="tbtn wide" title="Open another image" aria-label="Open image">
+          <svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>Open</span>
+        </button>
+        <input id="fileInput" type="file" accept="image/*" hidden>
+        <button id="resetBtn" class="tbtn wide" title="Reset all edits" aria-label="Reset all edits">
+          <svg viewBox="0 0 24 24"><path d="M4.5 10.5a8 8 0 1 1 2 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4.5v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Reset</span>
+        </button>
+        <button id="exportBtn" class="tbtn primary" title="Export PNG (Ctrl+S)" aria-label="Export PNG">
+          <svg viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Export PNG</span>
+        </button>
+      </div>
+    </header>
+
+    <aside class="panel left">
+      <section class="group">
+        <h2>Adjust <button id="resetAdj" class="mini" title="Reset adjustments" aria-label="Reset adjustments">reset</button></h2>
+        <div class="slider" data-key="brightness">
+          <div class="srow"><label for="rng-brightness">Brightness</label><output id="out-brightness">0</output></div>
+          <input type="range" id="rng-brightness" min="-100" max="100" step="1" value="0" aria-label="Brightness">
+        </div>
+        <div class="slider" data-key="contrast">
+          <div class="srow"><label for="rng-contrast">Contrast</label><output id="out-contrast">0</output></div>
+          <input type="range" id="rng-contrast" min="-100" max="100" step="1" value="0" aria-label="Contrast">
+        </div>
+        <div class="slider" data-key="saturation">
+          <div class="srow"><label for="rng-saturation">Saturation</label><output id="out-saturation">0</output></div>
+          <input type="range" id="rng-saturation" min="-100" max="100" step="1" value="0" aria-label="Saturation">
+        </div>
+        <div class="slider" data-key="warmth">
+          <div class="srow"><label for="rng-warmth">Warmth</label><output id="out-warmth">0</output></div>
+          <input type="range" id="rng-warmth" min="-100" max="100" step="1" value="0" aria-label="Warmth">
+        </div>
+        <div class="slider" data-key="sharpen">
+          <div class="srow"><label for="rng-sharpen">Clarity</label><output id="out-sharpen">0</output></div>
+          <input type="range" id="rng-sharpen" min="0" max="100" step="1" value="0" aria-label="Clarity">
+        </div>
+      </section>
+      <section class="group">
+        <h2>Filters</h2>
+        <div class="presets" id="presets"></div>
+      </section>
+      <section class="group">
+        <h2>Histogram</h2>
+        <canvas id="hist" width="236" height="66" aria-label="Color histogram"></canvas>
+      </section>
+    </aside>
+
+    <main class="stage" id="stage">
+      <div class="frame" id="frame">
+        <canvas id="view"></canvas>
+        <canvas id="beforeView" aria-hidden="true"></canvas>
+        <div class="divider" id="divider" aria-hidden="true"><i></i><b class="tagB">Before</b><b class="tagA">After</b></div>
+        <div class="cropLayer" id="cropLayer" aria-hidden="true">
+          <div class="cropRect" id="cropRect">
+            <span class="grid-v" style="left:33.33%"></span><span class="grid-v" style="left:66.66%"></span>
+            <span class="grid-h" style="top:33.33%"></span><span class="grid-h" style="top:66.66%"></span>
+            <i data-h="nw" class="h nw"></i><i data-h="n" class="h n"></i><i data-h="ne" class="h ne"></i>
+            <i data-h="e" class="h e"></i><i data-h="se" class="h se"></i><i data-h="s" class="h s"></i>
+            <i data-h="sw" class="h sw"></i><i data-h="w" class="h w"></i>
+            <em id="cropSize">800 × 600</em>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="panel right">
+      <section class="group" id="cropPanel">
+        <h2>Crop</h2>
+        <div class="chips" id="aspectChips">
+          <button class="chip on" data-a="free" aria-label="Free aspect">Free</button>
+          <button class="chip" data-a="orig" aria-label="Original aspect">Orig</button>
+          <button class="chip" data-a="1" aria-label="Square">1:1</button>
+          <button class="chip" data-a="1.3333" aria-label="Four three">4:3</button>
+          <button class="chip" data-a="1.5" aria-label="Three two">3:2</button>
+          <button class="chip" data-a="1.7778" aria-label="Sixteen nine">16:9</button>
+          <button class="chip" data-a="0.5625" aria-label="Nine sixteen">9:16</button>
+        </div>
+        <div class="numgrid">
+          <label for="cx">X<input id="cx" type="number" min="0" step="1" value="0"></label>
+          <label for="cy">Y<input id="cy" type="number" min="0" step="1" value="0"></label>
+          <label for="cw">W<input id="cw" type="number" min="1" step="1" value="800"></label>
+          <label for="ch">H<input id="ch" type="number" min="1" step="1" value="600"></label>
+        </div>
+        <div class="row">
+          <button id="applyCrop" class="btn" disabled>Apply crop</button>
+          <button id="cancelCrop" class="btn ghost" disabled>Reset</button>
+        </div>
+      </section>
+      <section class="group grow">
+        <h2>History</h2>
+        <ul id="histList" class="hist"></ul>
+      </section>
+    </aside>
+
+    <footer class="statusbar">
+      <span id="stFile">photo.png</span>
+      <span id="stDims">–</span>
+      <span id="stZoom">–</span>
+      <span class="zoomctl">
+        <button id="zoomFit" class="zbtn on" aria-label="Fit to screen">Fit</button>
+        <button id="zoom100" class="zbtn" aria-label="Actual size">100%</button>
+      </span>
+      <span class="spacer"></span>
+      <span id="stSteps">Step 0 / 0</span>
+      <span class="hint">Ctrl+Z undo · Ctrl+Shift+Z redo · R rotate · C compare · X crop · Enter/Esc in crop</span>
+    </footer>
+  </div>
+  <div id="toast" role="status"></div>
+</body>
+</html>

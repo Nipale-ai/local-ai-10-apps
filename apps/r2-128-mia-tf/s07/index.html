@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One Word at a Time — how a language model writes</title>
+  <meta name="description" content="Step through a real example and see the odds behind every word a language model writes.">
+  <meta name="theme-color" content="#0b0e14">
+  <style>:root{--bg:#0b0e14;--card:#151b26;--card2:#10151f;--line:#263042;--text:#e8ecf4;--muted:#aab4c8;--accent:#38e0c8;--accent2:#5ea2ff;--danger:#ff8f6b}*{box-sizing:border-box}html,body{margin:0;padding:0}body{background:radial-gradient(1200px 600px at 85% -10%, #14263a 0%, transparent 60%), radial-gradient(900px 500px at -10% 110%, #16233a 0%, transparent 55%), var(--bg);color:var(--text);min-height:100vh;font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}.wrap{max-width:760px;margin:0 auto;padding:28px 18px 56px}header h1{letter-spacing:-.02em;background:linear-gradient(92deg,#7ef4de 10%,#7db4ff 90%);color:#0000;-webkit-background-clip:text;background-clip:text;margin:0 0 6px;font-size:clamp(24px,4.6vw,34px);line-height:1.15}header p.sub{color:var(--muted);max-width:60ch;margin:0 0 22px;font-size:clamp(13px,2.6vw,15px)}.card{background:linear-gradient(#161d2b 0%,#121826 100%);border:1px solid #263042;border-radius:14px;margin-bottom:14px;padding:16px 16px 18px;box-shadow:0 10px 30px #00000059}.kicker{letter-spacing:.14em;text-transform:uppercase;color:#8fa0bd;margin:0 0 8px;font-size:11px;font-weight:600}.kicker-row{justify-content:space-between;align-items:baseline;gap:10px;display:flex}.stepcount{color:#8fa0bd;letter-spacing:.06em;text-transform:none;font:600 11px ui-monospace,Menlo,monospace}.prog{background:#1b2333;border-radius:4px;height:4px;margin:-4px 0 12px;overflow:hidden}.prog i{background:linear-gradient(90deg,#35e8c6,#62a7ff);width:0;height:100%;transition:width .4s;display:block}#sentence{letter-spacing:-.01em;min-height:4.6em;font-size:clamp(19px,3.6vw,26px);font-weight:600;line-height:1.5;display:block}#sentence .done{color:#e8ecf4}#sentence .w{display:inline-block}#sentence .w.fresh{color:#7ef4de;text-shadow:0 0 18px #42e8cd59}#caret{vertical-align:-.18em;background:#43e6cd;border-radius:2px;width:.55ch;height:1.1em;margin-left:3px;animation:1.1s steps(2,end) infinite blink;display:inline-block}@keyframes blink{0%,60%{opacity:1}61%,to{opacity:.15}}#caption{color:#c6cede;border-top:1px dashed #2b364c;margin-top:12px;padding-top:10px;font-size:clamp(13px,2.6vw,14.5px)}#caption strong{color:#7ef4de;font-weight:650}.bar-row{grid-template-columns:minmax(72px,108px) minmax(0,1fr) 64px;align-items:center;gap:10px;padding:5px 0;display:grid}.bar-row+.bar-row{border-top:1px solid #1c2434}.token{color:#dbe3f0;overflow-wrap:anywhere;font:600 clamp(13px,2.7vw,15px)/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.token.chosen:after{content:" ✓ picked";color:#43e6cd;white-space:nowrap;font-size:11px}.track{background:#1b2333;border-radius:6px;height:22px;position:relative;overflow:hidden}.fill{opacity:.92;will-change:width;background:linear-gradient(90deg,#2bbfa8,#4f95f6);border-radius:6px;width:0%;transition:width .42s cubic-bezier(.22,.75,.2,1);position:absolute;inset:0 auto 0 0}.fill.top{background:linear-gradient(90deg,#35e8c6,#62a7ff)}.pct{text-align:right;color:#b9c3d6;font-variant-numeric:tabular-nums;font:600 13px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.pct .logit{color:#8b97ad;margin-top:2px;font-size:10.5px;font-weight:500;display:block}.done-note{color:#9fb2a8;padding:8px 2px;font-size:14px}#bars.swap{animation:.3s swapin}@keyframes swapin{0%{opacity:.25}to{opacity:1}}.controls{flex-wrap:wrap;align-items:center;gap:10px;display:flex}button{color:#e8ecf4;cursor:pointer;touch-action:manipulation;background:#202a3d;border:1px solid #33415a;border-radius:10px;min-height:44px;padding:12px 18px;font:600 14.5px/1 inherit}button:active{transform:translateY(1px)}button:hover:not(:disabled){background:#26324a;border-color:#46577a}button.primary:hover:not(:disabled){filter:brightness(1.12)}button:focus-visible,input[type=range]:focus-visible{outline-offset:2px;outline:2px solid #7ef4de}button:disabled{opacity:.38;cursor:default}button.primary{color:#05251f;background:linear-gradient(#33e0c0,#1fbfae);border-color:#2fd0b4}button.primary:disabled{filter:grayscale(.6)}.spacer{flex:1}.tempbox{flex-wrap:wrap;align-items:center;gap:12px;display:flex}.tempbox label{color:#c6cede;white-space:nowrap;font-size:13px}.tempbox output{color:#7ef4de;text-align:right;min-width:3.4ch;font:600 13px ui-monospace,Menlo,monospace}.tlab{letter-spacing:.08em;text-transform:uppercase;color:#8b97ad;font-size:10.5px}input[type=range]{accent-color:#38e0c8;background:0 0;width:clamp(140px,34vw,240px);height:40px}.hint{color:#8b97ad;margin-top:10px;font-size:12.5px}.expert-toggle{margin-bottom:14px}.expert{color:#c6cede;font-size:13.5px}.expert h3{letter-spacing:.12em;text-transform:uppercase;color:#8fa0bd;margin:0 0 8px;font-size:13px}.formula{color:#d9e2f2;overflow-wrap:anywhere;background:#0e1420;border:1px solid #263042;border-radius:8px;margin:8px 0;padding:10px 12px;font:600 14px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.expert p{margin:8px 0 0}.fly{z-index:40;pointer-events:none;color:#7ef4de;text-shadow:0 0 18px #42e8cd59;white-space:pre;margin:0;font:600 clamp(19px,3.6vw,26px)/1.3 ui-sans-serif,system-ui,sans-serif;position:fixed}footer{color:#7c8798;margin-top:22px;font-size:12px}@media (width<=560px){.wrap{padding:20px 12px 44px}.card{border-radius:12px;padding:13px 12px 14px}.bar-row{grid-template-columns:minmax(64px,88px) minmax(0,1fr) 56px;gap:7px}.controls{gap:8px}button{padding:12px 13px}#sentence{min-height:5.4em}}@media (prefers-reduced-motion:reduce){*,:before,:after{transition:none!important;animation:none!important}}</style>
+  <script type="module" crossorigin src="./assets/index-EDflTjeY.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>How a language model writes, one word at a time</h1>
+      <p class="sub">A language model does not write whole sentences. It looks at the text so far, gives every possible next word a probability, picks one, and repeats. Step through a real example and watch the odds.</p>
+    </header>
+
+    <main>
+      <section class="card" aria-label="Text so far">
+        <div class="prog" aria-hidden="true"><i id="progFill"></i></div>
+        <p class="kicker">Text so far</p>
+        <div id="sentence" aria-live="polite"></div>
+        <div id="caption" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-label="Candidate next words">
+        <div class="kicker-row"><p class="kicker">What could come next?</p><span class="stepcount" id="stepcount">step 1 of 12</span></div>
+        <div id="bars"></div>
+        <p class="hint">Bar length = how likely the model thinks each word is. The word with a tick is the one the model picks.</p>
+      </section>
+
+      <section class="card">
+        <div class="controls">
+          <button id="back" type="button" aria-label="Back">← Back</button>
+          <button id="next" type="button" class="primary" aria-label="Next word">Next word →</button>
+          <button id="auto" type="button" aria-label="Auto play" title="Auto play">▶ Auto play</button>
+          <button id="restart" type="button" hidden aria-label="Start over">↺ Start over</button>
+          <span class="spacer"></span>
+          <div class="tempbox">
+            <label for="temp">Temperature</label>
+            <span class="tlab">focused</span>
+            <input id="temp" type="range" min="0.05" max="2" step="0.05" value="1" aria-label="Temperature">
+            <span class="tlab">creative</span>
+            <output id="tempVal" for="temp">1.00</output>
+          </div>
+        </div>
+        <p class="hint" id="tempHint">Temperature reshapes the odds: low = play it safe, high = wild and creative.</p>
+      </section>
+
+      <section class="card expert" id="expertCard" hidden>
+        <h3>For experts</h3>
+        <div class="formula">p(word) = e^(s ÷ T) ÷ Σ e^(s ÷ T)</div>
+        <p>Each candidate carries a raw score (a <strong>logit</strong>). Dividing the logits by the temperature <strong>T</strong> and running <strong>softmax</strong> turns them into probabilities that add up to 100&nbsp;%. Small T sharpens the peak, large T flattens it.</p>
+        <p>We also cut the list to the five best guesses (that is <strong>top-k</strong>, k&nbsp;=&nbsp;5) before sampling, so nonsense words never get a chance.</p>
+      </section>
+
+      <footer>No real model runs in this page — the scores are hand-made for the example. Step with the buttons, or drag the temperature and watch the bars breathe.</footer>
+    </main>
+  </div>
+</body>
+</html>

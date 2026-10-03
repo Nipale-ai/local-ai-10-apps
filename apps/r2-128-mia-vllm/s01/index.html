@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will It Fit? — Local AI Memory Calculator</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Check whether a local AI model fits on a 16 GB, 32 GB or 128 GB machine.">
+  <style>:root{--bg:#0b1020;--panel:#141c30;--panel2:#0f1626;--line:#26314d;--text:#eef2fb;--muted:#a7b4d0;--accent:#7aa5ff;--w:#4f8cff;--k:#2fd0a0;--o:#f2a33c;--free:#223050;--ok-t:#6fe6ab;--ok-b:#123524;--bad-t:#ff9d9d;--bad-b:#3a1520;--warn-t:#ffc864;--warn-b:#3a2a10;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}*,:before,:after{box-sizing:border-box}html,body{margin:0;padding:0}body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;overflow-x:hidden}.bg{z-index:-1;pointer-events:none;background:radial-gradient(60rem 30rem at 85% -10%,#4f8cff24,#0000 60%),radial-gradient(50rem 26rem at -10% 110%,#2fd0a01a,#0000 60%);position:fixed;inset:0}.wrap{max-width:1060px;margin:0 auto;padding:24px 20px 40px}header{align-items:center;gap:14px;margin-bottom:22px;display:flex}.logo{border:1px solid var(--line);background:linear-gradient(135deg,#1b2a52,#123a33);border-radius:12px;flex:none;place-items:center;width:46px;height:46px;display:grid}h1{letter-spacing:.2px;margin:0;font-size:24px}.tag{color:var(--muted);margin:2px 0 0;font-size:14px}main{grid-template-columns:380px 1fr;align-items:start;gap:18px;display:grid}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 12px 32px #00000059}.panel h2{text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;font-size:13px;font-weight:600}.field{margin-bottom:14px}.field label{color:var(--text);margin-bottom:6px;font-size:13px;font-weight:600;display:block}.field .hint{color:var(--muted);font-size:12px;font-weight:400}input[type=number],select{border:1px solid var(--line);background:var(--panel2);width:100%;min-height:46px;color:var(--text);font:15px var(--mono);border-radius:10px;padding:10px 12px}input[type=number]{appearance:textfield}input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.trust{color:var(--muted);border:1px solid var(--line);white-space:nowrap;border-radius:999px;align-items:center;gap:6px;margin-left:auto;padding:6px 12px;font-size:12px;display:inline-flex}.trust i{background:var(--ok-t);border-radius:50%;flex:none;width:8px;height:8px}.verdict-row{align-items:flex-start;gap:10px;min-height:48px;margin:10px 0 14px;display:flex}.vic{flex:none;width:24px;height:24px;margin-top:2px}.quick{flex-wrap:wrap;gap:8px;margin:-4px 0 14px;display:flex}.qchip{border:1px solid var(--line);background:var(--panel2);min-width:40px;min-height:44px;color:var(--text);font:600 13px var(--mono);cursor:pointer;border-radius:10px;padding:8px 12px}.qchip:hover{border-color:var(--accent)}.qchip.on{border-color:var(--accent);background:#1a2745}.device.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 21px,calc(100% - 13px) 21px;background-repeat:no-repeat;background-size:5px 5px,5px 5px}.presets{flex-wrap:wrap;gap:8px;margin:2px 0 14px;display:flex}.chip{border:1px solid var(--line);background:var(--panel2);min-width:40px;min-height:44px;color:var(--text);cursor:pointer;text-align:left;border-radius:10px;padding:8px 12px;font:13px/1.3 ui-sans-serif,system-ui,sans-serif}.chip b{font-weight:600;display:block}.chip span{color:var(--muted);font-size:11px}.chip:hover{border-color:var(--accent)}.chip.on{border-color:var(--accent);background:#1a2745}.btn{border:1px solid var(--accent);width:100%;min-width:40px;min-height:46px;color:var(--text);cursor:pointer;background:#1a2745;border-radius:10px;padding:10px 14px;font:600 14px ui-sans-serif,system-ui,sans-serif}.btn:hover{background:#22315a}.btn{overflow-wrap:anywhere}@media (prefers-reduced-motion:reduce){.seg{transition:none}}.total-row{flex-wrap:wrap;align-items:baseline;gap:10px;min-height:64px;display:flex}.total{min-width:6.5ch}.pill{text-align:center;justify-content:center;align-items:center;min-width:112px;display:inline-flex}.modelname{color:var(--accent);border:1px solid var(--line);background:var(--panel2);border-radius:999px;align-items:center;gap:7px;max-width:100%;margin:0 0 6px;padding:5px 12px;font:600 12.5px ui-sans-serif,system-ui,sans-serif;display:inline-flex}.modelname:before{content:"";background:var(--accent);border-radius:2px;flex:none;width:8px;height:8px}.total{font:700 52px/1.1 var(--mono);color:#fff;letter-spacing:-1px}.unit{color:var(--muted);max-width:220px;font-size:14px}.verdict{min-height:48px;color:var(--text);max-width:60ch;margin:10px 0 18px;font-size:15.5px}.plain{color:var(--muted);max-width:70ch;margin:0 0 16px;font-size:13px}.devices{gap:12px;display:grid}.device{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}.d-head{justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;display:flex}.d-name{font:600 15px var(--mono)}.best-tag{color:var(--accent);text-transform:uppercase;letter-spacing:.1em;visibility:hidden;margin-left:auto;margin-right:10px;font:700 10.5px ui-sans-serif,system-ui,sans-serif}.device.best .best-tag{visibility:visible}.pill{border-radius:999px;min-height:24px;padding:4px 10px;font:600 12px ui-sans-serif,system-ui,sans-serif}.pill.ok{color:var(--ok-t);background:var(--ok-b)}.pill.no{color:var(--bad-t);background:var(--bad-b)}.pill.warn{color:var(--warn-t);background:var(--warn-b)}.track{background:var(--free);border:1px solid var(--line);border-radius:9px;height:18px;position:relative;overflow:hidden}.seg{transition:left .25s,width .25s;position:absolute;top:0;bottom:0}.seg.w{background:var(--w)}.seg.k{background:var(--k)}.seg.o{background:var(--o)}.marker{background:#ffffffbf;width:2px;position:absolute;top:-2px;bottom:-2px;left:90%}::selection{color:#fff;background:#2c4a8a}.device.over .track{border-color:var(--bad-t)}.d-note{font:12.5px var(--mono);color:var(--muted);min-height:19px;margin-top:7px}.legend{color:var(--muted);flex-wrap:wrap;gap:14px;margin:12px 2px 16px;font-size:12.5px;display:flex}.legend i{vertical-align:-1px;border-radius:3px;width:11px;height:11px;margin-right:6px;display:inline-block}details{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:0 14px}summary{cursor:pointer;align-items:center;min-height:44px;font-size:14px;font-weight:600;list-style:none;display:flex}summary::-webkit-details-marker{display:none}summary:after{content:"";border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);flex:none;width:8px;height:8px;margin-left:auto;transition:transform .15s;transform:rotate(45deg)}details[open] summary:after{transform:rotate(-135deg)}table{border-collapse:collapse;width:100%;font:13px var(--mono);margin:6px 0 14px}th,td{text-align:left;border-top:1px solid var(--line);color:var(--text);padding:6px 8px}th{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;font-weight:600}td.num{text-align:right}footer{color:var(--muted);max-width:80ch;margin-top:26px;font-size:12.5px}footer code{font:12px var(--mono);color:var(--text)}@media (width<=900px){main{grid-template-columns:1fr}.total{font-size:44px}.wrap{padding:18px 14px 32px}header{flex-wrap:wrap}.trust{flex-basis:100%;justify-content:flex-start;margin-left:0}}</style>
+  <script type="module" crossorigin src="./assets/index-BRZ3UYGk.js"></script>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <div class="logo" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7aa5ff" stroke-width="1.6">
+          <rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="#2fd0a0"/>
+          <path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Will It Fit?</h1>
+        <p class="tag">Local AI memory calculator — model size, quantization and context vs. your graphics card</p>
+      </div>
+      <span class="trust"><i></i>Runs offline · nothing leaves this page</span>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="in-h">
+        <h2 id="in-h">Your model</h2>
+        <div class="field">
+          <label for="in-params">Model size <span class="hint">(billions of parameters)</span></label>
+          <input id="in-params" type="number" min="0" step="0.1" inputmode="decimal" value="7.3" aria-describedby="in-h">
+        </div>
+        <div class="field">
+          <label for="in-quant">Quantization</label>
+          <select id="in-quant">
+            <option value="Q3_K_M">Q3_K_M · 3.91 bits/weight</option>
+            <option value="NVFP4">NVFP4 · 4.50 bits/weight</option>
+            <option value="Q4_K_M" selected>Q4_K_M · 4.85 bits/weight</option>
+            <option value="Q5_K_M">Q5_K_M · 5.69 bits/weight</option>
+            <option value="Q6_K">Q6_K · 6.56 bits/weight</option>
+            <option value="Q8_0">Q8_0 · 8.50 bits/weight</option>
+            <option value="FP16">FP16 · 16.00 bits/weight</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="in-context">Context length <span class="hint">(tokens)</span></label>
+          <input id="in-context" type="number" min="0" step="512" inputmode="numeric" value="32768">
+        </div>
+        <div class="quick" role="group" aria-label="Common context lengths" id="quick"></div>
+        <div class="field">
+          <label for="in-kv">Context memory <span class="hint">(GB per 1k tokens)</span></label>
+          <input id="in-kv" type="number" min="0" step="0.001" inputmode="decimal" value="0.4">
+        </div>
+
+        <h2 id="pre-h" style="margin-top:18px">Presets</h2>
+        <div class="presets" role="group" aria-labelledby="pre-h" id="presets"></div>
+
+        <button class="btn" id="copy" type="button">Copy share link</button>
+      </section>
+
+      <section class="panel" aria-labelledby="res-h">
+        <h2 id="res-h">Result</h2>
+        <div class="modelname" id="modelname">Custom model</div>
+        <div class="total-row">
+          <div class="total" id="total" aria-live="polite">–</div>
+          <div class="unit" id="unit">GB of memory the model needs in total</div>
+        </div>        <div class="verdict-row" aria-live="polite">
+          <svg class="vic" id="vic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"></svg>
+          <p class="verdict" id="verdict" style="margin:0"></p>
+        </div>
+        <p class="plain">Weights are the trained brain of the model, context memory grows with the conversation,
+          and every runtime needs about 1.5&nbsp;GB of overhead. A device must keep 10&nbsp;% of its memory free.</p>
+        <div class="devices" id="devices"></div>
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--w)"></i>Weights</span>
+          <span><i style="background:var(--k)"></i>Context (KV)</span>
+          <span><i style="background:var(--o)"></i>Overhead</span>
+          <span><i style="background:var(--free)"></i>Free</span>
+          <span><i style="background:rgba(255,255,255,.75);width:3px;height:14px;border-radius:1px"></i>10&nbsp;% reserve line</span>
+        </div>
+        <details>
+          <summary>Expert details</summary>
+          <table>
+            <thead><tr><th>Component</th><th style="text-align:right">GB</th></tr></thead>
+            <tbody id="expert-rows"></tbody>
+          </table>
+          <table>
+            <thead><tr><th>Device</th><th style="text-align:right">Usable (0.9 × D)</th><th style="text-align:right">Headroom</th><th>Verdict</th></tr></thead>
+            <tbody id="expert-dev"></tbody>
+          </table>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      Formula: <code>total = params × bpw ÷ 8 + context ÷ 1000 × kv_gb_per_1k + 1.5</code>, fits when
+      <code>total ≤ 0.9 × device_GB</code>. Estimates only — real loaders vary a little.
+    </footer>
+  </div>
+</body>
+</html>

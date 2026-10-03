@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murmuration · a boids field study</title>
+  <style>:root{--lightningcss-light: ;--lightningcss-dark:initial;color-scheme:dark}*{box-sizing:border-box}html,body{background:#0b0d1f;height:100%;margin:0;padding:0;overflow:hidden}body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}#sky{width:100%;height:100%;display:block;position:fixed;inset:0}#vignette{pointer-events:none;background:radial-gradient(120% 90% at 50% 42%,#0000 62%,#04040e47 100%);position:fixed;inset:0}#brand{pointer-events:none;-webkit-user-select:none;user-select:none;position:fixed;top:22px;left:26px}#brand h1{letter-spacing:.24em;color:#f3e8dc;text-shadow:0 2px 14px #00000073;margin:0;font-size:21px;font-weight:650}#brand p{letter-spacing:.16em;color:#f3e8dc9e;text-transform:uppercase;margin:4px 0 0;font-size:11.5px}#fps{pointer-events:none;-webkit-user-select:none;user-select:none;letter-spacing:.08em;color:#f3e8dc8c;font-variant-numeric:tabular-nums;font-size:11.5px;position:fixed;top:24px;right:26px}#panel{-webkit-backdrop-filter:blur(12px);color:#ece7f2;background:#0d0e1e9e;border:1px solid #ffffff21;border-radius:16px;width:272px;padding:16px 18px 14px;position:fixed;bottom:22px;left:22px;box-shadow:0 12px 40px #00000073}#panel.hidden{display:none}.ph{align-items:baseline;gap:8px;margin-bottom:12px;display:flex}.ph b{letter-spacing:.22em;color:#f3e8dc;font-size:12px;font-weight:700}.ph span{color:#ece7f28c;letter-spacing:.06em;font-size:10.5px}.ctl{margin:9px 0}.ctl .lab{justify-content:space-between;align-items:baseline;margin-bottom:3px;display:flex}.ctl label{letter-spacing:.09em;color:#ece7f2d9;text-transform:uppercase;font-size:11.5px}.ctl output{color:#f3c8a0f2;font-variant-numeric:tabular-nums;font-size:11px}input[type=range]{accent-color:#e88a4a;cursor:pointer;background:0 0;width:100%;height:22px;margin:0}.btns{gap:8px;margin-top:13px;display:flex}button{font:inherit;letter-spacing:.05em;color:#f3e8dc;cursor:pointer;background:#ffffff17;border:1px solid #ffffff29;border-radius:9px;padding:7px 11px;font-size:11.5px;transition:background .15s,transform 50ms}button:hover{background:#ffffff2b}button:active{transform:translateY(1px)}.presets{flex-wrap:wrap;align-items:center;gap:6px;margin-top:11px;display:flex}.presets i{letter-spacing:.14em;color:#ece7f2ad;text-transform:uppercase;margin-right:2px;font-size:10px;font-style:normal}.presets button{border-radius:999px;padding:5px 9px;font-size:10.5px}.hint{color:#ece7f2b8;margin-top:11px;font-size:10.5px;line-height:1.5}#showBtn{-webkit-backdrop-filter:blur(12px);background:#0d0e1e9e;border-radius:12px;padding:9px 14px;position:fixed;bottom:22px;left:22px}#showBtn[hidden]{display:none}</style>
+  <script type="module" crossorigin src="./assets/index-DLfE4kun.js"></script>
+</head>
+<body>
+  <canvas id="sky"></canvas>
+  <div id="vignette"></div>
+  <header id="brand">
+    <h1>MURMURATION</h1>
+    <p>a boids field study &middot; dusk</p>
+  </header>
+  <div id="fps"></div>
+
+  <aside id="panel" aria-label="Flock controls">
+    <div class="ph"><b>CONTROLS</b><span>rules of the flock</span></div>
+    <div class="ctl">
+      <div class="lab"><label for="coh">Cohesion</label><output id="cohv">55%</output></div>
+      <input type="range" id="coh" min="0" max="100" value="55">
+    </div>
+    <div class="ctl">
+      <div class="lab"><label for="sep">Separation</label><output id="sepv">45%</output></div>
+      <input type="range" id="sep" min="0" max="100" value="45">
+    </div>
+    <div class="ctl">
+      <div class="lab"><label for="spd">Speed</label><output id="spdv">50%</output></div>
+      <input type="range" id="spd" min="0" max="100" value="50">
+    </div>
+    <div class="ctl">
+      <div class="lab"><label for="cnt">Flock size</label><output id="cntv">900</output></div>
+      <input type="range" id="cnt" min="100" max="4000" step="50" value="900">
+    </div>
+    <div class="btns">
+      <button id="pauseBtn" type="button">Pause</button>
+      <button id="resetBtn" type="button">Restart</button>
+      <button id="hideBtn" type="button">Hide panel</button>
+    </div>
+    <div class="presets">
+      <i>Presets</i>
+      <button type="button" data-preset="murmur">Murmuration</button>
+      <button type="button" data-preset="tight">Tight ball</button>
+      <button type="button" data-preset="scatter">Scatter</button>
+      <button type="button" data-preset="calm">Calm</button>
+    </div>
+    <div class="hint">Move the mouse over the sky &mdash; the flock flees the hawk.<br>Space: pause &middot; R: restart &middot; H: hide</div>
+  </aside>
+  <button id="showBtn" type="button" hidden>&#9776; Panel</button>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will this model fit on my GPU? — VRAM calculator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23151b27'/%3E%3Crect x='3' y='3' width='10' height='10' rx='2' fill='none' stroke='%233fe0a0' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>:root{--bg:#0b0e14;--panel:#151b27;--panel2:#1c2433;--line:#2a3549;--ink:#eef2f8;--muted:#9fb0c8;--dim:#8296b0;--mint:#3fe0a0;--coral:#ff6b6b;--amber:#ffb454;--teal:#38bdf8;--rose:#f472b6}*{box-sizing:border-box}html{--lightningcss-light: ;--lightningcss-dark:initial;color-scheme:dark}html,body{margin:0;padding:0}body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica Neue,Arial,sans-serif;overflow-x:clip}.wrap{max-width:1120px;margin:0 auto;padding:22px 16px 48px}header{margin-bottom:18px}h1{letter-spacing:-.02em;margin:0 0 6px;font-size:clamp(21px,3.4vw,29px)}.sub{color:var(--muted);max-width:64ch;margin:0}.grid{grid-template-columns:380px 1fr;align-items:start;gap:14px;display:grid}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;min-width:0;padding:18px}.panel h2{text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px;font-size:13px;font-weight:600}label{color:var(--muted);margin:14px 0 5px;font-size:13px;font-weight:600;display:block}label:first-of-type{margin-top:4px}input[type=number],select{width:100%;min-height:44px;font:inherit;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:16px}input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:1px}.presets{flex-wrap:wrap;gap:8px;display:flex}.presets button{min-width:44px;min-height:44px;font:inherit;background:var(--panel2);color:var(--ink);border:1px solid var(--line);cursor:pointer;border-radius:10px;padding:8px 12px;font-size:13.5px;font-weight:600}.presets button:hover{border-color:var(--teal)}.presets button.on{border-color:var(--teal);background:#204058}.total-row{flex-wrap:wrap;align-items:baseline;gap:10px;display:flex}#total{letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--mint);min-width:5.5ch;font-size:clamp(38px,6vw,54px);font-weight:800}#total.no{color:var(--coral)}#modelsum{color:var(--muted);min-height:1.5em;margin:2px 0 0;font-size:13.5px}.qhint{color:var(--dim);margin:6px 0 0;font-size:12.5px}.total-row .unit{color:var(--muted);font-size:15px}#verdict{background:var(--panel2);border:1px solid var(--line);border-radius:10px;min-height:calc(1.5em + 26px);margin:10px 0 0;padding:12px 14px}#verdict b{color:var(--ink)}#explain{color:var(--muted);min-height:3em;margin:10px 0 16px}.dev{background:var(--panel2);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:12px 14px}.dev-top{justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px;display:flex}.dev-name{font-weight:700}.dev-hint{color:var(--dim);font-size:12.5px;font-weight:400}.badge{white-space:nowrap;text-align:center;border-radius:999px;min-width:76px;padding:3px 9px;font-size:12.5px;font-weight:700}.badge.ok{color:var(--mint);background:#123528}.badge.no{color:var(--coral);background:#3a1d21}.bar{background:#0d1219;border-radius:6px;height:22px;position:relative;overflow:hidden}.bar .fill{position:absolute;inset:0}.bar .mark{background:var(--coral);opacity:.9;width:2px;position:absolute;top:0;bottom:0}.dev-sub{color:var(--muted);overflow-wrap:anywhere;margin-top:7px;font-size:13px}.legend{color:var(--muted);flex-wrap:wrap;gap:6px 14px;margin:2px 0 14px;font-size:12.5px;display:flex}.legend span{align-items:center;gap:6px;display:inline-flex}.sw{border-radius:3px;width:11px;height:11px;display:inline-block}details.expert{border:1px solid var(--line);background:var(--panel2);border-radius:10px;margin-bottom:14px;padding:10px 14px}details.expert summary{cursor:pointer;color:var(--ink);font-weight:600}details.expert p{color:var(--muted);font-variant-numeric:tabular-nums;margin:10px 0 0}#share{min-width:44px;min-height:44px;font:inherit;cursor:pointer;color:var(--ink);border:1px solid var(--teal);background:#204058;border-radius:10px;padding:10px 16px;font-weight:700}.formula{color:var(--dim);overflow-wrap:anywhere;margin-top:14px;font-size:12.5px}.msum{z-index:5;border-bottom:1px solid var(--line);background:#0b0e14;flex-wrap:wrap;align-items:baseline;gap:8px;padding:11px 16px;font-size:14px;display:none;position:sticky;top:0}.msum b{font-variant-numeric:tabular-nums;font-size:17px}.msum .fit{color:var(--mint);font-weight:600}.msum .fit.no{color:var(--coral)}@media (width<=900px){.grid{grid-template-columns:1fr}.msum{display:flex}}@media (width<=520px){.wrap{padding:14px 10px 40px}.panel{padding:14px}}</style>
+  <script type="module" crossorigin src="./assets/index-CwWLcZjy.js"></script>
+</head>
+<body>
+<div class="msum" id="msum" aria-hidden="true"><b id="msum-total">0.0</b><span>GB needed</span><span id="msum-fit"></span></div>
+<div class="wrap">
+  <header>
+    <h1>Will this model fit on my GPU?</h1>
+    <p class="sub">Enter the model size, quantization and context you plan to run. You get the memory it needs and whether it fits on a 16 GB, 32 GB or 128 GB machine — with 10 % of the card kept free, like real runtimes do.</p>
+  </header>
+  <main class="grid">
+    <section class="panel" aria-label="Model inputs">
+      <h2>Presets</h2>
+      <div class="presets" id="presets"><button type="button" data-p="7" data-q="Q4_K_M" data-c="8192" data-k="0.10">Mistral 7B · Q4_K_M</button><button type="button" data-p="8" data-q="Q4_K_M" data-c="8192" data-k="0.128">Llama 3.1 8B · Q4_K_M</button><button type="button" data-p="27" data-q="Q4_K_M" data-c="32768" data-k="0.064">Gemma 3 27B · Q4_K_M</button><button type="button" data-p="32" data-q="Q6_K" data-c="8192" data-k="0.14">Qwen2.5 32B · Q6_K</button><button type="button" data-p="70" data-q="Q4_K_M" data-c="4096" data-k="0.32">Llama 3.3 70B · Q4_K_M</button><button type="button" data-p="70" data-q="Q5_K_M" data-c="8192" data-k="0.30">DeepSeek R1 70B · Q5_K_M</button></div>
+      <label for="params">Model size (billions of parameters)</label>
+      <input id="params" type="number" inputmode="decimal" min="0" step="0.1" value="8" aria-label="Model size in billions of parameters">
+      <label for="quant">Quantization</label>
+      <select id="quant" aria-label="Quantization">
+        <option>Q3_K_M</option><option selected>Q4_K_M</option><option>Q5_K_M</option><option>Q6_K</option><option>Q8_0</option><option>FP16</option><option>NVFP4</option>
+      </select>
+      <p class="qhint" id="qhint"></p>
+      <label for="ctx">Context length (tokens)</label>
+      <input id="ctx" type="number" inputmode="numeric" min="0" step="1" value="8192" aria-label="Context length in tokens">
+      <label for="kv">Context memory (GB per 1 000 tokens)</label>
+      <input id="kv" type="number" inputmode="decimal" min="0" step="0.001" value="0.128" aria-label="Context memory in gigabytes per 1000 tokens">
+    </section>
+    <section class="panel" aria-label="Result">
+      <h2>Result</h2>
+      <div class="total-row"><span id="total" aria-live="polite">0.0</span><span class="unit">GB of memory needed</span></div>
+      <p id="modelsum"></p>
+      <p id="verdict" aria-live="polite"></p>
+      <p id="explain"></p>
+      <div id="devices">
+      <div class="dev"><div class="dev-top"><span class="dev-name">16 GB <span class="dev-hint">· laptop / small desktop GPU</span></span><span class="badge"></span></div><div class="bar"><i class="fill"></i><i class="mark"></i></div><div class="dev-sub"></div></div>
+      <div class="dev"><div class="dev-top"><span class="dev-name">32 GB <span class="dev-hint">· high-end desktop GPU</span></span><span class="badge"></span></div><div class="bar"><i class="fill"></i><i class="mark"></i></div><div class="dev-sub"></div></div>
+      <div class="dev"><div class="dev-top"><span class="dev-name">128 GB <span class="dev-hint">· Mac Studio / server board</span></span><span class="badge"></span></div><div class="bar"><i class="fill"></i><i class="mark"></i></div><div class="dev-sub"></div></div>
+    </div>
+      <div class="legend" aria-hidden="true">
+        <span><i class="sw" style="background:var(--teal)"></i>Weights</span>
+        <span><i class="sw" style="background:var(--amber)"></i>Context (KV cache)</span>
+        <span><i class="sw" style="background:var(--rose)"></i>Runtime overhead (1.5 GB)</span>
+        <span><i class="sw" style="background:#0d1219;border:1px solid var(--line)"></i>Free space</span>
+        <span><i class="sw" style="background:var(--coral)"></i>Usable limit (90 %)</span>
+      </div>
+      <details class="expert">
+        <summary>Expert details</summary>
+        <p id="expert"></p>
+        <p>Formula: weights = params × bits-per-weight ÷ 8 · context = tokens ÷ 1 000 × GB per 1k · overhead = 1.5 GB · a device must keep 10 % of its memory free.</p>
+      </details>
+      <button id="share" type="button" title="Copy a link that restores these inputs">Copy share link</button>
+    </section>
+  </main>
+</div>
+</body>
+</html>

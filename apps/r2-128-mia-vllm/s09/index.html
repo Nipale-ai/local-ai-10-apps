@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Studio — print-ready A4 invoices</title>
+  <script type="module" crossorigin src="./assets/index-CnbEIxWx.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-V8Wbsq_6.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mini"><span class="mono-sq">N</span><strong>Invoice Studio</strong><span class="tag">print-ready A4 invoices</span></div>
+    <div class="top-actions">
+      <span class="tb-gross">Total due <strong id="tbGross">—</strong></span>
+      <button id="btnPrint" type="button" class="btn primary">Print / Save as PDF</button>
+    </div>
+  </header>
+
+  <div class="app">
+    <aside class="panel" id="formPanel" aria-label="Invoice editor">
+
+      <section class="sec">
+        <h2 class="sec-t">Sender</h2>
+        <div class="row2">
+          <div><label for="sCompany">Company</label><input id="sCompany" data-s="company" type="text"></div>
+          <div><label for="sRep">Representative</label><input id="sRep" data-s="rep" type="text"></div>
+        </div>
+        <label for="sStreet">Street</label><input id="sStreet" data-s="street" type="text">
+        <div class="row2">
+          <div><label for="sCity">ZIP / City</label><input id="sCity" data-s="city" type="text"></div>
+          <div><label for="sCountry">Country</label><input id="sCountry" data-s="country" type="text"></div>
+        </div>
+        <div class="row3">
+          <div><label for="sEmail">Email</label><input id="sEmail" data-s="email" type="text"></div>
+          <div><label for="sPhone">Phone</label><input id="sPhone" data-s="phone" type="text"></div>
+          <div><label for="sWeb">Website</label><input id="sWeb" data-s="web" type="text"></div>
+        </div>
+        <div class="tpl-row">
+          <button id="btnSaveTpl" type="button" class="btn">Save as template</button>
+          <button id="btnLoadTpl" type="button" class="btn">Load template</button>
+          <span id="tplStatus" role="status"></span>
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2 class="sec-t">Customer</h2>
+        <label for="cName">Company / name</label><input id="cName" data-c="name" type="text">
+        <label for="cAttn">Attention</label><input id="cAttn" data-c="attn" type="text">
+        <label for="cStreet">Street</label><input id="cStreet" data-c="street" type="text">
+        <div class="row2">
+          <div><label for="cCity">ZIP / City</label><input id="cCity" data-c="city" type="text"></div>
+          <div><label for="cCountry">Country</label><input id="cCountry" data-c="country" type="text"></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2 class="sec-t">Invoice details</h2>
+        <div class="row3">
+          <div><label for="mNumber">Invoice number</label><input id="mNumber" data-m="number" type="text"></div>
+          <div><label for="mIssue">Invoice date</label><input id="mIssue" data-m="issue" type="date"></div>
+          <div><label for="mDue">Due date</label><input id="mDue" data-m="due" type="date"></div>
+        </div>
+        <label for="mService">Service period</label><input id="mService" data-m="service" type="text">
+        <label for="mCurrency">Currency</label>
+        <select id="mCurrency" data-m="currency" aria-label="Currency">
+          <option value="EUR">EUR (€)</option>
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+        </select>
+      </section>
+
+      <section class="sec">
+        <h2 class="sec-t">Line items</h2>
+        <table class="items">
+          <thead>
+            <tr><th class="th-num">#</th><th class="th-desc">Description</th><th class="th-num">Qty</th><th class="th-num">Unit price</th><th class="th-num">VAT %</th><th class="th-num">Amount</th><th class="th-x"></th></tr>
+          </thead>
+          <tbody id="itemRows"></tbody>
+        </table>
+        <div class="row-end">
+          <button id="btnNew" type="button" class="btn">New invoice</button>
+          <button id="btnAdd" type="button" class="btn">+ Add line</button>
+        </div>
+        <div class="disc-row">
+          <label for="discount">Discount (%)</label>
+          <input id="discount" type="number" step="any" min="0" max="100" aria-label="Discount (%)">
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2 class="sec-t">Payment details</h2>
+        <div class="row2">
+          <div><label for="pBank">Bank</label><input id="pBank" data-s="bank" type="text"></div>
+          <div><label for="pIban">IBAN</label><input id="pIban" data-s="iban" type="text"></div>
+        </div>
+        <div class="row2">
+          <div><label for="pBic">BIC</label><input id="pBic" data-s="bic" type="text"></div>
+          <div><label for="pTax">VAT ID</label><input id="pTax" data-s="taxid" type="text"></div>
+        </div>
+        <label for="pTerms">Payment terms</label><textarea id="pTerms" data-s="terms" rows="2"></textarea>
+        <label for="pNotes">Notes (shown at the bottom of the invoice)</label><textarea id="pNotes" data-s="notes" rows="3"></textarea>
+      </section>
+    </aside>
+
+    <main class="preview" aria-label="Invoice preview">
+      <div class="preview-col">
+        <div class="page-cap">A4 · 794 × 1123 px — the print view shows only the invoice</div>
+        <div id="invoice-page"></div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
